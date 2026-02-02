@@ -1130,6 +1130,9 @@
             // Save data globally
             window.reportData = { data, score, areas, allIssues };
 
+            // URL Google Sheets Web App
+            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwiwtzb41Ychrn93zbs906j9ou-_VgwT-R0TihAs61pr0xxAAMQqqHlfaM2BOmT0PbS/exec';
+
             // Populate BREVO fields
             document.getElementById('DIPENDENTI').value = data.employees;
             document.getElementById('PUNTEGGIO').value = score;
@@ -1166,6 +1169,66 @@
             window.scrollTo(0, 0);
         }
 
+        function sendToGoogleSheets(reportData) {
+            const { data, score, areas, allIssues } = reportData;
+            
+            const payload = {
+                email: document.getElementById('EMAIL').value,
+                nome: document.getElementById('NOME').value,
+                nomeAzienda: document.getElementById('NOME_AZIENDA').value,
+                telefono: document.getElementById('TELEFONO').value,
+                dipendenti: data.employees,
+                settore: data.sector,
+                punteggioTotale: score,
+                statusGenerale: score >= 80 ? 'green' : score >= 50 ? 'yellow' : 'red',
+                numeroCriticita: allIssues.length,
+                scoreMedico: areas.medico.score,
+                scoreFormazione: areas.formazione.score,
+                scoreDocumenti: areas.documenti.score,
+                scoreNomine: areas.nomine.score,
+                scoreDPI: areas.dpi_sicurezza.score,
+                scoreAntincendio: areas.antincendio.score,
+                statusMedico: areas.medico.status,
+                statusFormazione: areas.formazione.status,
+                statusDocumenti: areas.documenti.status,
+                statusNomine: areas.nomine.status,
+                statusDPI: areas.dpi_sicurezza.status,
+                statusAntincendio: areas.antincendio.status,
+                medicoNominato: data.medico,
+                visite: data.visite,
+                formazioneGenerale: data.formGen,
+                formazioneSpecifica: data.formSpec,
+                formazioneAggiornata: data.formUpd,
+                dvr: data.dvr,
+                rspp: data.rspp,
+                addetti: data.addetti,
+                dpi: data.dpi,
+                registro: data.registro,
+                emergenza: data.emergenza,
+                estintori: data.estintori,
+                proveEvacuazione: data.prove_evacuazione,
+                impiantoElettrico: data.impianto_elettrico,
+                cassettaSoccorso: data.cassetta_soccorso,
+                criticitaMedico: areas.medico.issues.map(i => i.title),
+                criticitaFormazione: areas.formazione.issues.map(i => i.title),
+                criticitaDocumenti: areas.documenti.issues.map(i => i.title),
+                criticitaNomine: areas.nomine.issues.map(i => i.title),
+                criticitaDPI: areas.dpi_sicurezza.issues.map(i => i.title),
+                criticitaAntincendio: areas.antincendio.issues.map(i => i.title)
+            };
+            
+            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwiwtzb41Ychrn93zbs906j9ou-_VgwT-R0TihAs61pr0xxAAMQqqHlfaM2BOmT0PbS/exec';
+            
+            fetch(GOOGLE_SHEET_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(result => console.log('✅ Google Sheets OK:', result))
+            .catch(error => console.error('❌ Errore Google Sheets:', error));
+        }
+
         function submitBrevoForm() {
             const form = document.getElementById('brevoForm');
             const nomeAzienda = document.getElementById('NOME_AZIENDA').value.trim();
@@ -1184,8 +1247,10 @@
                 body: formData,
                 mode: 'no-cors'
             }).then(() => {
+                sendToGoogleSheets(window.reportData);
                 showFinalReport();
             }).catch(() => {
+                sendToGoogleSheets(window.reportData);
                 showFinalReport();
             });
 
