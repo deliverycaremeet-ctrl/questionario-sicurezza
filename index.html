@@ -1464,33 +1464,6 @@
             }
         });
 
-        // ─── AGGIORNA ATTRIBUTI CONTATTO BREVO VIA API ───
-        async function updateBrevoAttributes(email, score, dipendenti, settore, criticita) {
-            const BREVO_KEY = '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';
-            const url = 'https://api.brevo.com/v3/contacts/' + encodeURIComponent(email);
-
-            try {
-                const res = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'api-key': BREVO_KEY,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        attributes: {
-                            PUNTEGGIO: parseInt(score) || 0,
-                            DIPENDENTI: parseInt(dipendenti) || 0,
-                            SETTORE: settore || '',
-                            CRITICITA: parseInt(criticita) || 0
-                        }
-                    })
-                });
-                console.log('✅ BREVO attributi aggiornati: ' + res.status);
-            } catch (err) {
-                console.log('❌ Errore aggiornamento BREVO: ' + err);
-            }
-        }
-
         // ─── SUBMIT FORM ───
         function submitBrevoForm() {
             const form = document.getElementById('brevoForm');
@@ -1541,13 +1514,7 @@
             }
 
             const formData = new FormData(form);
-            const emailValue = email;
-            const scoreValue = window.reportData ? window.reportData.score : 0;
-            const dipValue = window.reportData ? window.reportData.data.employees : 0;
-            const settoreValue = window.reportData ? window.reportData.data.sector : '';
-            const critValue = window.reportData ? window.reportData.allIssues.length : 0;
-
-            // 1) Submit a sibforms (crea contatto + attiva automazione con ritardo 2 min)
+            // 1) Submit a sibforms (crea contatto + attiva automazione)
             fetch('https://d62e0a7b.sibforms.com/serve/MUIFALKwDBJk4OcnNWEtufWXX8uR64iideRXZJ_Ff80MkC1kEUV3Bhps_ZJK_6TyYamlE1pW1dLeccmnJC2DgZd2SyKOQ-f0QThBAcipcKnaEHHWvhFVQTRe-l9KikMlq0BTVZfX0_x_aWIUq3XjyfUxCtfvBbxrhKm5aEiAD-mNcUeSiKKeXIM32c7kvn0xWb-3A1Nq-GLPuGHa', {
                 method: 'POST',
                 body: formData,
@@ -1557,12 +1524,7 @@
             }).catch(() => {
                 console.log('⚠️ Sibforms: no-cors, continuiamo');
             }).finally(() => {
-                // 2) Aspetta 3 secondi poi aggiorna il contatto BREVO con gli attributi
-                setTimeout(() => {
-                    updateBrevoAttributes(emailValue, scoreValue, dipValue, settoreValue, critValue);
-                }, 3000);
-
-                // 3) Invia anche a Google Sheets e mostra il report
+                // 2) Invia a Google Sheets (qui l'Apps Script aggiorna anche il contatto BREVO)
                 sendToGoogleSheets(window.reportData);
                 showFinalReport();
             });
@@ -1782,4 +1744,4 @@
                     <li><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</li>
                 </ul>
 
-                <h3>10. Autorità
+                <h3>10. Autorità 
