@@ -1088,12 +1088,12 @@
         <div class="footer">
             <strong>Delivery Care Srl - SB</strong><br>
             P.IVA: 11263630961 | P.zza centro commerciale 44, 20090 Segrate (MI)<br>
-            Tel: +39 02 50047124 | Email: info@deliverycare.it<br>
+            Tel: +39 02 50047124 | Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f8fff7fed1f5f4fdf8e7f4e3e8f2f0e3f4bff8e5">[email&#160;protected]</a><br>
             31.000+ lavoratori in sorveglianza sanitaria | 42 province coperte
         </div>
     </div>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         let currentStep = 1;
         const totalSteps = 6;
         
@@ -1464,6 +1464,33 @@
             }
         });
 
+        // ─── AGGIORNA ATTRIBUTI CONTATTO BREVO VIA API ───
+        async function updateBrevoAttributes(email, score, dipendenti, settore, criticita) {
+            const BREVO_KEY = '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';
+            const url = 'https://api.brevo.com/v3/contacts/' + encodeURIComponent(email);
+
+            try {
+                const res = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'api-key': BREVO_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        attributes: {
+                            PUNTEGGIO: parseInt(score) || 0,
+                            DIPENDENTI: parseInt(dipendenti) || 0,
+                            SETTORE: settore || '',
+                            CRITICITA: parseInt(criticita) || 0
+                        }
+                    })
+                });
+                console.log('✅ BREVO attributi aggiornati: ' + res.status);
+            } catch (err) {
+                console.log('❌ Errore aggiornamento BREVO: ' + err);
+            }
+        }
+
         // ─── SUBMIT FORM ───
         function submitBrevoForm() {
             const form = document.getElementById('brevoForm');
@@ -1505,16 +1532,37 @@
             }
             mktField.value = consentMarketing ? 'SI' : 'NO';
 
+            // Re-imposta i campi hidden da window.reportData per sicurezza
+            if (window.reportData) {
+                document.getElementById('PUNTEGGIO').value = window.reportData.score;
+                document.getElementById('DIPENDENTI').value = window.reportData.data.employees;
+                document.getElementById('SETTORE').value = window.reportData.data.sector;
+                document.getElementById('CRITICITA').value = window.reportData.allIssues.length;
+            }
+
             const formData = new FormData(form);
-            
+            const emailValue = email;
+            const scoreValue = window.reportData ? window.reportData.score : 0;
+            const dipValue = window.reportData ? window.reportData.data.employees : 0;
+            const settoreValue = window.reportData ? window.reportData.data.sector : '';
+            const critValue = window.reportData ? window.reportData.allIssues.length : 0;
+
+            // 1) Submit a sibforms (crea contatto + attiva automazione con ritardo 2 min)
             fetch('https://d62e0a7b.sibforms.com/serve/MUIFALKwDBJk4OcnNWEtufWXX8uR64iideRXZJ_Ff80MkC1kEUV3Bhps_ZJK_6TyYamlE1pW1dLeccmnJC2DgZd2SyKOQ-f0QThBAcipcKnaEHHWvhFVQTRe-l9KikMlq0BTVZfX0_x_aWIUq3XjyfUxCtfvBbxrhKm5aEiAD-mNcUeSiKKeXIM32c7kvn0xWb-3A1Nq-GLPuGHa', {
                 method: 'POST',
                 body: formData,
                 mode: 'no-cors'
             }).then(() => {
-                sendToGoogleSheets(window.reportData);
-                showFinalReport();
+                console.log('✅ Sibforms: contatto creato');
             }).catch(() => {
+                console.log('⚠️ Sibforms: no-cors, continuiamo');
+            }).finally(() => {
+                // 2) Aspetta 3 secondi poi aggiorna il contatto BREVO con gli attributi
+                setTimeout(() => {
+                    updateBrevoAttributes(emailValue, scoreValue, dipValue, settoreValue, critValue);
+                }, 3000);
+
+                // 3) Invia anche a Google Sheets e mostra il report
                 sendToGoogleSheets(window.reportData);
                 showFinalReport();
             });
@@ -1647,7 +1695,7 @@
                     <p><strong>Titolare del Trattamento:</strong> Delivery Care Srl – Società Benefit</p>
                     <p><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</p>
                     <p><strong>P.IVA:</strong> 11263630961</p>
-                    <p><strong>Contatto:</strong> info@deliverycare.it | +39 02 50047124</p>
+                    <p><strong>Contatto:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e272028210e2a2b2227382b3c372d2f3c2b60273a">[email&#160;protected]</a> | +39 02 50047124</p>
                 </div>
 
                 <h3>1. Oggetto e base giuridica</h3>
@@ -1729,22 +1777,9 @@
                     Per esercitare i diritti sopra elencati, l'interessato può contattare direttamente il Titolare del Trattamento:
                 </p>
                 <ul>
-                    <li><strong>Email:</strong> info@deliverycare.it</li>
+                    <li><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e575058517e5a5b5257485b4c475d5f4c5b10574a">[email&#160;protected]</a></li>
                     <li><strong>Telefono:</strong> +39 02 50047124</li>
                     <li><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</li>
                 </ul>
 
-                <h3>10. Autorità di supervisione</h3>
-                <p>
-                    L'interessato ha il diritto di proporre reclamo all'<strong>Autorità Garante per la protezione dei dati personali (Garante Privacy)</strong>, 
-                    contattandola al sito <strong>www.garanteprivacy.it</strong>.
-                </p>
-
-            </div>
-            <button class="modal-footer-btn" onclick="chiudiModalPrivacy()">Ho letto – Chiudi</button>
-        </div>
-    </div>
-
-
-</body>
-</html>
+                <h3>10. Autorità
