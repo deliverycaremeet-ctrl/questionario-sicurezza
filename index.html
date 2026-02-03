@@ -428,12 +428,211 @@
                 page-break-inside: avoid;
             }
         }
+
+        /* ─── CONSENSO PRIVACY ─── */
+        .consent-block {
+            margin-top: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .consent-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .consent-row input[type="checkbox"] {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            accent-color: #1E40AF;
+            cursor: pointer;
+        }
+
+        .consent-row label {
+            font-size: 13px;
+            color: #475569;
+            line-height: 1.55;
+            cursor: pointer;
+        }
+
+        .consent-row label .obbligatorio {
+            color: #DC2626;
+            font-weight: 700;
+        }
+
+        .consent-row label a.link-privacy {
+            color: #1E40AF;
+            text-decoration: underline;
+            font-weight: 600;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+
+        .consent-row label a.link-privacy:hover {
+            color: #3B82F6;
+        }
+
+        .consent-row.errore input[type="checkbox"] {
+            outline: 3px solid #DC2626;
+            outline-offset: 1px;
+        }
+
+        .consent-errore-msg {
+            display: none;
+            color: #DC2626;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 2px;
+            padding-left: 32px;
+        }
+
+        .consent-errore-msg.visibile {
+            display: block;
+        }
+
+        /* ─── MODAL INFORMATIVA ─── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.aperta {
+            display: flex;
+        }
+
+        .modal-informativa {
+            background: white;
+            border-radius: 16px;
+            max-width: 680px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #1E40AF, #1E3A8A);
+            color: white;
+            padding: 24px 28px;
+            border-radius: 16px 16px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .modal-body {
+            padding: 28px;
+        }
+
+        .modal-body h3 {
+            color: #1E40AF;
+            font-size: 16px;
+            margin: 22px 0 8px;
+        }
+
+        .modal-body h3:first-child {
+            margin-top: 0;
+        }
+
+        .modal-body p, .modal-body li {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+
+        .modal-body ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .modal-body .titolare-box {
+            background: #EFF6FF;
+            border: 1px solid #BFDBFE;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin-bottom: 20px;
+        }
+
+        .modal-body .titolare-box p {
+            margin-bottom: 4px;
+            color: #1E3A8A;
+        }
+
+        .modal-body .titolare-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-footer-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1E40AF, #3B82F6);
+            color: white;
+            border: none;
+            border-radius: 0 0 16px 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .modal-footer-btn:hover {
+            opacity: 0.9;
+        }
+
+        @media print {
+            .modal-overlay { display: none !important; }
+            .consent-block { display: none !important; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <img src="logo.png" alt="Delivery Care Srl - SB">
+            <img src="LOGO_Delivery_Care.png" alt="Delivery Care Srl - SB">
             <h1>La tua azienda è davvero in regola con la sicurezza sul lavoro?</h1>
             <p>Verifica di conformità D.Lgs 81/08</p>
             <div class="benefits">
@@ -842,13 +1041,30 @@
                         <input type="text" name="email_address_check" value="" style="display:none;">
                         <input type="hidden" name="locale" value="it">
 
-                        <button type="button" class="btn btn-primary" onclick="submitBrevoForm()" style="width: 100%; margin-top: 10px;">
+                        <!-- CONSENSO RGPD -->
+                        <div class="consent-block">
+                            <div class="consent-row" id="consentRowObbligatorio">
+                                <input type="checkbox" id="consentObbl" name="CONSENSO_DATI">
+                                <label for="consentObbl">
+                                    Ho letto l'<a class="link-privacy" onclick="aprModalPrivacy()">informativa sul trattamento dei dati personali</a> e 
+                                    <strong>Do consenso</strong> al trattamento dei miei dati personali da parte di Delivery Care Srl per le finalità ivi indicate.
+                                    <span class="obbligatorio">*</span>
+                                </label>
+                            </div>
+                            <div class="consent-errore-msg" id="consentErrMsg">⚠️ Il consenso è obbligatorio per procedere.</div>
+
+                            <div class="consent-row">
+                                <input type="checkbox" id="consentMarketing" name="CONSENSO_MARKETING">
+                                <label for="consentMarketing">
+                                    Accetto di ricevere comunicazioni commerciali e promozionali da parte di Delivery Care Srl, inclusi aggiornamenti normativi e offerte dei servizi.
+                                    <span style="color: #64748B; font-style: italic;">(opzionale)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary" onclick="submitBrevoForm()" style="width: 100%; margin-top: 20px;">
                             📊 Visualizza Report Completo
                         </button>
-
-                        <p style="font-size: 12px; color: #64748B; margin-top: 15px; text-align: center; line-height: 1.5;">
-                            Accedendo al report accetti la nostra Privacy Policy.<br>Non invieremo spam.
-                        </p>
                     </form>
                 </div>
             </div>
@@ -880,6 +1096,9 @@
     <script>
         let currentStep = 1;
         const totalSteps = 6;
+        
+        // URL Google Sheets Web App (GLOBALE)
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwiwtzb41Ychrn93zbs906j9ou-_VgwT-R0TihAs61pr0xxAAMQqqHlfaM2BOmT0PbS/exec';
 
         function nextStep() {
             if (currentStep === 1) {
@@ -1130,9 +1349,6 @@
             // Save data globally
             window.reportData = { data, score, areas, allIssues };
 
-            // URL Google Sheets Web App
-            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwiwtzb41Ychrn93zbs906j9ou-_VgwT-R0TihAs61pr0xxAAMQqqHlfaM2BOmT0PbS/exec';
-
             // Populate BREVO fields
             document.getElementById('DIPENDENTI').value = data.employees;
             document.getElementById('PUNTEGGIO').value = score;
@@ -1217,28 +1433,77 @@
                 criticitaAntincendio: areas.antincendio.issues.map(i => i.title)
             };
             
-            const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbwiwtzb41Ychrn93zbs906j9ou-_VgwT-R0TihAs61pr0xxAAMQqqHlfaM2BOmT0PbS/exec';
-            
             fetch(GOOGLE_SHEET_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
                 body: JSON.stringify(payload)
             })
-            .then(response => response.json())
-            .then(result => console.log('✅ Google Sheets OK:', result))
+            .then(() => console.log('✅ Google Sheets: richiesta inviata'))
             .catch(error => console.error('❌ Errore Google Sheets:', error));
         }
 
+        // ─── MODAL PRIVACY ───
+        function aprModalPrivacy() {
+            document.getElementById('modalPrivacy').classList.add('aperta');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function chiudiModalPrivacy() {
+            document.getElementById('modalPrivacy').classList.remove('aperta');
+            document.body.style.overflow = '';
+        }
+
+        // Chiudi modal cliccando fuori – attaccato dopo che il DOM è completo
+        document.addEventListener('DOMContentLoaded', function() {
+            const overlay = document.getElementById('modalPrivacy');
+            if (overlay) {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) chiudiModalPrivacy();
+                });
+            }
+        });
+
+        // ─── SUBMIT FORM ───
         function submitBrevoForm() {
             const form = document.getElementById('brevoForm');
             const nomeAzienda = document.getElementById('NOME_AZIENDA').value.trim();
             const email = document.getElementById('EMAIL').value.trim();
             const telefono = document.getElementById('TELEFONO').value.trim();
-            
+            const consentObbl = document.getElementById('consentObbl').checked;
+
+            // Validazione campi
             if (!nomeAzienda || !email || !telefono) {
                 alert('Compila tutti i campi obbligatori');
                 return;
             }
+
+            // Validazione consenso OBBLIGATORIO
+            const rowObbl = document.getElementById('consentRowObbligatorio');
+            const errMsg  = document.getElementById('consentErrMsg');
+
+            if (!consentObbl) {
+                rowObbl.classList.add('errore');
+                errMsg.classList.add('visibile');
+                errMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+            // Rimuovi stato errore se presente
+            rowObbl.classList.remove('errore');
+            errMsg.classList.remove('visibile');
+
+            // Consenso marketing (opzionale) → campo nascosto
+            const consentMarketing = document.getElementById('consentMarketing').checked;
+            // Aggiungi campo dinamico se non esiste
+            let mktField = document.getElementById('CONSENSO_MKT');
+            if (!mktField) {
+                mktField = document.createElement('input');
+                mktField.type = 'hidden';
+                mktField.name = 'CONSENSO_MKT';
+                mktField.id = 'CONSENSO_MKT';
+                form.appendChild(mktField);
+            }
+            mktField.value = consentMarketing ? 'SI' : 'NO';
 
             const formData = new FormData(form);
             
@@ -1256,7 +1521,8 @@
 
             trackEvent('lead_submitted', {
                 punteggio: window.reportData.score,
-                criticita: window.reportData.allIssues.length
+                criticita: window.reportData.allIssues.length,
+                consenso_marketing: consentMarketing
             });
         }
 
@@ -1368,14 +1634,117 @@
     </script>
     
     <!-- BREVO Scripts -->
-    <script>
-        window.REQUIRED_CODE_ERROR_MESSAGE = 'Campo obbligatorio';
-        window.LOCALE = 'it';
-        window.EMAIL_INVALID_MESSAGE = "Email non valida";
-        window.REQUIRED_ERROR_MESSAGE = "Campo obbligatorio";
-        window.GENERIC_INVALID_MESSAGE = "Formato non valido";
-        var AUTOHIDE = Boolean(0);
-    </script>
-    <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
+    <!-- ─── MODAL INFORMATIVA PRIVACY (RGPD) ─── -->
+    <div class="modal-overlay" id="modalPrivacy">
+        <div class="modal-informativa">
+            <div class="modal-header">
+                <h2>🔒 Informativa sul Trattamento dei Dati Personali</h2>
+                <button class="modal-close" onclick="chiudiModalPrivacy()">&times;</button>
+            </div>
+            <div class="modal-body">
+
+                <div class="titolare-box">
+                    <p><strong>Titolare del Trattamento:</strong> Delivery Care Srl – Società Benefit</p>
+                    <p><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</p>
+                    <p><strong>P.IVA:</strong> 11263630961</p>
+                    <p><strong>Contatto:</strong> info@deliverycare.it | +39 02 50047124</p>
+                </div>
+
+                <h3>1. Oggetto e base giuridica</h3>
+                <p>
+                    La presente informativa è redatta ai sensi degli <strong>artt. 13 e 14 del Regolamento UE 2016/679 (RGPD)</strong> 
+                    e del <strong>D.Lgs. 196/2003 (Codice della Privacy)</strong>, come modificato dal D.Lgs. 101/2017.
+                </p>
+                <p>
+                    Il trattamento dei dati personali conferiti tramite il presente formulario è fondato sul 
+                    <strong>consenso esplicito</strong> dell'interessato (art. 6, comma 1, lettera a) RGPD), 
+                    nonché sul <strong>interesse legittimo</strong> del Titolare (art. 6, comma 1, lettera f) RGPD) 
+                    relativamente alla gestione operativa del servizio richiesto.
+                </p>
+
+                <h3>2. Dati personali trattati</h3>
+                <p>Il Titolare tratta i seguenti dati personali:</p>
+                <ul>
+                    <li><strong>Dati identificativi:</strong> nome e cognome del referente;</li>
+                    <li><strong>Dati di contatto:</strong> indirizzo email e numero di telefono;</li>
+                    <li><strong>Dati relativi all'azienda:</strong> nome dell'azienda, settore di attività, numero di dipendenti;</li>
+                    <li><strong>Dati derivati dal check-up:</strong> punteggio di conformità, criticità rilevate, risposte ai questionari;</li>
+                    <li><strong>Dati di navigazione:</strong> indirizzo IP, cookies e dati generati dalla visita al sito (trattati in forma anonima/aggregata).</li>
+                </ul>
+
+                <h3>3. Finalità del trattamento</h3>
+                <p>I dati personali vengono trattati per le seguenti finalità:</p>
+                <ul>
+                    <li><strong>Erogazione del servizio:</strong> generazione e invio del report di conformità D.Lgs 81/08;</li>
+                    <li><strong>Gestione della richiesta:</strong> elaborazione e follow-up della richiesta di valutazione;</li>
+                    <li><strong>Analisi e miglioramento:</strong> analisi aggregata e anonima dei risultati per migliorare il servizio;</li>
+                    <li><strong>Comunicazioni commerciali</strong> (solo se esplicitamente consentiI): invio di offerte, aggiornamenti normativi e comunicazioni promozionali relativi ai servizi di Delivery Care.</li>
+                </ul>
+
+                <h3>4. Modalità del trattamento</h3>
+                <p>
+                    Il trattamento viene effettuato con strumenti elettronici e cartacei, nel rispetto dei principi di 
+                    liceità, correttezza e trasparenza. I dati vengono conservati per il periodo necessario al 
+                    perseguimento delle finalità indicati, e comunque <strong>non oltre 24 mesi</strong> dalla data di raccolta, 
+                    salvo diversa indicazione di legge o consenso.
+                </p>
+
+                <h3>5. Destinatari e comunicazione dei dati</h3>
+                <p>I dati personali possono essere comunicati a:</p>
+                <ul>
+                    <li>Dipendenti e collaboratori di Delivery Care Srl, nell'ambito delle loro mansioni;</li>
+                    <li>Fornitori di servizi IT e cloud (es. Google, Brevo) per la gestione tecnica dei sistemi, nel ruolo di <strong>Responsabili del Trattamento</strong> ai sensi dell'art. 28 RGPD;</li>
+                    <li>Soggetti a cui la comunicazione sia necessaria per l'esecuzione del servizio richiesto.</li>
+                </ul>
+                <p>I dati <strong>non vengono trasferiti</strong> a terzi per finalità di marketing o pubblicità senza consenso esplicito.</p>
+
+                <h3>6. Trasferimento dei dati all'estero</h3>
+                <p>
+                    I dati possono essere trasferiti nell'ambito dello Spazio Economico Europeo (SEE). 
+                    Eventuali trasferimenti verso paesi terzi avvengono nel rispetto delle garanzie previste dal RGPD 
+                    (es. decisioni di adeguatezza, clausole contrattuali standard).
+                </p>
+
+                <h3>7. Periodo di conservazione</h3>
+                <p>
+                    I dati vengono conservati per il periodo strettamente necessario alla realizzazione delle finalità 
+                    per cui sono stati raccolti, e comunque <strong>non oltre 24 mesi</strong>. 
+                    I dati relativi al consenso marketing vengono eliminati immediatamente a seguito della revoca del consenso.
+                </p>
+
+                <h3>8. Diritti dell'interessato</h3>
+                <p>Ai sensi degli artt. 15-22 RGPD, l'interessato ha il diritto di:</p>
+                <ul>
+                    <li><strong>Accesso:</strong> ottenere conferma che i propri dati vengano trattati e conoscere le modalità;</li>
+                    <li><strong>Rettificazione:</strong> correggere dati personali inesatti;</li>
+                    <li><strong>Cancellazione:</strong> ottenere l'eliminazione dei propri dati ("diritto all'oblio");</li>
+                    <li><strong>Limitazione del trattamento:</strong> bloccare il trattamento in determinati casi;</li>
+                    <li><strong>Portabilità:</strong> ricevere i propri dati in formato strutturato;</li>
+                    <li><strong>Opposizione:</strong> opporsi al trattamento, in particolare per finalità di marketing;</li>
+                    <li><strong>Revoca del consenso:</strong> in qualsiasi momento, senza pregiudizio per la liceità del trattamento fondato sul consenso prima della sua revoca.</li>
+                </ul>
+
+                <h3>9. Come esercitare i diritti</h3>
+                <p>
+                    Per esercitare i diritti sopra elencati, l'interessato può contattare direttamente il Titolare del Trattamento:
+                </p>
+                <ul>
+                    <li><strong>Email:</strong> info@deliverycare.it</li>
+                    <li><strong>Telefono:</strong> +39 02 50047124</li>
+                    <li><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</li>
+                </ul>
+
+                <h3>10. Autorità di supervisione</h3>
+                <p>
+                    L'interessato ha il diritto di proporre reclamo all'<strong>Autorità Garante per la protezione dei dati personali (Garante Privacy)</strong>, 
+                    contattandola al sito <strong>www.garanteprivacy.it</strong>.
+                </p>
+
+            </div>
+            <button class="modal-footer-btn" onclick="chiudiModalPrivacy()">Ho letto – Chiudi</button>
+        </div>
+    </div>
+
+
 </body>
 </html>
