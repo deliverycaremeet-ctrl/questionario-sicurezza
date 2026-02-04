@@ -1035,10 +1035,11 @@
 
                         <div style="margin-bottom: 20px; background: #EFF6FF; padding: 16px; border-radius: 8px; border: 2px solid #BFDBFE;">
                             <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #1E40AF;">📊 Il tuo Punteggio di Conformità</label>
-                            <input type="text" name="PUNTEGGIO" id="PUNTEGGIO_VISIBLE" readonly style="width: 100%; padding: 12px; border: 2px solid #93C5FD; border-radius: 8px; font-size: 24px; font-weight: 700; text-align: center; color: #1E40AF; background: white; cursor: default;">
+                            <input type="text" id="PUNTEGGIO_VISIBLE" readonly style="width: 100%; padding: 12px; border: 2px solid #93C5FD; border-radius: 8px; font-size: 24px; font-weight: 700; text-align: center; color: #1E40AF; background: white; cursor: default;">
                         </div>
 
                         <!-- Hidden fields BREVO -->
+                        <input type="hidden" name="PUNTEGGIO" id="PUNTEGGIO">
                         <input type="hidden" name="DIPENDENTI" id="DIPENDENTI">
                         <input type="hidden" name="SETTORE" id="SETTORE">
                         <input type="hidden" name="CRITICITA" id="CRITICITA">
@@ -1356,6 +1357,7 @@
             // Populate BREVO fields
             document.getElementById('DIPENDENTI').value = data.employees;
             document.getElementById('PUNTEGGIO_VISIBLE').value = score + '/100';
+            document.getElementById('PUNTEGGIO').value = score;
             document.getElementById('SETTORE').value = data.sector;
             document.getElementById('CRITICITA').value = allIssues.length;
 
@@ -1512,6 +1514,7 @@
             // Re-imposta i campi hidden da window.reportData per sicurezza
             if (window.reportData) {
                 document.getElementById('PUNTEGGIO_VISIBLE').value = window.reportData.score + '/100';
+                document.getElementById('PUNTEGGIO').value = window.reportData.score;
                 document.getElementById('DIPENDENTI').value = window.reportData.data.employees;
                 document.getElementById('SETTORE').value = window.reportData.data.sector;
                 document.getElementById('CRITICITA').value = window.reportData.allIssues.length;
