@@ -1520,7 +1520,7 @@
         });
 
         // ─── SUBMIT FORM ───
-        function submitBrevoForm() {
+        async function submitBrevoForm() {
             const form = document.getElementById('brevoForm');
             const nomeAzienda = document.getElementById('NOME_AZIENDA').value.trim();
             const email = document.getElementById('EMAIL').value.trim();
@@ -1570,20 +1570,24 @@
             }
 
             const formData = new FormData(form);
+            
             // 1) Submit a sibforms (crea contatto + attiva automazione)
-            fetch('https://d62e0a7b.sibforms.com/serve/MUIFALKwDBJk4OcnNWEtufWXX8uR64iideRXZJ_Ff80MkC1kEUV3Bhps_ZJK_6TyYamlE1pW1dLeccmnJC2DgZd2SyKOQ-f0QThBAcipcKnaEHHWvhFVQTRe-l9KikMlq0BTVZfX0_x_aWIUq3XjyfUxCtfvBbxrhKm5aEiAD-mNcUeSiKKeXIM32c7kvn0xWb-3A1Nq-GLPuGHa', {
-                method: 'POST',
-                body: formData,
-                mode: 'no-cors'
-            }).then(() => {
+            try {
+                await fetch('https://d62e0a7b.sibforms.com/serve/MUIFALKwDBJk4OcnNWEtufWXX8uR64iideRXZJ_Ff80MkC1kEUV3Bhps_ZJK_6TyYamlE1pW1dLeccmnJC2DgZd2SyKOQ-f0QThBAcipcKnaEHHWvhFVQTRe-l9KikMlq0BTVZfX0_x_aWIUq3XjyfUxCtfvBbxrhKm5aEiAD-mNcUeSiKKeXIM32c7kvn0xWb-3A1Nq-GLPuGHa', {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                });
                 console.log('✅ Sibforms: contatto creato');
-            }).catch(() => {
-                console.log('⚠️ Sibforms: no-cors, continuiamo');
-            }).finally(() => {
-                // 2) Invia a Google Sheets (qui l'Apps Script aggiorna anche il contatto BREVO)
-                sendToGoogleSheets(window.reportData);
-                showFinalReport();
-            });
+            } catch (error) {
+                console.log('⚠️ Sibforms: errore, continuiamo');
+            }
+            
+            // 2) Invia a Google Sheets con PDF (ASPETTA la generazione del PDF!)
+            await sendToGoogleSheets(window.reportData);
+            
+            // 3) Mostra report finale
+            showFinalReport();
 
             trackEvent('lead_submitted', {
                 punteggio: window.reportData.score,
@@ -1722,7 +1726,7 @@
                         </div>
                         
                         <p style="font-size: 17px; text-align: center; color: #1E293B; margin: 30px 0 25px 0; font-weight: 600;">
-                            Contattaci, senza impegno, per una call di 15 minuti<br>
+                            Contattaci per una call di 15 minuti<br>
                             per scoprire come possiamo aiutarti.
                         </p>
                         
@@ -1732,9 +1736,6 @@
                             </div>
                             <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
                                 📧 Scrivici: <a href="mailto:info@deliverycare.it" style="color: #1E40AF; text-decoration: none;">info@deliverycare.it</a>
-                            </div>
-                            <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
-                                📅 Prenota: <a href="https://calendly.com/deliverycare" style="color: #1E40AF; text-decoration: none;" target="_blank">calendly.com/deliverycare</a>
                             </div>
                             <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
                                 🌐 <a href="https://www.deliverycare.it" style="color: #1E40AF; text-decoration: none;" target="_blank">www.deliverycare.it</a>
