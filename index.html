@@ -20,6 +20,9 @@
         }
     </script>
     
+    <!-- html2pdf.js per generazione PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
     <style>
         * {
             margin: 0;
@@ -1076,11 +1079,6 @@
 
             <!-- REPORT FINALE -->
             <div class="report" id="reportSection">
-                <div style="background: linear-gradient(135deg, #10B981, #059669); color: white; padding: 20px 30px; border-radius: 12px; margin-bottom: 30px; text-align: center;">
-                    <div style="font-size: 20px; font-weight: 700; margin-bottom: 8px;">✅ Report Generato con Successo!</div>
-                    <div style="font-size: 15px; opacity: 0.95;">📧 Una copia è stata inviata alla tua email</div>
-                </div>
-
                 <div id="reportContent"></div>
                 
                 <div class="buttons">
@@ -1391,8 +1389,13 @@
             window.scrollTo(0, 0);
         }
 
-        function sendToGoogleSheets(reportData) {
+        async function sendToGoogleSheets(reportData) {
             const { data, score, areas, allIssues } = reportData;
+            
+            console.log('📄 Generazione PDF in corso...');
+            
+            // Genera il PDF del report
+            const pdfBase64 = await generatePDFReport();
             
             const payload = {
                 email: document.getElementById('EMAIL').value,
@@ -1436,7 +1439,8 @@
                 criticitaDocumenti: areas.documenti.issues.map(i => i.title),
                 criticitaNomine: areas.nomine.issues.map(i => i.title),
                 criticitaDPI: areas.dpi_sicurezza.issues.map(i => i.title),
-                criticitaAntincendio: areas.antincendio.issues.map(i => i.title)
+                criticitaAntincendio: areas.antincendio.issues.map(i => i.title),
+                pdfBase64: pdfBase64  // <-- PDF allegato
             };
             
             fetch(GOOGLE_SHEET_URL, {
@@ -1445,8 +1449,53 @@
                 headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
                 body: JSON.stringify(payload)
             })
-            .then(() => console.log('✅ Google Sheets: richiesta inviata'))
+            .then(() => console.log('✅ Google Sheets + PDF: richiesta inviata'))
             .catch(error => console.error('❌ Errore Google Sheets:', error));
+        }
+        
+        // Funzione per generare PDF del report
+        async function generatePDFReport() {
+            try {
+                // Crea una copia temporanea del report per il PDF
+                const reportElement = document.getElementById('reportContent').cloneNode(true);
+                
+                // Crea un contenitore temporaneo
+                const tempContainer = document.createElement('div');
+                tempContainer.style.cssText = 'position: absolute; left: -9999px; width: 800px; background: white; padding: 40px;';
+                tempContainer.appendChild(reportElement);
+                document.body.appendChild(tempContainer);
+                
+                // Opzioni per html2pdf
+                const opt = {
+                    margin: 15,
+                    filename: 'Report_Sicurezza.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
+                
+                // Genera PDF e ottieni blob
+                const pdfBlob = await html2pdf().set(opt).from(tempContainer).outputPdf('blob');
+                
+                // Rimuovi contenitore temporaneo
+                document.body.removeChild(tempContainer);
+                
+                // Converti blob in base64
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const base64 = reader.result.split(',')[1];
+                        console.log('✅ PDF generato: ' + base64.length + ' caratteri');
+                        resolve(base64);
+                    };
+                    reader.onerror = reject;
+                    reader.readAsDataURL(pdfBlob);
+                });
+                
+            } catch (error) {
+                console.error('❌ Errore generazione PDF:', error);
+                return null;
+            }
         }
 
         // ─── MODAL PRIVACY ───
@@ -1551,6 +1600,16 @@
                 const { data, score, areas, allIssues } = window.reportData;
                 
                 let html = `
+                    <!-- Logo e Titolo -->
+                    <div style="text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 3px solid #E2E8F0;">
+                        <img src="https://raw.githubusercontent.com/deliverycaremeet-ctrl/questionario-sicurezza/main/LOGO_Delivery_Care.png" 
+                             alt="Delivery Care" 
+                             style="max-width: 250px; height: auto; margin-bottom: 20px;">
+                        <h1 style="font-size: 28px; font-weight: 700; color: #1E293B; margin: 15px 0 0 0;">
+                            REPORT COMPLIANCE SICUREZZA LAVORO - D.Lgs 81/08
+                        </h1>
+                    </div>
+                    
                     <div style="text-align:center; margin-bottom:40px;">
                         <div style="font-size:64px; font-weight:900; color:#1E40AF;">${score}/100</div>
                         <div style="font-size:24px; font-weight:700; margin-top:10px; color:#64748B;">
@@ -1615,29 +1674,82 @@
                     html += '</div>';
                 });
 
-                // CTA
+                // Footer professionale con CTA e sconto INAIL
                 html += `
-                    <div style="background: linear-gradient(135deg, #1E40AF, #3B82F6); color: white; padding: 45px 35px; border-radius: 16px; text-align: center; margin: 35px 0;">
-                        <h2 style="font-size: 32px; font-weight: 900; margin-bottom: 15px;">🆘 Serve Aiuto?</h2>
-                        <p style="font-size: 18px; margin-bottom: 25px; opacity: 0.95;">
-                            Prenota un <strong>check-up gratuito</strong> con i nostri esperti
+                    <div style="background: #F8FAFC; border-top: 3px solid #E2E8F0; padding: 45px 35px; margin-top: 40px;">
+                        <h2 style="font-size: 28px; font-weight: 700; color: #1E293B; margin-bottom: 20px; text-align: center;">
+                            COME POSSIAMO AIUTARTI
+                        </h2>
+                        
+                        <p style="font-size: 16px; line-height: 1.7; color: #475569; margin-bottom: 20px;">
+                            Questo report ti ha fornito una fotografia chiara dello stato di conformità 
+                            della tua azienda rispetto al D.Lgs 81/08.
                         </p>
-                        <div style="background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; margin: 25px 0;">
-                            <div style="font-size: 20px; font-weight: 700; margin: 12px 0;">
-                                📧 <a href="mailto:info@deliverycare.it" style="color: white;">info@deliverycare.it</a>
-                            </div>
-                            <div style="font-size: 20px; font-weight: 700; margin: 12px 0;">
-                                📞 <a href="tel:+390250047124" style="color: white;">+39 02 50047124</a>
+                        
+                        <p style="font-size: 16px; line-height: 1.7; color: #475569; margin-bottom: 20px;">
+                            Quotidianamente affianchiamo aziende come la tua per implementare la sicurezza 
+                            sul lavoro in modo pragmatico ed efficace. Il nostro approccio è concreto e 
+                            operativo: lavoriamo insieme a te per costruire un sistema di sicurezza reale, 
+                            sostenibile e su misura per la tua realtà.
+                        </p>
+                        
+                        <div style="background: white; border-left: 4px solid #1E40AF; padding: 25px; border-radius: 8px; margin: 30px 0;">
+                            <p style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 15px;">
+                                Cosa possiamo fare per te:
+                            </p>
+                            <div style="font-size: 15px; color: #475569; line-height: 2;">
+                                ✓ Analizzare nel dettaglio le criticità emerse dal report<br>
+                                ✓ Definirti un piano d'azione prioritario con tempi e costi certi<br>
+                                ✓ Affiancarti nell'implementazione degli interventi necessari<br>
+                                ✓ Formare il tuo team sulla sicurezza<br>
+                                ✓ Garantirti la conformità normativa nel tempo
                             </div>
                         </div>
-                        <p style="margin-top:20px; font-size:16px;">⏰ Lun-Ven, 9:00-18:00</p>
-                    </div>
-
-                    <div style="text-align:center; padding:30px 0;">
-                        <p style="font-size:16px; color:#64748B;">
-                            Grazie per aver utilizzato il nostro strumento di verifica.<br>
-                            <strong>Delivery Care Srl - SB</strong> è al tuo fianco per la sicurezza sul lavoro.
+                        
+                        <!-- BOX SCONTO INAIL -->
+                        <div style="background: linear-gradient(135deg, #FEF3C7, #FDE68A); border: 3px solid #F59E0B; border-radius: 12px; padding: 30px; margin: 35px 0; text-align: center; box-shadow: 0 4px 12px rgba(245,158,11,0.2);">
+                            <div style="font-size: 24px; font-weight: 900; color: #92400E; margin-bottom: 15px;">
+                                ⚡ ATTENZIONE! OPPORTUNITÀ FINO AL 28 FEBBRAIO
+                            </div>
+                            <p style="font-size: 17px; color: #78350F; line-height: 1.6; margin-bottom: 15px;">
+                                Lo sai che puoi ottenere <strong>fino al 28% di sconto INAIL</strong><br>
+                                implementando azioni di prevenzione degli infortuni?
+                            </p>
+                            <p style="font-size: 16px; color: #92400E; font-weight: 700;">
+                                ⏰ Hai tempo fino al <strong>28 febbraio</strong> per presentare la domanda.<br>
+                                Contattaci subito!
+                            </p>
+                        </div>
+                        
+                        <p style="font-size: 17px; text-align: center; color: #1E293B; margin: 30px 0 25px 0; font-weight: 600;">
+                            Contattaci, senza impegno, per una call di 15 minuti<br>
+                            per scoprire come possiamo aiutarti.
                         </p>
+                        
+                        <div style="background: white; border: 2px solid #E2E8F0; border-radius: 12px; padding: 30px; text-align: center;">
+                            <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
+                                📞 Chiamaci: <a href="tel:+390250047124" style="color: #1E40AF; text-decoration: none;">+39 02 50047124</a>
+                            </div>
+                            <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
+                                📧 Scrivici: <a href="mailto:info@deliverycare.it" style="color: #1E40AF; text-decoration: none;">info@deliverycare.it</a>
+                            </div>
+                            <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
+                                📅 Prenota: <a href="https://calendly.com/deliverycare" style="color: #1E40AF; text-decoration: none;" target="_blank">calendly.com/deliverycare</a>
+                            </div>
+                            <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
+                                🌐 <a href="https://www.deliverycare.it" style="color: #1E40AF; text-decoration: none;" target="_blank">www.deliverycare.it</a>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-top: 35px; padding-top: 25px; border-top: 2px solid #E2E8F0;">
+                            <p style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">
+                                Delivery Care Srl - SB
+                            </p>
+                            <p style="font-size: 14px; color: #64748B; line-height: 1.6;">
+                                P.IVA: 11263630961 | P.zza centro commerciale 44, 20090 Segrate (MI)<br>
+                                Specialisti in Sicurezza sul Lavoro
+                            </p>
+                        </div>
                     </div>
                 `;
                 
