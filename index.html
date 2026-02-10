@@ -17,8 +17,46 @@
             if (typeof gtag !== 'undefined') {
                 gtag('event', eventName, eventParams);
             }
+            // Track Facebook Pixel eventi
+            if (typeof fbq !== 'undefined') {
+                fbq('trackCustom', eventName, eventParams);
+            }
+        }
+        
+        function trackConversion(conversionLabel) {
+            // Google Ads Conversion
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-XXXXXXXXX/' + conversionLabel  // SOSTITUIRE AW-XXXXXXXXX con tuo ID
+                });
+            }
         }
     </script>
+    
+    <!-- Google Ads Conversion Tracking -->
+    <!-- ISTRUZIONI: Sostituire AW-XXXXXXXXX con il tuo ID conversione Google Ads -->
+    <script>
+        gtag('config', 'AW-XXXXXXXXX');  // SOSTITUIRE con il tuo Google Ads Conversion ID
+    </script>
+    
+    <!-- Meta Pixel (Facebook) -->
+    <!-- ISTRUZIONI: Sostituire XXXXXXXXXXXXXXX con il tuo Facebook Pixel ID -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'XXXXXXXXXXXXXXX'); // SOSTITUIRE con il tuo Facebook Pixel ID
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=XXXXXXXXXXXXXXX&ev=PageView&noscript=1"/>
+    </noscript>
     
     <!-- html2pdf.js per generazione PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -683,6 +721,11 @@
                     </select>
                 </div>
 
+                <div class="question-box">
+                    <div class="question-label">Email Aziendale</div>
+                    <input type="email" id="emailAzienda" placeholder="esempio@azienda.it" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 16px;">
+                </div>
+
                 <div class="buttons">
                     <button class="btn btn-primary" onclick="nextStep()">Inizia Check-up →</button>
                 </div>
@@ -1107,8 +1150,15 @@
             if (currentStep === 1) {
                 const employees = document.getElementById('numEmployees').value;
                 const sector = document.getElementById('sectorSelect').value;
-                if (!employees || !sector) {
+                const email = document.getElementById('emailAzienda').value;
+                if (!employees || !sector || !email) {
                     alert('Compila tutti i campi');
+                    return;
+                }
+                // Validazione email
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert('Inserisci un indirizzo email valido');
                     return;
                 }
             }
@@ -1118,6 +1168,13 @@
             document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
             updateProgress();
             window.scrollTo(0, 0);
+            
+            // Track avanzamento step
+            trackEvent('step_completato', {
+                step_completato: currentStep - 1,
+                step_successivo: currentStep,
+                progress: Math.round((currentStep / totalSteps) * 100)
+            });
         }
 
         function prevStep() {
@@ -1142,6 +1199,7 @@
             const data = {
                 employees: parseInt(document.getElementById('numEmployees').value) || 10,
                 sector: document.getElementById('sectorSelect').value || 'non_selezionato',
+                emailAzienda: document.getElementById('emailAzienda').value || '',
                 medico: getVal('medicoNominato') || 'no',
                 visite: getVal('visite') || 'none',
                 formGen: getVal('formazioneGenerale') || 'none',
@@ -1351,6 +1409,23 @@
 
             // Save data globally
             window.reportData = { data, score, areas, allIssues };
+            
+            // Track completamento questionario
+            trackEvent('questionario_completato', {
+                punteggio: score,
+                criticita: allIssues.length,
+                dipendenti: data.employees,
+                settore: data.sector
+            });
+            
+            // Facebook Pixel - ViewContent (ha completato il questionario)
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'ViewContent', {
+                    content_name: 'Report Sicurezza Generato',
+                    content_category: 'Questionario',
+                    value: score
+                });
+            }
 
             // Populate BREVO fields
             document.getElementById('DIPENDENTI').value = data.employees;
@@ -1399,6 +1474,7 @@
             
             const payload = {
                 email: document.getElementById('EMAIL').value,
+                emailAzienda: document.getElementById('emailAzienda').value,
                 nome: document.getElementById('NOME').value,
                 nomeAzienda: document.getElementById('NOME_AZIENDA').value,
                 telefono: document.getElementById('TELEFONO').value,
@@ -1589,11 +1665,24 @@
             // 3) Mostra report finale
             showFinalReport();
 
+            // Tracking eventi
             trackEvent('lead_submitted', {
                 punteggio: window.reportData.score,
                 criticita: window.reportData.allIssues.length,
                 consenso_marketing: consentMarketing
             });
+            
+            // Google Ads Conversion
+            trackConversion('XXXXX-XXXXX');  // SOSTITUIRE con label conversione Google Ads
+            
+            // Facebook Pixel Lead
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Lead', {
+                    content_name: 'Questionario Sicurezza',
+                    value: window.reportData.score,
+                    currency: 'EUR'
+                });
+            }
         }
 
         function showFinalReport() {
