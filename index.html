@@ -721,11 +721,6 @@
                     </select>
                 </div>
 
-                <div class="question-box">
-                    <div class="question-label">Email Aziendale</div>
-                    <input type="email" id="emailAzienda" placeholder="esempio@azienda.it" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 16px;">
-                </div>
-
                 <div class="buttons">
                     <button class="btn btn-primary" onclick="nextStep()">Inizia Check-up →</button>
                 </div>
@@ -1150,15 +1145,8 @@
             if (currentStep === 1) {
                 const employees = document.getElementById('numEmployees').value;
                 const sector = document.getElementById('sectorSelect').value;
-                const email = document.getElementById('emailAzienda').value;
-                if (!employees || !sector || !email) {
+                if (!employees || !sector) {
                     alert('Compila tutti i campi');
-                    return;
-                }
-                // Validazione email
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    alert('Inserisci un indirizzo email valido');
                     return;
                 }
             }
@@ -1199,7 +1187,6 @@
             const data = {
                 employees: parseInt(document.getElementById('numEmployees').value) || 10,
                 sector: document.getElementById('sectorSelect').value || 'non_selezionato',
-                emailAzienda: document.getElementById('emailAzienda').value || '',
                 medico: getVal('medicoNominato') || 'no',
                 visite: getVal('visite') || 'none',
                 formGen: getVal('formazioneGenerale') || 'none',
@@ -1474,7 +1461,6 @@
             
             const payload = {
                 email: document.getElementById('EMAIL').value,
-                emailAzienda: document.getElementById('emailAzienda').value,
                 nome: document.getElementById('NOME').value,
                 nomeAzienda: document.getElementById('NOME_AZIENDA').value,
                 telefono: document.getElementById('TELEFONO').value,
