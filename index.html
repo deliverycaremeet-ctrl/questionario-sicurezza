@@ -27,16 +27,17 @@
             // Google Ads Conversion
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'conversion', {
-                    'send_to': 'AW-XXXXXXXXX/' + conversionLabel  // SOSTITUIRE AW-XXXXXXXXX con tuo ID
+                    'send_to': 'AW-17912451655/' + conversionLabel,
+                    'value': 30.0,
+                    'currency': 'EUR'
                 });
             }
         }
     </script>
     
-    <!-- Google Ads Conversion Tracking -->
-    <!-- ISTRUZIONI: Sostituire AW-XXXXXXXXX con il tuo ID conversione Google Ads -->
+    <!-- Google Ads Conversion Tracking - ID Configurato -->
     <script>
-        gtag('config', 'AW-XXXXXXXXX');  // SOSTITUIRE con il tuo Google Ads Conversion ID
+        gtag('config', 'AW-17912451655');
     </script>
     
     <!-- Meta Pixel (Facebook) -->
@@ -1659,7 +1660,7 @@
             });
             
             // Google Ads Conversion
-            trackConversion('XXXXX-XXXXX');  // SOSTITUIRE con label conversione Google Ads
+            trackConversion('fT3NCNbm0_kbEMekqd1C');
             
             // Facebook Pixel Lead
             if (typeof fbq !== 'undefined') {
