@@ -5,26 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check-up Sicurezza Lavoro | Delivery Care</title>
     
-    <!-- Google Analytics 4 -->
+    <!-- ═══════════════════════════════════════════════════════════════════
+         GOOGLE TAG (gtag.js) - GA4 + GOOGLE ADS UNIFICATI
+         Questo blocco DEVE restare insieme per funzionare correttamente
+    ═══════════════════════════════════════════════════════════════════ -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKRX5MWW0Z"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
+        
+        // Google Analytics 4
         gtag('config', 'G-YKRX5MWW0Z');
         
+        // Google Ads Conversion Tracking
+        gtag('config', 'AW-17912451655');
+        
+        // Funzione per tracciare eventi personalizzati
         function trackEvent(eventName, eventParams) {
             if (typeof gtag !== 'undefined') {
                 gtag('event', eventName, eventParams);
             }
-            // Track Facebook Pixel eventi
             if (typeof fbq !== 'undefined') {
                 fbq('trackCustom', eventName, eventParams);
             }
         }
         
+        // Funzione per tracciare conversioni Google Ads
         function trackConversion(conversionLabel) {
-            // Google Ads Conversion
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'conversion', {
                     'send_to': 'AW-17912451655/' + conversionLabel,
@@ -35,13 +43,11 @@
         }
     </script>
     
-    <!-- Google Ads Conversion Tracking - ID Configurato -->
-    <script>
-        gtag('config', 'AW-17912451655');
-    </script>
-    
-    <!-- Meta Pixel (Facebook) -->
-    <!-- ISTRUZIONI: Sostituire XXXXXXXXXXXXXXX con il tuo Facebook Pixel ID -->
+    <!-- ═══════════════════════════════════════════════════════════════════
+         META PIXEL (FACEBOOK)
+         ISTRUZIONI: Sostituire XXXXXXXXXXXXXXX con il tuo Facebook Pixel ID
+         Se non hai un Pixel Facebook, puoi rimuovere questo blocco
+    ═══════════════════════════════════════════════════════════════════ -->
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -56,7 +62,7 @@
     </script>
     <noscript>
         <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=XXXXXXXXXXXXXXX&ev=PageView&noscript=1"/>
+        src="https://www.facebook.net/tr?id=XXXXXXXXXXXXXXX&ev=PageView&noscript=1"/>
     </noscript>
     
     <!-- html2pdf.js per generazione PDF -->
@@ -283,6 +289,15 @@
             line-height: 1.7;
         }
 
+        .footer a {
+            color: #94A3B8;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -325,7 +340,6 @@
 
         /* CSS STAMPA OTTIMIZZATO */
         @media print {
-            /* Reset generale */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -344,7 +358,6 @@
                 border-radius: 0;
             }
 
-            /* Nascondi elementi non necessari */
             .header,
             .footer,
             .buttons,
@@ -353,26 +366,22 @@
                 display: none !important;
             }
 
-            /* Mostra solo il report */
             #reportSection {
                 display: block !important;
                 page-break-after: auto;
             }
 
-            /* Rimuovi background gradient dal primo div del report */
             #reportSection > div:first-child {
                 background: #E8F5E9 !important;
                 -webkit-print-color-adjust: exact;
                 border: 2px solid #4CAF50;
             }
 
-            /* Ottimizza card aree */
             #reportContent > div {
                 page-break-inside: avoid;
                 margin-bottom: 15px;
             }
 
-            /* Mantieni colori semaforo ma rendi stampabili */
             #reportContent div[style*="background:#D1FAE5"] {
                 background: #E8F5E9 !important;
                 border: 2px solid #4CAF50 !important;
@@ -388,21 +397,18 @@
                 border: 2px solid #F44336 !important;
             }
 
-            /* Ottimizza testo */
             #reportContent {
                 font-size: 11pt;
                 line-height: 1.4;
                 color: #000;
             }
 
-            /* Titoli */
             h2, h3 {
                 page-break-after: avoid;
                 margin-top: 12pt;
                 margin-bottom: 8pt;
             }
 
-            /* Link visitabili */
             a {
                 color: #000;
                 text-decoration: underline;
@@ -418,7 +424,6 @@
                 font-size: 9pt;
             }
 
-            /* CTA finale più sobrio */
             #reportContent > div[style*="background: linear-gradient(135deg, #1E40AF"] {
                 background: #E3F2FD !important;
                 color: #000 !important;
@@ -435,7 +440,6 @@
                 font-weight: bold;
             }
 
-            /* Aggiungi header semplice alla stampa */
             #reportSection:before {
                 content: "REPORT COMPLIANCE SICUREZZA LAVORO - D.Lgs 81/08";
                 display: block;
@@ -447,7 +451,6 @@
                 border-bottom: 3px solid #1976D2;
             }
 
-            /* Footer stampa */
             #reportSection:after {
                 content: "Delivery Care Srl - SB | Tel: +39 02 50047124 | Email: info@deliverycare.it";
                 display: block;
@@ -459,13 +462,11 @@
                 page-break-after: avoid;
             }
 
-            /* Margini pagina */
             @page {
                 margin: 2cm 1.5cm;
                 size: A4 portrait;
             }
 
-            /* Evita rotture indesiderate */
             .no-break {
                 page-break-inside: avoid;
             }
@@ -1130,12 +1131,12 @@
         <div class="footer">
             <strong>Delivery Care Srl - SB</strong><br>
             P.IVA: 11263630961 | P.zza centro commerciale 44, 20090 Segrate (MI)<br>
-            Tel: +39 02 50047124 | Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f8fff7fed1f5f4fdf8e7f4e3e8f2f0e3f4bff8e5">[email&#160;protected]</a><br>
+            Tel: +39 02 50047124 | Email: <a href="mailto:info@deliverycare.it">info@deliverycare.it</a><br>
             31.000+ lavoratori in sorveglianza sanitaria | 42 province coperte
         </div>
     </div>
 
-    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    <script>
         let currentStep = 1;
         const totalSteps = 6;
         
@@ -1839,7 +1840,6 @@
         updateProgress();
     </script>
     
-    <!-- BREVO Scripts -->
     <!-- ─── MODAL INFORMATIVA PRIVACY (RGPD) ─── -->
     <div class="modal-overlay" id="modalPrivacy">
         <div class="modal-informativa">
@@ -1853,7 +1853,7 @@
                     <p><strong>Titolare del Trattamento:</strong> Delivery Care Srl – Società Benefit</p>
                     <p><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</p>
                     <p><strong>P.IVA:</strong> 11263630961</p>
-                    <p><strong>Contatto:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e272028210e2a2b2227382b3c372d2f3c2b60273a">[email&#160;protected]</a> | +39 02 50047124</p>
+                    <p><strong>Contatto:</strong> <a href="mailto:info@deliverycare.it">info@deliverycare.it</a> | +39 02 50047124</p>
                 </div>
 
                 <h3>1. Oggetto e base giuridica</h3>
@@ -1884,14 +1884,14 @@
                     <li><strong>Erogazione del servizio:</strong> generazione e invio del report di conformità D.Lgs 81/08;</li>
                     <li><strong>Gestione della richiesta:</strong> elaborazione e follow-up della richiesta di valutazione;</li>
                     <li><strong>Analisi e miglioramento:</strong> analisi aggregata e anonima dei risultati per migliorare il servizio;</li>
-                    <li><strong>Comunicazioni commerciali</strong> (solo se esplicitamente consentiI): invio di offerte, aggiornamenti normativi e comunicazioni promozionali relativi ai servizi di Delivery Care.</li>
+                    <li><strong>Comunicazioni commerciali</strong> (solo se esplicitamente consentito): invio di offerte, aggiornamenti normativi e comunicazioni promozionali relativi ai servizi di Delivery Care.</li>
                 </ul>
 
                 <h3>4. Modalità del trattamento</h3>
                 <p>
                     Il trattamento viene effettuato con strumenti elettronici e cartacei, nel rispetto dei principi di 
                     liceità, correttezza e trasparenza. I dati vengono conservati per il periodo necessario al 
-                    perseguimento delle finalità indicati, e comunque <strong>non oltre 24 mesi</strong> dalla data di raccolta, 
+                    perseguimento delle finalità indicate, e comunque <strong>non oltre 24 mesi</strong> dalla data di raccolta, 
                     salvo diversa indicazione di legge o consenso.
                 </p>
 
@@ -1935,9 +1935,26 @@
                     Per esercitare i diritti sopra elencati, l'interessato può contattare direttamente il Titolare del Trattamento:
                 </p>
                 <ul>
-                    <li><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e575058517e5a5b5257485b4c475d5f4c5b10574a">[email&#160;protected]</a></li>
+                    <li><strong>Email:</strong> <a href="mailto:info@deliverycare.it">info@deliverycare.it</a></li>
                     <li><strong>Telefono:</strong> +39 02 50047124</li>
                     <li><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</li>
                 </ul>
 
-                <h3>10. Autorità
+                <h3>10. Autorità di controllo</h3>
+                <p>
+                    L'interessato ha il diritto di proporre reclamo all'Autorità Garante per la Protezione dei Dati Personali 
+                    (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">www.garanteprivacy.it</a>) 
+                    qualora ritenga che il trattamento dei propri dati violi il RGPD.
+                </p>
+
+                <h3>11. Aggiornamenti</h3>
+                <p>
+                    La presente informativa può essere aggiornata periodicamente. L'ultima versione sarà sempre disponibile 
+                    su questa pagina. Ultima modifica: Febbraio 2025.
+                </p>
+            </div>
+            <button class="modal-footer-btn" onclick="chiudiModalPrivacy()">Ho capito, chiudi</button>
+        </div>
+    </div>
+</body>
+</html>
