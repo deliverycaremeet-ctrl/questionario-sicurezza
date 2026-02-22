@@ -6,6 +6,17 @@
     <title>Check-up Sicurezza Lavoro | Delivery Care</title>
     
     <!-- ═══════════════════════════════════════════════════════════════════
+         MICROSOFT CLARITY - Tracciamento comportamento utenti
+    ═══════════════════════════════════════════════════════════════════ -->
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "vlau8uhjsv");
+    </script>
+    
+    <!-- ═══════════════════════════════════════════════════════════════════
          GOOGLE TAG (gtag.js) - GA4 + GOOGLE ADS UNIFICATI
          Questo blocco DEVE restare insieme per funzionare correttamente
     ═══════════════════════════════════════════════════════════════════ -->
@@ -362,7 +373,7 @@
             .footer,
             .buttons,
             .step,
-            #preReportSection {
+            #formSection {
                 display: none !important;
             }
 
@@ -666,6 +677,21 @@
             opacity: 0.9;
         }
 
+        /* ─── FORM FIELDS STYLING ─── */
+        .form-field-hint {
+            font-size: 11px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        
+        .form-field-hint.required {
+            color: #DC2626;
+        }
+        
+        .form-field-hint.optional {
+            color: #64748B;
+        }
+
         @media print {
             .modal-overlay { display: none !important; }
             .consent-block { display: none !important; }
@@ -675,7 +701,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="LOGO_Delivery_Care.png" alt="Delivery Care Srl - SB">
+            <img src="https://raw.githubusercontent.com/deliverycaremeet-ctrl/questionario-sicurezza/main/LOGO_Delivery_Care.png" alt="Delivery Care Srl - SB">
             <h1>La tua azienda è davvero in regola con la sicurezza sul lavoro?</h1>
             <p>Verifica di conformità D.Lgs 81/08</p>
             <div class="benefits">
@@ -1032,53 +1058,48 @@
 
                 <div class="buttons">
                     <button class="btn btn-secondary" onclick="prevStep()">← Indietro</button>
-                    <button class="btn btn-primary" onclick="generateReport()">🔍 Genera Report</button>
+                    <button class="btn btn-primary" onclick="calculateAndShowForm()">🔍 Vedi il tuo Risultato →</button>
                 </div>
             </div>
 
-            <!-- PRE-REPORT: Percentuale + Form BREVO -->
-            <div class="report" id="preReportSection">
-                <div style="text-align: center; padding: 40px 20px;">
-                    <div style="width: 200px; height: 200px; margin: 0 auto 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15);" id="scoreCircle">
-                        <div>
-                            <div id="preScoreDisplay" style="font-size: 72px; font-weight: 900; color: white;">58</div>
-                            <div style="font-size: 24px; color: white; margin-top: -10px;">%</div>
-                        </div>
-                    </div>
-
-                    <h2 style="font-size: 28px; font-weight: 800; margin: 30px 0 15px; color: #0F172A;">La tua percentuale di adeguamento è</h2>
-                    <p id="scoreMessage" style="font-size: 17px; color: #64748B; margin-bottom: 35px; line-height: 1.7;">
-                        <!-- Message dinamico -->
+            <!-- ═══════════════════════════════════════════════════════════════════
+                 FORM SECTION - PRIMA DEL RISULTATO
+                 L'utente deve compilare il form per vedere il report
+            ═══════════════════════════════════════════════════════════════════ -->
+            <div class="report" id="formSection">
+                <div style="text-align: center; padding: 30px 20px;">
+                    <div style="font-size: 64px; margin-bottom: 20px;">📊</div>
+                    <h2 style="font-size: 26px; font-weight: 800; margin-bottom: 15px; color: #0F172A;">Il tuo report è pronto!</h2>
+                    <p style="font-size: 16px; color: #64748B; margin-bottom: 30px; line-height: 1.7;">
+                        Inserisci la tua email per visualizzare subito il risultato completo<br>
+                        con la percentuale di conformità, le aree critiche e le sanzioni che rischi.
                     </p>
 
-                    <!-- FORM BREVO -->
+                    <!-- FORM -->
                     <form id="brevoForm" style="max-width: 500px; margin: 0 auto; text-align: left; background: #F8FAFC; padding: 35px; border-radius: 16px; border: 2px solid #E2E8F0;">
                         
-                        <h3 style="text-align: center; margin-bottom: 20px; font-size: 17px; line-height: 1.5; color: #0F172A;">Per visualizzare e ricevere via mail il report completo con le aree critiche e gli interventi più urgenti compila il form qui sotto</h3>
-                        
                         <div style="margin-bottom: 18px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Nome Azienda *</label>
-                            <input type="text" name="NOME_AZIENDA" id="NOME_AZIENDA" required placeholder="Es: Rossi SRL" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Email *</label>
+                            <input type="email" name="EMAIL" id="EMAIL" required placeholder="la-tua@email.it" style="width: 100%; padding: 14px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                            <div class="form-field-hint required">⚠️ Campo obbligatorio</div>
+                        </div>
+
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Nome Azienda</label>
+                            <input type="text" name="NOME_AZIENDA" id="NOME_AZIENDA" placeholder="Es: Rossi SRL" style="width: 100%; padding: 14px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                            <div class="form-field-hint optional">Facoltativo</div>
                         </div>
 
                         <div style="margin-bottom: 18px;">
                             <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Nome Referente</label>
-                            <input type="text" name="NOME" id="NOME" placeholder="Es: Mario Rossi" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                        </div>
-
-                        <div style="margin-bottom: 18px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Email *</label>
-                            <input type="email" name="EMAIL" id="EMAIL" required placeholder="mario.rossi@azienda.it" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                            <input type="text" name="NOME" id="NOME" placeholder="Es: Mario Rossi" style="width: 100%; padding: 14px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                            <div class="form-field-hint optional">Facoltativo</div>
                         </div>
 
                         <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Telefono *</label>
-                            <input type="tel" name="TELEFONO" id="TELEFONO" required placeholder="333 123 4567" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                        </div>
-
-                        <div style="margin-bottom: 20px; background: #EFF6FF; padding: 16px; border-radius: 8px; border: 2px solid #BFDBFE;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #1E40AF;">📊 Il tuo Punteggio di Conformità</label>
-                            <input type="text" id="PUNTEGGIO_VISIBLE" readonly style="width: 100%; padding: 12px; border: 2px solid #93C5FD; border-radius: 8px; font-size: 24px; font-weight: 700; text-align: center; color: #1E40AF; background: white; cursor: default;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Telefono</label>
+                            <input type="tel" name="TELEFONO" id="TELEFONO" placeholder="333 123 4567" style="width: 100%; padding: 14px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                            <div class="form-field-hint optional">Facoltativo - per consulenza gratuita</div>
                         </div>
 
                         <!-- Hidden fields BREVO -->
@@ -1110,14 +1131,23 @@
                             </div>
                         </div>
 
-                        <button type="button" class="btn btn-primary" onclick="submitBrevoForm()" style="width: 100%; margin-top: 20px;">
-                            📊 Visualizza Report Completo
+                        <button type="button" class="btn btn-primary" onclick="submitBrevoForm()" style="width: 100%; margin-top: 25px; padding: 18px; font-size: 17px;">
+                            📊 Visualizza il Report Completo
                         </button>
                     </form>
+                    
+                    <div style="margin-top: 25px; padding: 20px; background: #EFF6FF; border-radius: 12px; border: 2px solid #BFDBFE;">
+                        <div style="font-size: 14px; color: #1E40AF; font-weight: 600;">
+                            🔒 I tuoi dati sono al sicuro e non verranno condivisi con terzi
+                        </div>
+                        <div style="font-size: 13px; color: #64748B; margin-top: 8px;">
+                            31.000+ lavoratori gestiti | 42 province coperte
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <!-- REPORT FINALE -->
+            <!-- REPORT FINALE - Dopo il form -->
             <div class="report" id="reportSection">
                 <div id="reportContent"></div>
                 
@@ -1185,7 +1215,8 @@
             return el ? el.value : null;
         }
 
-        function generateReport() {
+        // Calcola il report e mostra il form
+        function calculateAndShowForm() {
             const data = {
                 employees: parseInt(document.getElementById('numEmployees').value) || 10,
                 sector: document.getElementById('sectorSelect').value || 'non_selezionato',
@@ -1416,39 +1447,16 @@
                 });
             }
 
-            // Populate BREVO fields
+            // Populate hidden fields
             document.getElementById('DIPENDENTI').value = data.employees;
-            document.getElementById('PUNTEGGIO_VISIBLE').value = score + '/100';
             document.getElementById('PUNTEGGIO').value = score;
             document.getElementById('SETTORE').value = data.sector;
             document.getElementById('CRITICITA').value = allIssues.length;
 
-            // Show PRE-REPORT
-            document.getElementById('preScoreDisplay').textContent = score;
-            
-            // Set circle color
-            const circle = document.getElementById('scoreCircle');
-            const message = document.getElementById('scoreMessage');
-            if (score >= 80) {
-                circle.style.background = 'linear-gradient(135deg, #10B981, #059669)';
-                message.textContent = '🟢 La tua azienda risulta conforme. Ricevi il report dettagliato per conferma.';
-            } else if (score >= 50) {
-                circle.style.background = 'linear-gradient(135deg, #F59E0B, #EF4444)';
-                message.textContent = '🟡 Ci sono alcune criticità da sistemare. Ricevi il report completo con le azioni da intraprendere.';
-            } else {
-                circle.style.background = 'linear-gradient(135deg, #EF4444, #DC2626)';
-                message.textContent = '🔴 Attenzione: sono emerse criticità importanti. Ricevi subito il report per metterti in regola.';
-            }
-
+            // Mostra il form
             document.querySelector(`[data-step="${currentStep}"]`).classList.remove('active');
-            document.getElementById('preReportSection').classList.add('active');
+            document.getElementById('formSection').classList.add('active');
             document.getElementById('progressBar').style.width = '100%';
-            
-            trackEvent('questionario_completato', {
-                settore: data.sector,
-                punteggio: score,
-                criticita: allIssues.length
-            });
 
             window.scrollTo(0, 0);
         }
@@ -1463,9 +1471,9 @@
             
             const payload = {
                 email: document.getElementById('EMAIL').value,
-                nome: document.getElementById('NOME').value,
-                nomeAzienda: document.getElementById('NOME_AZIENDA').value,
-                telefono: document.getElementById('TELEFONO').value,
+                nome: document.getElementById('NOME').value || '',
+                nomeAzienda: document.getElementById('NOME_AZIENDA').value || '',
+                telefono: document.getElementById('TELEFONO').value || '',
                 dipendenti: data.employees,
                 settore: data.sector,
                 punteggioTotale: score,
@@ -1586,14 +1594,13 @@
         // ─── SUBMIT FORM ───
         async function submitBrevoForm() {
             const form = document.getElementById('brevoForm');
-            const nomeAzienda = document.getElementById('NOME_AZIENDA').value.trim();
             const email = document.getElementById('EMAIL').value.trim();
-            const telefono = document.getElementById('TELEFONO').value.trim();
             const consentObbl = document.getElementById('consentObbl').checked;
 
-            // Validazione campi
-            if (!nomeAzienda || !email || !telefono) {
-                alert('Compila tutti i campi obbligatori');
+            // Validazione email (unico campo obbligatorio)
+            if (!email) {
+                alert('Inserisci la tua email per visualizzare il report');
+                document.getElementById('EMAIL').focus();
                 return;
             }
 
@@ -1624,17 +1631,11 @@
             }
             mktField.value = consentMarketing ? 'SI' : 'NO';
 
-            // Re-imposta i campi hidden da window.reportData per sicurezza
-            if (window.reportData) {
-                document.getElementById('PUNTEGGIO_VISIBLE').value = window.reportData.score + '/100';
-                document.getElementById('PUNTEGGIO').value = window.reportData.score;
-                document.getElementById('DIPENDENTI').value = window.reportData.data.employees;
-                document.getElementById('SETTORE').value = window.reportData.data.sector;
-                document.getElementById('CRITICITA').value = window.reportData.allIssues.length;
-            }
-
             const formData = new FormData(form);
             
+            // Prima mostra il report, poi invia in background
+            showFinalReport();
+
             // 1) Submit a sibforms (crea contatto + attiva automazione)
             try {
                 await fetch('https://d62e0a7b.sibforms.com/serve/MUIFALKwDBJk4OcnNWEtufWXX8uR64iideRXZJ_Ff80MkC1kEUV3Bhps_ZJK_6TyYamlE1pW1dLeccmnJC2DgZd2SyKOQ-f0QThBAcipcKnaEHHWvhFVQTRe-l9KikMlq0BTVZfX0_x_aWIUq3XjyfUxCtfvBbxrhKm5aEiAD-mNcUeSiKKeXIM32c7kvn0xWb-3A1Nq-GLPuGHa', {
@@ -1647,11 +1648,8 @@
                 console.log('⚠️ Sibforms: errore, continuiamo');
             }
             
-            // 2) Invia a Google Sheets con PDF (ASPETTA la generazione del PDF!)
+            // 2) Invia a Google Sheets con PDF
             await sendToGoogleSheets(window.reportData);
-            
-            // 3) Mostra report finale
-            showFinalReport();
 
             // Tracking eventi
             trackEvent('lead_submitted', {
@@ -1674,7 +1672,7 @@
         }
 
         function showFinalReport() {
-            document.getElementById('preReportSection').classList.remove('active');
+            document.getElementById('formSection').classList.remove('active');
             document.getElementById('reportSection').classList.add('active');
             
             if (window.reportData) {
@@ -1691,10 +1689,14 @@
                         </h1>
                     </div>
                     
-                    <div style="text-align:center; margin-bottom:40px;">
-                        <div style="font-size:64px; font-weight:900; color:#1E40AF;">${score}/100</div>
-                        <div style="font-size:24px; font-weight:700; margin-top:10px; color:#64748B;">
+                    <!-- PUNTEGGIO GRANDE -->
+                    <div style="text-align:center; margin-bottom:40px; padding: 40px; background: ${score >= 80 ? 'linear-gradient(135deg, #D1FAE5, #A7F3D0)' : score >= 50 ? 'linear-gradient(135deg, #FEF3C7, #FDE68A)' : 'linear-gradient(135deg, #FEE2E2, #FECACA)'}; border-radius: 20px;">
+                        <div style="font-size:80px; font-weight:900; color:${score >= 80 ? '#059669' : score >= 50 ? '#D97706' : '#DC2626'};">${score}%</div>
+                        <div style="font-size:28px; font-weight:700; margin-top:10px; color:${score >= 80 ? '#047857' : score >= 50 ? '#B45309' : '#B91C1C'};">
                             ${score >= 80 ? '🟢 CONFORME' : score >= 50 ? '🟡 DA MIGLIORARE' : '🔴 CRITICITÀ GRAVI'}
+                        </div>
+                        <div style="font-size:16px; color:#64748B; margin-top:15px;">
+                            Percentuale di adeguamento al D.Lgs 81/08
                         </div>
                     </div>
                     
