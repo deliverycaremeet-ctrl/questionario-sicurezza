@@ -5,45 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check-up Sicurezza Lavoro | Delivery Care</title>
     
-    <!-- ═══════════════════════════════════════════════════════════════════
-         MICROSOFT CLARITY - Tracciamento comportamento utenti
-    ═══════════════════════════════════════════════════════════════════ -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "vlau8uhjsv");
-    </script>
-    
-    <!-- ═══════════════════════════════════════════════════════════════════
-         GOOGLE TAG (gtag.js) - GA4 + GOOGLE ADS UNIFICATI
-         Questo blocco DEVE restare insieme per funzionare correttamente
-    ═══════════════════════════════════════════════════════════════════ -->
+    <!-- Google Analytics 4 -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKRX5MWW0Z"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        
-        // Google Analytics 4
         gtag('config', 'G-YKRX5MWW0Z');
         
-        // Google Ads Conversion Tracking
-        gtag('config', 'AW-17912451655');
-        
-        // Funzione per tracciare eventi personalizzati
         function trackEvent(eventName, eventParams) {
             if (typeof gtag !== 'undefined') {
                 gtag('event', eventName, eventParams);
             }
+            // Track Facebook Pixel eventi
             if (typeof fbq !== 'undefined') {
                 fbq('trackCustom', eventName, eventParams);
             }
         }
         
-        // Funzione per tracciare conversioni Google Ads
         function trackConversion(conversionLabel) {
+            // Google Ads Conversion
             if (typeof gtag !== 'undefined') {
                 gtag('event', 'conversion', {
                     'send_to': 'AW-17912451655/' + conversionLabel,
@@ -54,11 +35,13 @@
         }
     </script>
     
-    <!-- ═══════════════════════════════════════════════════════════════════
-         META PIXEL (FACEBOOK)
-         ISTRUZIONI: Sostituire XXXXXXXXXXXXXXX con il tuo Facebook Pixel ID
-         Se non hai un Pixel Facebook, puoi rimuovere questo blocco
-    ═══════════════════════════════════════════════════════════════════ -->
+    <!-- Google Ads Conversion Tracking - ID Configurato -->
+    <script>
+        gtag('config', 'AW-17912451655');
+    </script>
+    
+    <!-- Meta Pixel (Facebook) -->
+    <!-- ISTRUZIONI: Sostituire XXXXXXXXXXXXXXX con il tuo Facebook Pixel ID -->
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -73,7 +56,7 @@
     </script>
     <noscript>
         <img height="1" width="1" style="display:none"
-        src="https://www.facebook.net/tr?id=XXXXXXXXXXXXXXX&ev=PageView&noscript=1"/>
+        src="https://www.facebook.com/tr?id=XXXXXXXXXXXXXXX&ev=PageView&noscript=1"/>
     </noscript>
     
     <!-- html2pdf.js per generazione PDF -->
@@ -184,6 +167,14 @@
             border-bottom: 3px solid #E2E8F0;
         }
 
+        .step-subtitle {
+            font-size: 15px;
+            color: #64748B;
+            margin-top: -15px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
         .question-box {
             margin-bottom: 25px;
         }
@@ -193,6 +184,107 @@
             font-weight: 600;
             margin-bottom: 12px;
             color: #1E293B;
+        }
+
+        /* Sector Cards */
+        .sector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .sector-card {
+            background: white;
+            border: 3px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 25px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sector-card:hover {
+            border-color: #3B82F6;
+            background: #F0F9FF;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+        }
+
+        .sector-card.selected {
+            border-color: #1E40AF;
+            background: #DBEAFE;
+            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
+        }
+
+        .sector-card .icon {
+            font-size: 40px;
+            line-height: 1;
+        }
+
+        .sector-card .name {
+            font-size: 17px;
+            font-weight: 700;
+            color: #1E293B;
+            line-height: 1.3;
+        }
+
+        @media (max-width: 640px) {
+            .sector-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Employee Cards */
+        .employee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .employee-card {
+            background: white;
+            border: 3px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 20px 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .employee-card:hover {
+            border-color: #3B82F6;
+            background: #F0F9FF;
+            transform: translateY(-2px);
+        }
+
+        .employee-card.selected {
+            border-color: #1E40AF;
+            background: #DBEAFE;
+        }
+
+        .employee-card .number {
+            font-size: 28px;
+            font-weight: 900;
+            color: #1E40AF;
+            margin-bottom: 5px;
+        }
+
+        .employee-card .label {
+            font-size: 13px;
+            color: #64748B;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .employee-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         .options {
@@ -300,15 +392,6 @@
             line-height: 1.7;
         }
 
-        .footer a {
-            color: #94A3B8;
-            text-decoration: none;
-        }
-
-        .footer a:hover {
-            color: white;
-        }
-
         @media (max-width: 768px) {
             body {
                 padding: 10px;
@@ -351,6 +434,7 @@
 
         /* CSS STAMPA OTTIMIZZATO */
         @media print {
+            /* Reset generale */
             * {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
@@ -369,30 +453,35 @@
                 border-radius: 0;
             }
 
+            /* Nascondi elementi non necessari */
             .header,
             .footer,
             .buttons,
             .step,
-            #formSection {
+            #preReportSection {
                 display: none !important;
             }
 
+            /* Mostra solo il report */
             #reportSection {
                 display: block !important;
                 page-break-after: auto;
             }
 
+            /* Rimuovi background gradient dal primo div del report */
             #reportSection > div:first-child {
                 background: #E8F5E9 !important;
                 -webkit-print-color-adjust: exact;
                 border: 2px solid #4CAF50;
             }
 
+            /* Ottimizza card aree */
             #reportContent > div {
                 page-break-inside: avoid;
                 margin-bottom: 15px;
             }
 
+            /* Mantieni colori semaforo ma rendi stampabili */
             #reportContent div[style*="background:#D1FAE5"] {
                 background: #E8F5E9 !important;
                 border: 2px solid #4CAF50 !important;
@@ -408,18 +497,21 @@
                 border: 2px solid #F44336 !important;
             }
 
+            /* Ottimizza testo */
             #reportContent {
                 font-size: 11pt;
                 line-height: 1.4;
                 color: #000;
             }
 
+            /* Titoli */
             h2, h3 {
                 page-break-after: avoid;
                 margin-top: 12pt;
                 margin-bottom: 8pt;
             }
 
+            /* Link visitabili */
             a {
                 color: #000;
                 text-decoration: underline;
@@ -435,6 +527,7 @@
                 font-size: 9pt;
             }
 
+            /* CTA finale più sobrio */
             #reportContent > div[style*="background: linear-gradient(135deg, #1E40AF"] {
                 background: #E3F2FD !important;
                 color: #000 !important;
@@ -451,6 +544,7 @@
                 font-weight: bold;
             }
 
+            /* Aggiungi header semplice alla stampa */
             #reportSection:before {
                 content: "REPORT COMPLIANCE SICUREZZA LAVORO - D.Lgs 81/08";
                 display: block;
@@ -462,6 +556,7 @@
                 border-bottom: 3px solid #1976D2;
             }
 
+            /* Footer stampa */
             #reportSection:after {
                 content: "Delivery Care Srl - SB | Tel: +39 02 50047124 | Email: info@deliverycare.it";
                 display: block;
@@ -473,11 +568,13 @@
                 page-break-after: avoid;
             }
 
+            /* Margini pagina */
             @page {
                 margin: 2cm 1.5cm;
                 size: A4 portrait;
             }
 
+            /* Evita rotture indesiderate */
             .no-break {
                 page-break-inside: avoid;
             }
@@ -677,21 +774,6 @@
             opacity: 0.9;
         }
 
-        /* ─── FORM FIELDS STYLING ─── */
-        .form-field-hint {
-            font-size: 11px;
-            margin-top: 4px;
-            font-weight: 500;
-        }
-        
-        .form-field-hint.required {
-            color: #DC2626;
-        }
-        
-        .form-field-hint.optional {
-            color: #64748B;
-        }
-
         @media print {
             .modal-overlay { display: none !important; }
             .consent-block { display: none !important; }
@@ -701,12 +783,12 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://raw.githubusercontent.com/deliverycaremeet-ctrl/questionario-sicurezza/main/LOGO_Delivery_Care.png" alt="Delivery Care Srl - SB">
-            <h1>La tua azienda è davvero in regola con la sicurezza sul lavoro?</h1>
-            <p>Verifica di conformità D.Lgs 81/08</p>
+            <img src="LOGO_Delivery_Care.png" alt="Delivery Care Srl - SB">
+            <h1>Check-up Express Sicurezza Lavoro D.Lgs 81/08</h1>
+            <p>Verifica la conformità della tua azienda</p>
             <div class="benefits">
                 <span class="benefit">✓ Gratuito</span>
-                <span class="benefit">✓ 2 minuti</span>
+                <span class="benefit">✓ Circa 2 minuti</span>
                 <span class="benefit">✓ Report immediato</span>
             </div>
             <div class="progress-container">
@@ -715,42 +797,101 @@
         </div>
 
         <div class="content">
-            <!-- Step 1: Company Data -->
-            <div class="step active" data-step="1">
-                <div class="step-title">📊 Dati Azienda</div>
+            <!-- LANDING PAGE -->
+            <div class="step active landing-page" data-step="0">
+                <div style="text-align: center; padding: 60px 40px;">
+                    <h2 style="font-size: 36px; color: #1E293B; margin-bottom: 25px; font-weight: 800; line-height: 1.2;">
+                        Scopri in 2 minuti<br>se la tua azienda è conforme
+                    </h2>
+                    <p style="font-size: 20px; color: #475569; margin-bottom: 15px; line-height: 1.6; max-width: 700px; margin-left: auto; margin-right: auto;">
+                        Rispondi a poche domande mirate e ottieni subito un'analisi preliminare dettagliata dello stato di conformità al D.Lgs 81/08.
+                    </p>
+                    <p style="font-size: 17px; color: #1E293B; margin-bottom: 50px; font-weight: 700; max-width: 700px; margin-left: auto; margin-right: auto;">
+                        Non sono necessari documenti sotto mano.
+                    </p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin: 50px auto 60px; max-width: 750px; text-align: left;">
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 32px;">✅</span>
+                            <div>
+                                <h3 style="font-size: 18px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">Completamente Gratuito</h3>
+                                <p style="font-size: 15px; color: #64748B; margin: 0;">Analisi completa senza alcun costo</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 32px;">⚡</span>
+                            <div>
+                                <h3 style="font-size: 18px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">Veloce e Immediato</h3>
+                                <p style="font-size: 15px; color: #64748B; margin: 0;">Solo 2 minuti per completarlo</p>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: start; gap: 15px;">
+                            <span style="font-size: 32px;">🎯</span>
+                            <div>
+                                <h3 style="font-size: 18px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">Personalizzato</h3>
+                                <p style="font-size: 15px; color: #64748B; margin: 0;">Adattato al tuo settore specifico</p>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="question-box">
-                    <div class="question-label">Numero Dipendenti</div>
-                    <input type="number" id="numEmployees" placeholder="Es: 15" min="1">
+                    <button class="btn btn-primary" onclick="startTest()" style="font-size: 20px; padding: 20px 50px; box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);">
+                        🚀 Inizia il Check-up
+                    </button>
+
+                    <p style="font-size: 14px; color: #94A3B8; margin-top: 30px;">
+                        ⏱️ Tempo stimato: circa 2 minuti
+                    </p>
+                </div>
+            </div>
+
+            <!-- Step 1: Sector -->
+            <div class="step" data-step="1">
+                <div style="text-align: center; margin-bottom: 40px;">
+                    <div style="font-size: 32px; font-weight: 800; color: #1E293B; margin-bottom: 15px;">
+                        In quale settore opera la tua azienda?
+                    </div>
+                    <div style="font-size: 16px; color: #64748B; line-height: 1.6; max-width: 600px; margin: 0 auto;">
+                        Ci serve per mostrarti solo le domande realmente pertinenti alla tua attività
+                    </div>
                 </div>
 
-                <div class="question-box">
-                    <div class="question-label">Settore di Attività</div>
-                    <select id="sectorSelect" name="sector">
-                        <option value="">-- Seleziona --</option>
-                        <option value="office">🏢 Uffici e Studi</option>
-                        <option value="retail">🛒 Commercio</option>
-                        <option value="gdo">🏪 Grande Distribuzione</option>
-                        <option value="manufacturing">🏭 Manifattura</option>
-                        <option value="food">🍔 Industria Alimentare</option>
-                        <option value="construction">🏗️ Edilizia</option>
-                        <option value="logistics">🚚 Logistica</option>
-                        <option value="automotive">🚗 Automotive</option>
-                        <option value="horeca">🍽️ Ristorazione/Hotel</option>
-                        <option value="healthcare">🏥 Sanità</option>
-                        <option value="personal">💇 Servizi Persona</option>
-                        <option value="education">🎓 Istruzione</option>
-                        <option value="facility">🔧 Pulizie/Facility</option>
-                        <option value="it">💻 IT</option>
-                        <option value="energy">⚡ Energia</option>
-                        <option value="agriculture">🌾 Agricoltura</option>
-                        <option value="public">🏛️ PA</option>
-                        <option value="other">🎨 Altro</option>
-                    </select>
+                <div class="sector-grid">
+                    <div class="sector-card" onclick="selectSector('office')">
+                        <div class="icon">🏢</div>
+                        <div class="name">Uffici / Studi /<br>Servizi / IT</div>
+                    </div>
+                    <div class="sector-card" onclick="selectSector('logistics')">
+                        <div class="icon">🚚</div>
+                        <div class="name">Logistica /<br>Trasporti / Magazzini</div>
+                    </div>
+                    <div class="sector-card" onclick="selectSector('manufacturing')">
+                        <div class="icon">🏭</div>
+                        <div class="name">Produzione /<br>Industria / Manifattura</div>
+                    </div>
+                    <div class="sector-card" onclick="selectSector('construction')">
+                        <div class="icon">🏗️</div>
+                        <div class="name">Edilizia /<br>Cantieri / Impiantistica</div>
+                    </div>
+                    <div class="sector-card" onclick="selectSector('retail')">
+                        <div class="icon">🛒</div>
+                        <div class="name">Commercio /<br>Retail / GDO</div>
+                    </div>
+                    <div class="sector-card" onclick="selectSector('healthcare')">
+                        <div class="icon">🏥</div>
+                        <div class="name">Sanità / RSA /<br>Assistenza</div>
+                    </div>
+                    <div class="sector-card" onclick="selectSector('horeca')">
+                        <div class="icon">🍽️</div>
+                        <div class="name">Ristorazione /<br>Hotel / Hospitality</div>
+                    </div>
+                    <div class="sector-card" onclick="selectSector('other')">
+                        <div class="icon">🎨</div>
+                        <div class="name">Altro</div>
+                    </div>
                 </div>
 
                 <div class="buttons">
-                    <button class="btn btn-primary" onclick="nextStep()">Inizia Check-up →</button>
+                    <button class="btn btn-primary" onclick="nextStep()" id="sectorNextBtn" disabled style="opacity: 0.5;">Continua →</button>
                 </div>
             </div>
 
@@ -794,9 +935,32 @@
                     </div>
                 </div>
 
+                <!-- Numero Dipendenti -->
+                <div class="question-box" style="margin-top: 40px;">
+                    <div class="question-label" style="text-align: center; margin-bottom: 20px;">Quanti dipendenti ha la tua azienda?</div>
+                    <div class="employee-grid">
+                        <div class="employee-card" onclick="selectEmployees('1-15')">
+                            <div class="number">1-15</div>
+                            <div class="label">dipendenti</div>
+                        </div>
+                        <div class="employee-card" onclick="selectEmployees('16-100')">
+                            <div class="number">16-100</div>
+                            <div class="label">dipendenti</div>
+                        </div>
+                        <div class="employee-card" onclick="selectEmployees('101-250')">
+                            <div class="number">101-250</div>
+                            <div class="label">dipendenti</div>
+                        </div>
+                        <div class="employee-card" onclick="selectEmployees('250+')">
+                            <div class="number">250+</div>
+                            <div class="label">dipendenti</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="buttons">
                     <button class="btn btn-secondary" onclick="prevStep()">← Indietro</button>
-                    <button class="btn btn-primary" onclick="nextStep()">Avanti →</button>
+                    <button class="btn btn-primary" onclick="nextStep()" id="step2NextBtn" disabled style="opacity: 0.5;">Avanti →</button>
                 </div>
             </div>
 
@@ -1058,48 +1222,99 @@
 
                 <div class="buttons">
                     <button class="btn btn-secondary" onclick="prevStep()">← Indietro</button>
-                    <button class="btn btn-primary" onclick="calculateAndShowForm()">🔍 Vedi il tuo Risultato →</button>
+                    <button class="btn btn-primary" onclick="generateReport()">🔍 Genera Report</button>
                 </div>
             </div>
 
-            <!-- ═══════════════════════════════════════════════════════════════════
-                 FORM SECTION - PRIMA DEL RISULTATO
-                 L'utente deve compilare il form per vedere il report
-            ═══════════════════════════════════════════════════════════════════ -->
-            <div class="report" id="formSection">
-                <div style="text-align: center; padding: 30px 20px;">
-                    <div style="font-size: 64px; margin-bottom: 20px;">📊</div>
-                    <h2 style="font-size: 26px; font-weight: 800; margin-bottom: 15px; color: #0F172A;">Il tuo report è pronto!</h2>
-                    <p style="font-size: 16px; color: #64748B; margin-bottom: 30px; line-height: 1.7;">
-                        Inserisci la tua email per visualizzare subito il risultato completo<br>
-                        con la percentuale di conformità, le aree critiche e le sanzioni che rischi.
-                    </p>
+            <!-- PRE-REPORT: Percentuale + Form BREVO -->
+            <div class="report" id="preReportSection">
+                <div style="text-align: center; padding: 40px 20px;">
+                    
+                    <!-- Titolo sopra -->
+                    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 25px; color: #0F172A;">La tua percentuale di adeguamento è</h2>
+                    
+                    <!-- Cerchio punteggio -->
+                    <div style="width: 200px; height: 200px; margin: 0 auto 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15);" id="scoreCircle">
+                        <div>
+                            <div id="preScoreDisplay" style="font-size: 72px; font-weight: 900; color: white;">58</div>
+                            <div style="font-size: 24px; color: white; margin-top: -10px;">%</div>
+                        </div>
+                    </div>
 
-                    <!-- FORM -->
+                    <!-- 2 Card Info -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 500px; margin: 0 auto 40px;">
+                        <div style="background: #FEE2E2; border: 2px solid #DC2626; border-radius: 12px; padding: 20px; text-align: center;">
+                            <div id="criticalAreasCount" style="font-size: 48px; font-weight: 900; color: #DC2626; margin-bottom: 5px;">3</div>
+                            <div style="font-size: 14px; font-weight: 600; color: #991B1B;">Aree Critiche</div>
+                        </div>
+                        <div style="background: #FEF3C7; border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; text-align: center;">
+                            <div id="urgentActionsCount" style="font-size: 48px; font-weight: 900; color: #F59E0B; margin-bottom: 5px;">5</div>
+                            <div style="font-size: 14px; font-weight: 600; color: #92400E;">Interventi Urgenti</div>
+                        </div>
+                    </div>
+
+                    <!-- FORM BREVO -->
                     <form id="brevoForm" style="max-width: 500px; margin: 0 auto; text-align: left; background: #F8FAFC; padding: 35px; border-radius: 16px; border: 2px solid #E2E8F0;">
                         
-                        <div style="margin-bottom: 18px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Email *</label>
-                            <input type="email" name="EMAIL" id="EMAIL" required placeholder="la-tua@email.it" style="width: 100%; padding: 14px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                            <div class="form-field-hint required">⚠️ Campo obbligatorio</div>
-                        </div>
-
-                        <div style="margin-bottom: 18px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Nome Azienda</label>
-                            <input type="text" name="NOME_AZIENDA" id="NOME_AZIENDA" placeholder="Es: Rossi SRL" style="width: 100%; padding: 14px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                            <div class="form-field-hint optional">Facoltativo</div>
-                        </div>
-
-                        <div style="margin-bottom: 18px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Nome Referente</label>
-                            <input type="text" name="NOME" id="NOME" placeholder="Es: Mario Rossi" style="width: 100%; padding: 14px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                            <div class="form-field-hint optional">Facoltativo</div>
-                        </div>
-
+                        <h3 style="text-align: center; margin-bottom: 25px; font-size: 17px; line-height: 1.6; color: #0F172A;">Abbiamo già elaborato una prima valutazione. Inserisci la tua email per ricevere il report completo con dettaglio criticità, priorità e azioni consigliate.</h3>
+                        
+                        <!-- EMAIL (OBBLIGATORIA) -->
                         <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #475569;">Telefono</label>
-                            <input type="tel" name="TELEFONO" id="TELEFONO" placeholder="333 123 4567" style="width: 100%; padding: 14px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                            <div class="form-field-hint optional">Facoltativo - per consulenza gratuita</div>
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 15px; color: #0F172A;">Email *</label>
+                            <input type="email" name="EMAIL" id="EMAIL" required placeholder="mario.rossi@azienda.it" style="width: 100%; padding: 14px; border: 2px solid #3B82F6; border-radius: 8px; font-size: 16px;">
+                        </div>
+
+                        <!-- CONSENSO PRIVACY (OBBLIGATORIO) -->
+                        <div class="consent-block" style="margin-bottom: 30px;">
+                            <div class="consent-row" id="consentRowObbligatorio">
+                                <input type="checkbox" id="consentObbl" name="CONSENSO_DATI">
+                                <label for="consentObbl">
+                                    Ho letto l'<a class="link-privacy" onclick="aprModalPrivacy()">informativa sul trattamento dei dati personali</a> e 
+                                    <strong>Do consenso</strong> al trattamento dei miei dati personali da parte di Delivery Care Srl per le finalità ivi indicate.
+                                    <span class="obbligatorio">*</span>
+                                </label>
+                            </div>
+                            <div class="consent-errore-msg" id="consentErrMsg">⚠️ Il consenso è obbligatorio per procedere.</div>
+                        </div>
+
+                        <!-- SEPARATORE VISIVO -->
+                        <div style="border-top: 2px solid #E2E8F0; margin: 30px 0; padding-top: 25px;">
+                            <p style="text-align: center; color: #64748B; font-size: 14px; margin-bottom: 20px; font-style: italic;">Campi facoltativi (aiutaci a personalizzare il report)</p>
+                        </div>
+
+                        <!-- NOME (FACOLTATIVO) -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #64748B;">Nome Referente <span style="font-style: italic; font-weight: 400;">(facoltativo)</span></label>
+                            <input type="text" name="NOME" id="NOME" placeholder="Es: Mario Rossi" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                        </div>
+
+                        <!-- NOME AZIENDA (FACOLTATIVO) -->
+                        <div style="margin-bottom: 18px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #64748B;">Nome Azienda <span style="font-style: italic; font-weight: 400;">(facoltativo)</span></label>
+                            <input type="text" name="NOME_AZIENDA" id="NOME_AZIENDA" placeholder="Es: Rossi SRL" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                        </div>
+
+                        <!-- TELEFONO (FACOLTATIVO) -->
+                        <div style="margin-bottom: 20px;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #64748B;">Telefono <span style="font-style: italic; font-weight: 400;">(facoltativo)</span></label>
+                            <input type="tel" name="TELEFONO" id="TELEFONO" placeholder="333 123 4567" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
+                        </div>
+
+                        <!-- CONSENSO MARKETING (FACOLTATIVO) -->
+                        <div class="consent-block" style="margin-bottom: 25px;">
+                            <div class="consent-row">
+                                <input type="checkbox" id="consentMarketing" name="CONSENSO_MARKETING">
+                                <label for="consentMarketing">
+                                    Accetto di ricevere comunicazioni commerciali e promozionali da parte di Delivery Care Srl, inclusi aggiornamenti normativi e offerte dei servizi.
+                                    <span style="color: #64748B; font-style: italic;">(facoltativo)</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- PUNTEGGIO VISIBILE (nascosto) -->
+                        <div style="margin-bottom: 20px; background: #EFF6FF; padding: 16px; border-radius: 8px; border: 2px solid #BFDBFE; display: none;">
+                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #1E40AF;">📊 Il tuo Punteggio di Conformità</label>
+                            <input type="text" id="PUNTEGGIO_VISIBLE" readonly style="width: 100%; padding: 12px; border: 2px solid #93C5FD; border-radius: 8px; font-size: 24px; font-weight: 700; text-align: center; color: #1E40AF; background: white; cursor: default;">
                         </div>
 
                         <!-- Hidden fields BREVO -->
@@ -1110,44 +1325,14 @@
                         <input type="text" name="email_address_check" value="" style="display:none;">
                         <input type="hidden" name="locale" value="it">
 
-                        <!-- CONSENSO RGPD -->
-                        <div class="consent-block">
-                            <div class="consent-row" id="consentRowObbligatorio">
-                                <input type="checkbox" id="consentObbl" name="CONSENSO_DATI">
-                                <label for="consentObbl">
-                                    Ho letto l'<a class="link-privacy" onclick="aprModalPrivacy()">informativa sul trattamento dei dati personali</a> e 
-                                    <strong>Do consenso</strong> al trattamento dei miei dati personali da parte di Delivery Care Srl per le finalità ivi indicate.
-                                    <span class="obbligatorio">*</span>
-                                </label>
-                            </div>
-                            <div class="consent-errore-msg" id="consentErrMsg">⚠️ Il consenso è obbligatorio per procedere.</div>
-
-                            <div class="consent-row">
-                                <input type="checkbox" id="consentMarketing" name="CONSENSO_MARKETING">
-                                <label for="consentMarketing">
-                                    Accetto di ricevere comunicazioni commerciali e promozionali da parte di Delivery Care Srl, inclusi aggiornamenti normativi e offerte dei servizi.
-                                    <span style="color: #64748B; font-style: italic;">(opzionale)</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <button type="button" class="btn btn-primary" onclick="submitBrevoForm()" style="width: 100%; margin-top: 25px; padding: 18px; font-size: 17px;">
-                            📊 Visualizza il Report Completo
+                        <button type="button" class="btn btn-primary" onclick="submitBrevoForm()" style="width: 100%; margin-top: 20px;">
+                            📊 Visualizza Report Completo
                         </button>
                     </form>
-                    
-                    <div style="margin-top: 25px; padding: 20px; background: #EFF6FF; border-radius: 12px; border: 2px solid #BFDBFE;">
-                        <div style="font-size: 14px; color: #1E40AF; font-weight: 600;">
-                            🔒 I tuoi dati sono al sicuro e non verranno condivisi con terzi
-                        </div>
-                        <div style="font-size: 13px; color: #64748B; margin-top: 8px;">
-                            31.000+ lavoratori gestiti | 42 province coperte
-                        </div>
-                    </div>
                 </div>
             </div>
 
-            <!-- REPORT FINALE - Dopo il form -->
+            <!-- REPORT FINALE -->
             <div class="report" id="reportSection">
                 <div id="reportContent"></div>
                 
@@ -1161,24 +1346,86 @@
         <div class="footer">
             <strong>Delivery Care Srl - SB</strong><br>
             P.IVA: 11263630961 | P.zza centro commerciale 44, 20090 Segrate (MI)<br>
-            Tel: +39 02 50047124 | Email: <a href="mailto:info@deliverycare.it">info@deliverycare.it</a><br>
+            Tel: +39 02 50047124 | Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="91f8fff7fed1f5f4fdf8e7f4e3e8f2f0e3f4bff8e5">[email&#160;protected]</a><br>
             31.000+ lavoratori in sorveglianza sanitaria | 42 province coperte
         </div>
     </div>
 
-    <script>
-        let currentStep = 1;
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+        let currentStep = 0;
         const totalSteps = 6;
+        
+        function startTest() {
+            document.querySelector('[data-step="0"]').classList.remove('active');
+            currentStep = 1;
+            document.querySelector('[data-step="1"]').classList.add('active');
+            updateProgress();
+            window.scrollTo(0, 0);
+            
+            trackEvent('test_started', {
+                timestamp: new Date().toISOString()
+            });
+        }
+        
+        // Selected sector variable
+        let selectedSector = '';
+        let selectedEmployees = '';
+        
+        function selectSector(sector) {
+            selectedSector = sector;
+            
+            // Remove selected class from all cards
+            document.querySelectorAll('.sector-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked card
+            event.target.closest('.sector-card').classList.add('selected');
+            
+            // Enable continue button
+            const btn = document.getElementById('sectorNextBtn');
+            btn.disabled = false;
+            btn.style.opacity = '1';
+        }
+
+        function selectEmployees(range) {
+            selectedEmployees = range;
+            
+            // Remove selected class from all cards
+            document.querySelectorAll('.employee-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked card
+            event.target.closest('.employee-card').classList.add('selected');
+            
+            // Check if can enable button (need employees selection)
+            checkStep2Complete();
+        }
+
+        function checkStep2Complete() {
+            // Check if employees is selected
+            if (selectedEmployees) {
+                const btn = document.getElementById('step2NextBtn');
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
+        }
         
         // URL Google Sheets Web App (GLOBALE)
         const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxzxAES75zzCDy6ROvKmWjCko6oLbPKJBD1oXePTZ0h7Zh5uD9S13LeehOaLKvz8X1a/exec';
 
         function nextStep() {
             if (currentStep === 1) {
-                const employees = document.getElementById('numEmployees').value;
-                const sector = document.getElementById('sectorSelect').value;
-                if (!employees || !sector) {
-                    alert('Compila tutti i campi');
+                if (!selectedSector) {
+                    alert('Seleziona un settore');
+                    return;
+                }
+            }
+
+            if (currentStep === 2) {
+                if (!selectedEmployees) {
+                    alert('Seleziona il numero di dipendenti');
                     return;
                 }
             }
@@ -1215,11 +1462,11 @@
             return el ? el.value : null;
         }
 
-        // Calcola il report e mostra il form
-        function calculateAndShowForm() {
+        function generateReport() {
             const data = {
-                employees: parseInt(document.getElementById('numEmployees').value) || 10,
-                sector: document.getElementById('sectorSelect').value || 'non_selezionato',
+                employees: selectedEmployees || '1-15',
+                employeesRange: selectedEmployees || '1-15',
+                sector: selectedSector || 'non_selezionato',
                 medico: getVal('medicoNominato') || 'no',
                 visite: getVal('visite') || 'none',
                 formGen: getVal('formazioneGenerale') || 'none',
@@ -1447,16 +1694,42 @@
                 });
             }
 
-            // Populate hidden fields
+            // Populate BREVO fields
             document.getElementById('DIPENDENTI').value = data.employees;
+            document.getElementById('PUNTEGGIO_VISIBLE').value = score + '/100';
             document.getElementById('PUNTEGGIO').value = score;
             document.getElementById('SETTORE').value = data.sector;
             document.getElementById('CRITICITA').value = allIssues.length;
 
-            // Mostra il form
+            // Show PRE-REPORT
+            document.getElementById('preScoreDisplay').textContent = score;
+            
+            // Set circle color
+            const circle = document.getElementById('scoreCircle');
+            if (score >= 80) {
+                circle.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+            } else if (score >= 50) {
+                circle.style.background = 'linear-gradient(135deg, #F59E0B, #EF4444)';
+            } else {
+                circle.style.background = 'linear-gradient(135deg, #EF4444, #DC2626)';
+            }
+
+            // Popola card statistiche
+            const criticalAreas = Object.values(areas).filter(area => area.status === 'red').length;
+            const urgentActions = allIssues.length;
+            
+            document.getElementById('criticalAreasCount').textContent = criticalAreas;
+            document.getElementById('urgentActionsCount').textContent = urgentActions;
+
             document.querySelector(`[data-step="${currentStep}"]`).classList.remove('active');
-            document.getElementById('formSection').classList.add('active');
+            document.getElementById('preReportSection').classList.add('active');
             document.getElementById('progressBar').style.width = '100%';
+            
+            trackEvent('questionario_completato', {
+                settore: data.sector,
+                punteggio: score,
+                criticita: allIssues.length
+            });
 
             window.scrollTo(0, 0);
         }
@@ -1471,9 +1744,9 @@
             
             const payload = {
                 email: document.getElementById('EMAIL').value,
-                nome: document.getElementById('NOME').value || '',
-                nomeAzienda: document.getElementById('NOME_AZIENDA').value || '',
-                telefono: document.getElementById('TELEFONO').value || '',
+                nome: document.getElementById('NOME').value,
+                nomeAzienda: document.getElementById('NOME_AZIENDA').value,
+                telefono: document.getElementById('TELEFONO').value,
                 dipendenti: data.employees,
                 settore: data.sector,
                 punteggioTotale: score,
@@ -1594,13 +1867,14 @@
         // ─── SUBMIT FORM ───
         async function submitBrevoForm() {
             const form = document.getElementById('brevoForm');
+            const nomeAzienda = document.getElementById('NOME_AZIENDA').value.trim();
             const email = document.getElementById('EMAIL').value.trim();
+            const telefono = document.getElementById('TELEFONO').value.trim();
             const consentObbl = document.getElementById('consentObbl').checked;
 
-            // Validazione email (unico campo obbligatorio)
-            if (!email) {
-                alert('Inserisci la tua email per visualizzare il report');
-                document.getElementById('EMAIL').focus();
+            // Validazione campi
+            if (!nomeAzienda || !email || !telefono) {
+                alert('Compila tutti i campi obbligatori');
                 return;
             }
 
@@ -1631,11 +1905,17 @@
             }
             mktField.value = consentMarketing ? 'SI' : 'NO';
 
+            // Re-imposta i campi hidden da window.reportData per sicurezza
+            if (window.reportData) {
+                document.getElementById('PUNTEGGIO_VISIBLE').value = window.reportData.score + '/100';
+                document.getElementById('PUNTEGGIO').value = window.reportData.score;
+                document.getElementById('DIPENDENTI').value = window.reportData.data.employees;
+                document.getElementById('SETTORE').value = window.reportData.data.sector;
+                document.getElementById('CRITICITA').value = window.reportData.allIssues.length;
+            }
+
             const formData = new FormData(form);
             
-            // Prima mostra il report, poi invia in background
-            showFinalReport();
-
             // 1) Submit a sibforms (crea contatto + attiva automazione)
             try {
                 await fetch('https://d62e0a7b.sibforms.com/serve/MUIFALKwDBJk4OcnNWEtufWXX8uR64iideRXZJ_Ff80MkC1kEUV3Bhps_ZJK_6TyYamlE1pW1dLeccmnJC2DgZd2SyKOQ-f0QThBAcipcKnaEHHWvhFVQTRe-l9KikMlq0BTVZfX0_x_aWIUq3XjyfUxCtfvBbxrhKm5aEiAD-mNcUeSiKKeXIM32c7kvn0xWb-3A1Nq-GLPuGHa', {
@@ -1648,8 +1928,11 @@
                 console.log('⚠️ Sibforms: errore, continuiamo');
             }
             
-            // 2) Invia a Google Sheets con PDF
+            // 2) Invia a Google Sheets con PDF (ASPETTA la generazione del PDF!)
             await sendToGoogleSheets(window.reportData);
+            
+            // 3) Mostra report finale
+            showFinalReport();
 
             // Tracking eventi
             trackEvent('lead_submitted', {
@@ -1672,7 +1955,7 @@
         }
 
         function showFinalReport() {
-            document.getElementById('formSection').classList.remove('active');
+            document.getElementById('preReportSection').classList.remove('active');
             document.getElementById('reportSection').classList.add('active');
             
             if (window.reportData) {
@@ -1689,14 +1972,10 @@
                         </h1>
                     </div>
                     
-                    <!-- PUNTEGGIO GRANDE -->
-                    <div style="text-align:center; margin-bottom:40px; padding: 40px; background: ${score >= 80 ? 'linear-gradient(135deg, #D1FAE5, #A7F3D0)' : score >= 50 ? 'linear-gradient(135deg, #FEF3C7, #FDE68A)' : 'linear-gradient(135deg, #FEE2E2, #FECACA)'}; border-radius: 20px;">
-                        <div style="font-size:80px; font-weight:900; color:${score >= 80 ? '#059669' : score >= 50 ? '#D97706' : '#DC2626'};">${score}%</div>
-                        <div style="font-size:28px; font-weight:700; margin-top:10px; color:${score >= 80 ? '#047857' : score >= 50 ? '#B45309' : '#B91C1C'};">
+                    <div style="text-align:center; margin-bottom:40px;">
+                        <div style="font-size:64px; font-weight:900; color:#1E40AF;">${score}/100</div>
+                        <div style="font-size:24px; font-weight:700; margin-top:10px; color:#64748B;">
                             ${score >= 80 ? '🟢 CONFORME' : score >= 50 ? '🟡 DA MIGLIORARE' : '🔴 CRITICITÀ GRAVI'}
-                        </div>
-                        <div style="font-size:16px; color:#64748B; margin-top:15px;">
-                            Percentuale di adeguamento al D.Lgs 81/08
                         </div>
                     </div>
                     
@@ -1789,18 +2068,28 @@
                             </div>
                         </div>
                         
-                        <!-- BOX SCONTO INAIL -->
+                        <!-- BOX FORMAZIONE FINANZIATA -->
                         <div style="background: linear-gradient(135deg, #FEF3C7, #FDE68A); border: 3px solid #F59E0B; border-radius: 12px; padding: 30px; margin: 35px 0; text-align: center; box-shadow: 0 4px 12px rgba(245,158,11,0.2);">
                             <div style="font-size: 24px; font-weight: 900; color: #92400E; margin-bottom: 15px;">
-                                ⚡ ATTENZIONE! OPPORTUNITÀ FINO AL 28 FEBBRAIO
+                                💰 RISPARMIA SULLA FORMAZIONE OBBLIGATORIA
                             </div>
-                            <p style="font-size: 17px; color: #78350F; line-height: 1.6; margin-bottom: 15px;">
-                                Lo sai che puoi ottenere <strong>fino al 28% di sconto INAIL</strong><br>
-                                implementando azioni di prevenzione degli infortuni?
+                            <p style="font-size: 17px; color: #78350F; line-height: 1.6; margin-bottom: 20px;">
+                                La tua azienda ha accesso a fondi per formare gratuitamente i dipendenti.<br>
+                                Anche la formazione sicurezza può essere finanziata al 100%.
                             </p>
-                            <p style="font-size: 16px; color: #92400E; font-weight: 700;">
-                                ⏰ Hai tempo fino al <strong>28 febbraio</strong> per presentare la domanda.<br>
-                                Contattaci subito!
+                            <div style="text-align: left; display: inline-block; margin-bottom: 20px;">
+                                <div style="font-size: 16px; color: #78350F; font-weight: 600; margin: 10px 0;">
+                                    ✓ Zero costi per te
+                                </div>
+                                <div style="font-size: 16px; color: #78350F; font-weight: 600; margin: 10px 0;">
+                                    ✓ Formazione completa
+                                </div>
+                                <div style="font-size: 16px; color: #78350F; font-weight: 600; margin: 10px 0;">
+                                    ✓ Tutto in regola
+                                </div>
+                            </div>
+                            <p style="font-size: 17px; color: #92400E; font-weight: 700; margin-top: 15px;">
+                                📚 Scopri i Fondi Interprofessionali
                             </p>
                         </div>
                         
@@ -1842,6 +2131,7 @@
         updateProgress();
     </script>
     
+    <!-- BREVO Scripts -->
     <!-- ─── MODAL INFORMATIVA PRIVACY (RGPD) ─── -->
     <div class="modal-overlay" id="modalPrivacy">
         <div class="modal-informativa">
@@ -1855,7 +2145,7 @@
                     <p><strong>Titolare del Trattamento:</strong> Delivery Care Srl – Società Benefit</p>
                     <p><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</p>
                     <p><strong>P.IVA:</strong> 11263630961</p>
-                    <p><strong>Contatto:</strong> <a href="mailto:info@deliverycare.it">info@deliverycare.it</a> | +39 02 50047124</p>
+                    <p><strong>Contatto:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e272028210e2a2b2227382b3c372d2f3c2b60273a">[email&#160;protected]</a> | +39 02 50047124</p>
                 </div>
 
                 <h3>1. Oggetto e base giuridica</h3>
@@ -1886,14 +2176,14 @@
                     <li><strong>Erogazione del servizio:</strong> generazione e invio del report di conformità D.Lgs 81/08;</li>
                     <li><strong>Gestione della richiesta:</strong> elaborazione e follow-up della richiesta di valutazione;</li>
                     <li><strong>Analisi e miglioramento:</strong> analisi aggregata e anonima dei risultati per migliorare il servizio;</li>
-                    <li><strong>Comunicazioni commerciali</strong> (solo se esplicitamente consentito): invio di offerte, aggiornamenti normativi e comunicazioni promozionali relativi ai servizi di Delivery Care.</li>
+                    <li><strong>Comunicazioni commerciali</strong> (solo se esplicitamente consentiI): invio di offerte, aggiornamenti normativi e comunicazioni promozionali relativi ai servizi di Delivery Care.</li>
                 </ul>
 
                 <h3>4. Modalità del trattamento</h3>
                 <p>
                     Il trattamento viene effettuato con strumenti elettronici e cartacei, nel rispetto dei principi di 
                     liceità, correttezza e trasparenza. I dati vengono conservati per il periodo necessario al 
-                    perseguimento delle finalità indicate, e comunque <strong>non oltre 24 mesi</strong> dalla data di raccolta, 
+                    perseguimento delle finalità indicati, e comunque <strong>non oltre 24 mesi</strong> dalla data di raccolta, 
                     salvo diversa indicazione di legge o consenso.
                 </p>
 
@@ -1937,26 +2227,9 @@
                     Per esercitare i diritti sopra elencati, l'interessato può contattare direttamente il Titolare del Trattamento:
                 </p>
                 <ul>
-                    <li><strong>Email:</strong> <a href="mailto:info@deliverycare.it">info@deliverycare.it</a></li>
+                    <li><strong>Email:</strong> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3e575058517e5a5b5257485b4c475d5f4c5b10574a">[email&#160;protected]</a></li>
                     <li><strong>Telefono:</strong> +39 02 50047124</li>
                     <li><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</li>
                 </ul>
 
-                <h3>10. Autorità di controllo</h3>
-                <p>
-                    L'interessato ha il diritto di proporre reclamo all'Autorità Garante per la Protezione dei Dati Personali 
-                    (<a href="https://www.garanteprivacy.it" target="_blank" rel="noopener">www.garanteprivacy.it</a>) 
-                    qualora ritenga che il trattamento dei propri dati violi il RGPD.
-                </p>
-
-                <h3>11. Aggiornamenti</h3>
-                <p>
-                    La presente informativa può essere aggiornata periodicamente. L'ultima versione sarà sempre disponibile 
-                    su questa pagina. Ultima modifica: Febbraio 2025.
-                </p>
-            </div>
-            <button class="modal-footer-btn" onclick="chiudiModalPrivacy()">Ho capito, chiudi</button>
-        </div>
-    </div>
-</body>
-</html>
+                <h3>10. Autorità
