@@ -1876,14 +1876,12 @@
         // ─── SUBMIT FORM ───
         async function submitBrevoForm() {
             const form = document.getElementById('brevoForm');
-            const nomeAzienda = document.getElementById('NOME_AZIENDA').value.trim();
             const email = document.getElementById('EMAIL').value.trim();
-            const telefono = document.getElementById('TELEFONO').value.trim();
             const consentObbl = document.getElementById('consentObbl').checked;
 
-            // Validazione campi
-            if (!nomeAzienda || !email || !telefono) {
-                alert('Compila tutti i campi obbligatori');
+            // Validazione email
+            if (!email) {
+                alert('Inserisci l\'email');
                 return;
             }
 
@@ -1903,17 +1901,7 @@
 
             // Consenso marketing (opzionale) → campo nascosto
             const consentMarketing = document.getElementById('consentMarketing').checked;
-            // Aggiungi campo dinamico se non esiste
-            let mktField = document.getElementById('CONSENSO_MKT');
-            if (!mktField) {
-                mktField = document.createElement('input');
-                mktField.type = 'hidden';
-                mktField.name = 'CONSENSO_MKT';
-                mktField.id = 'CONSENSO_MKT';
-                form.appendChild(mktField);
-            }
-            mktField.value = consentMarketing ? 'SI' : 'NO';
-
+            
             // Re-imposta i campi hidden da window.reportData per sicurezza
             if (window.reportData) {
                 document.getElementById('PUNTEGGIO_VISIBLE').value = window.reportData.score + '/100';
@@ -1923,7 +1911,16 @@
                 document.getElementById('CRITICITA').value = window.reportData.allIssues.length;
             }
 
-            const formData = new FormData(form);
+            // Crea FormData con SOLO i campi che Brevo riconosce
+            const formData = new FormData();
+            formData.append('EMAIL', document.getElementById('EMAIL').value);
+            formData.append('NOME', document.getElementById('NOME').value || '');
+            formData.append('NOME_AZIENDA', document.getElementById('NOME_AZIENDA').value || '');
+            formData.append('TELEFONO', document.getElementById('TELEFONO').value || '');
+            formData.append('DIPENDENTI', document.getElementById('DIPENDENTI').value || '');
+            formData.append('SETTORE', document.getElementById('SETTORE').value || '');
+            formData.append('PUNTEGGIO', document.getElementById('PUNTEGGIO').value || '0');
+            formData.append('CRITICITA', document.getElementById('CRITICITA').value || '0');
             
             // 1) Submit a sibforms (crea contatto + attiva automazione)
             try {
