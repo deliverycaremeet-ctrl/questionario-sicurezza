@@ -1413,7 +1413,7 @@
             }
         }
         
-        // URL Google Sheets Web App (GLOBALE)
+        // URL Google Sheets Web App (AGGIORNATO)
         const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz0R06Eg3IuonsasVY-nT2Hwmkg4p5r_FkIP0JcMJ2M5euojfNN7alog0rD7DPVoadV/exec';
 
         function nextStep() {
@@ -1864,7 +1864,7 @@
             }
         });
 
-        // ─── SUBMIT FORM - VERSIONE SEMPLIFICATA ───
+        // ─── SUBMIT FORM - VERSIONE CORRETTA CON PDF ───
         async function submitBrevoForm() {
             const email = document.getElementById('EMAIL').value.trim();
             const consentObbl = document.getElementById('consentObbl').checked;
@@ -1892,11 +1892,14 @@
                 document.getElementById('CRITICITA').value = window.reportData.allIssues.length;
             }
 
-            // INVIO DIRETTO A GOOGLE SHEETS (che gestisce tutto: Sheets + Brevo + Email)
-            await sendToGoogleSheets(window.reportData);
-            
-            // Mostra report finale
+            // ⬇️ IMPORTANTE: PRIMA mostra il report (così il PDF ha contenuto)
             showFinalReport();
+            
+            // ⬇️ POI aspetta che il DOM si aggiorni
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // ⬇️ INFINE invia a Google Sheets (che genera il PDF dal report visibile)
+            await sendToGoogleSheets(window.reportData);
 
             // Tracking
             trackEvent('lead_submitted', {
