@@ -1,2124 +1,422 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check-up Sicurezza Lavoro | Delivery Care</title>
-    
-    <!-- Google Analytics 4 -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YKRX5MWW0Z"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-YKRX5MWW0Z');
-        
-        function trackEvent(eventName, eventParams) {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', eventName, eventParams);
-            }
-            // Track Facebook Pixel eventi
-            if (typeof fbq !== 'undefined') {
-                fbq('trackCustom', eventName, eventParams);
-            }
-        }
-        
-        function trackConversion(conversionLabel) {
-            // Google Ads Conversion
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'conversion', {
-                    'send_to': 'AW-17912451655/' + conversionLabel,
-                    'value': 30.0,
-                    'currency': 'EUR'
-                });
-            }
-        }
-    </script>
-    
-    <!-- Google Ads Conversion Tracking - ID Configurato -->
-    <script>
-        gtag('config', 'AW-17912451655');
-    </script>
-    
-    <!-- Microsoft Clarity -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "vlau8uhjsv");
-    </script>
-    
-    <!-- Meta Pixel (Facebook) -->
-    <!-- ISTRUZIONI: Sostituire XXXXXXXXXXXXXXX con il tuo Facebook Pixel ID -->
-    <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
-        fbq('init', 'XXXXXXXXXXXXXXX'); // SOSTITUIRE con il tuo Facebook Pixel ID
-        fbq('track', 'PageView');
-    </script>
-    <noscript>
-        <img height="1" width="1" style="display:none"
-        src="https://www.facebook.com/tr?id=XXXXXXXXXXXXXXX&ev=PageView&noscript=1"/>
-    </noscript>
-    
-    <!-- html2pdf.js per generazione PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #1E40AF 0%, #3B82F6 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            overflow: hidden;
-        }
-
-        .header {
-            background: linear-gradient(135deg, #1E40AF 0%, #1E3A8A 100%);
-            color: white;
-            padding: 30px 30px 25px;
-            text-align: center;
-        }
-
-        .header img {
-            max-width: 280px;
-            height: auto;
-            margin-bottom: 20px;
-            filter: brightness(0) invert(1);
-        }
-
-        .header h1 {
-            font-size: 26px;
-            margin-bottom: 12px;
-            font-weight: 700;
-            line-height: 1.3;
-        }
-
-        .header p {
-            opacity: 0.95;
-            font-size: 15px;
-            margin-bottom: 0;
-        }
-
-        .header .benefits {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 15px;
-            font-size: 13px;
-            flex-wrap: wrap;
-        }
-
-        .header .benefit {
-            opacity: 0.9;
-        }
-
-        .progress-container {
-            background: rgba(255,255,255,0.2);
-            height: 6px;
-            margin-top: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: white;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
-
-        .content {
-            padding: 35px 30px;
-        }
-
-        .step {
-            display: none;
-        }
-
-        .step.active {
-            display: block;
-            animation: fadeIn 0.4s;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .step-title {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            color: #0F172A;
-            padding-bottom: 15px;
-            border-bottom: 3px solid #E2E8F0;
-        }
-
-        .step-subtitle {
-            font-size: 15px;
-            color: #64748B;
-            margin-top: -15px;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-
-        .question-box {
-            margin-bottom: 25px;
-        }
-
-        .question-label {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #1E293B;
-        }
-
-        /* Sector Cards */
-        .sector-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .sector-card {
-            background: white;
-            border: 3px solid #E2E8F0;
-            border-radius: 12px;
-            padding: 25px 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .sector-card:hover {
-            border-color: #3B82F6;
-            background: #F0F9FF;
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
-        }
-
-        .sector-card.selected {
-            border-color: #1E40AF;
-            background: #DBEAFE;
-            box-shadow: 0 4px 12px rgba(30, 64, 175, 0.2);
-        }
-
-        .sector-card .icon {
-            font-size: 40px;
-            line-height: 1;
-        }
-
-        .sector-card .name {
-            font-size: 17px;
-            font-weight: 700;
-            color: #1E293B;
-            line-height: 1.3;
-        }
-
-        @media (max-width: 640px) {
-            .sector-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Employee Cards */
-        .employee-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .employee-card {
-            background: white;
-            border: 3px solid #E2E8F0;
-            border-radius: 12px;
-            padding: 20px 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-
-        .employee-card:hover {
-            border-color: #3B82F6;
-            background: #F0F9FF;
-            transform: translateY(-2px);
-        }
-
-        .employee-card.selected {
-            border-color: #1E40AF;
-            background: #DBEAFE;
-        }
-
-        .employee-card .number {
-            font-size: 28px;
-            font-weight: 900;
-            color: #1E40AF;
-            margin-bottom: 5px;
-        }
-
-        .employee-card .label {
-            font-size: 13px;
-            color: #64748B;
-            font-weight: 600;
-        }
-
-        @media (max-width: 640px) {
-            .employee-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        .options {
-            display: grid;
-            gap: 12px;
-        }
-
-        .option {
-            display: block;
-            padding: 16px 20px;
-            border: 2px solid #E2E8F0;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: white;
-        }
-
-        .option:hover {
-            border-color: #3B82F6;
-            background: #EFF6FF;
-            transform: translateX(4px);
-        }
-
-        .option input[type="radio"] {
-            margin-right: 12px;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .option input:checked + span,
-        .option:has(input:checked) {
-            border-color: #1E40AF;
-            background: #EFF6FF;
-            font-weight: 600;
-        }
-
-        input[type="number"],
-        select {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid #E2E8F0;
-            border-radius: 10px;
-            font-size: 15px;
-            transition: border-color 0.2s;
-        }
-
-        input[type="number"]:focus,
-        select:focus {
-            outline: none;
-            border-color: #3B82F6;
-        }
-
-        .buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-            justify-content: space-between;
-        }
-
-        .btn {
-            padding: 16px 32px;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            flex: 1;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #1E40AF, #3B82F6);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(30,64,175,0.3);
-        }
-
-        .btn-secondary {
-            background: #F1F5F9;
-            color: #475569;
-        }
-
-        .btn-secondary:hover {
-            background: #E2E8F0;
-        }
-
-        .report {
-            display: none;
-        }
-
-        .report.active {
-            display: block;
-        }
-
-        .footer {
-            background: #0F172A;
-            color: #94A3B8;
-            padding: 25px 30px;
-            text-align: center;
-            font-size: 13px;
-            line-height: 1.7;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .header {
-                padding: 25px 20px 20px;
-            }
-
-            .header h1 {
-                font-size: 22px;
-            }
-
-            .header p {
-                font-size: 14px;
-            }
-
-            .header .benefits {
-                gap: 12px;
-                font-size: 12px;
-            }
-
-            .content {
-                padding: 25px 20px;
-            }
-
-            .step-title {
-                font-size: 20px;
-            }
-
-            .btn {
-                padding: 14px 24px;
-                font-size: 15px;
-            }
-
-            .buttons {
-                flex-direction: column-reverse;
-            }
-        }
-
-        /* CSS STAMPA OTTIMIZZATO */
-        @media print {
-            /* Reset generale */
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
-            }
-
-            body {
-                background: white;
-                padding: 0;
-                margin: 0;
-            }
-
-            .container {
-                max-width: 100%;
-                box-shadow: none;
-                border-radius: 0;
-            }
-
-            /* Nascondi elementi non necessari */
-            .header,
-            .footer,
-            .buttons,
-            .step,
-            #preReportSection {
-                display: none !important;
-            }
-
-            /* Mostra solo il report */
-            #reportSection {
-                display: block !important;
-                page-break-after: auto;
-            }
-
-            /* Rimuovi background gradient dal primo div del report */
-            #reportSection > div:first-child {
-                background: #E8F5E9 !important;
-                -webkit-print-color-adjust: exact;
-                border: 2px solid #4CAF50;
-            }
-
-            /* Ottimizza card aree */
-            #reportContent > div {
-                page-break-inside: avoid;
-                margin-bottom: 15px;
-            }
-
-            /* Mantieni colori semaforo ma rendi stampabili */
-            #reportContent div[style*="background:#D1FAE5"] {
-                background: #E8F5E9 !important;
-                border: 2px solid #4CAF50 !important;
-            }
-
-            #reportContent div[style*="background:#FEF3C7"] {
-                background: #FFF9C4 !important;
-                border: 2px solid #FFA726 !important;
-            }
-
-            #reportContent div[style*="background:#FEE2E2"] {
-                background: #FFEBEE !important;
-                border: 2px solid #F44336 !important;
-            }
-
-            /* Ottimizza testo */
-            #reportContent {
-                font-size: 11pt;
-                line-height: 1.4;
-                color: #000;
-            }
-
-            /* Titoli */
-            h2, h3 {
-                page-break-after: avoid;
-                margin-top: 12pt;
-                margin-bottom: 8pt;
-            }
-
-            /* Link visitabili */
-            a {
-                color: #000;
-                text-decoration: underline;
-            }
-
-            a[href^="mailto:"]:after {
-                content: " (" attr(href) ")";
-                font-size: 9pt;
-            }
-
-            a[href^="tel:"]:after {
-                content: " (" attr(href) ")";
-                font-size: 9pt;
-            }
-
-            /* CTA finale più sobrio */
-            #reportContent > div[style*="background: linear-gradient(135deg, #1E40AF"] {
-                background: #E3F2FD !important;
-                color: #000 !important;
-                border: 2px solid #1976D2 !important;
-                page-break-inside: avoid;
-            }
-
-            #reportContent > div[style*="background: linear-gradient(135deg, #1E40AF"] * {
-                color: #000 !important;
-            }
-
-            #reportContent > div[style*="background: linear-gradient(135deg, #1E40AF"] a {
-                color: #1976D2 !important;
-                font-weight: bold;
-            }
-
-            /* Aggiungi header semplice alla stampa */
-            #reportSection:before {
-                content: "REPORT COMPLIANCE SICUREZZA LAVORO - D.Lgs 81/08";
-                display: block;
-                text-align: center;
-                font-size: 16pt;
-                font-weight: bold;
-                margin-bottom: 20pt;
-                padding-bottom: 10pt;
-                border-bottom: 3px solid #1976D2;
-            }
-
-            /* Footer stampa */
-            #reportSection:after {
-                content: "Delivery Care Srl - SB | Tel: +39 02 50047124 | Email: info@deliverycare.it";
-                display: block;
-                text-align: center;
-                font-size: 9pt;
-                margin-top: 30pt;
-                padding-top: 10pt;
-                border-top: 1px solid #ccc;
-                page-break-after: avoid;
-            }
-
-            /* Margini pagina */
-            @page {
-                margin: 2cm 1.5cm;
-                size: A4 portrait;
-            }
-
-            /* Evita rotture indesiderate */
-            .no-break {
-                page-break-inside: avoid;
-            }
-        }
-
-        /* ─── CONSENSO PRIVACY ─── */
-        .consent-block {
-            margin-top: 22px;
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .consent-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .consent-row input[type="checkbox"] {
-            flex-shrink: 0;
-            width: 20px;
-            height: 20px;
-            margin-top: 2px;
-            accent-color: #1E40AF;
-            cursor: pointer;
-        }
-
-        .consent-row label {
-            font-size: 13px;
-            color: #475569;
-            line-height: 1.55;
-            cursor: pointer;
-        }
-
-        .consent-row label .obbligatorio {
-            color: #DC2626;
-            font-weight: 700;
-        }
-
-        .consent-row label a.link-privacy {
-            color: #1E40AF;
-            text-decoration: underline;
-            font-weight: 600;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-            font-size: inherit;
-            font-family: inherit;
-        }
-
-        .consent-row label a.link-privacy:hover {
-            color: #3B82F6;
-        }
-
-        .consent-row.errore input[type="checkbox"] {
-            outline: 3px solid #DC2626;
-            outline-offset: 1px;
-        }
-
-        .consent-errore-msg {
-            display: none;
-            color: #DC2626;
-            font-size: 13px;
-            font-weight: 600;
-            margin-top: 2px;
-            padding-left: 32px;
-        }
-
-        .consent-errore-msg.visibile {
-            display: block;
-        }
-
-        /* ─── MODAL INFORMATIVA ─── */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.6);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal-overlay.aperta {
-            display: flex;
-        }
-
-        .modal-informativa {
-            background: white;
-            border-radius: 16px;
-            max-width: 680px;
-            width: 100%;
-            max-height: 85vh;
-            overflow-y: auto;
-            box-shadow: 0 24px 48px rgba(0,0,0,0.3);
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, #1E40AF, #1E3A8A);
-            color: white;
-            padding: 24px 28px;
-            border-radius: 16px 16px 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .modal-close {
-            background: rgba(255,255,255,0.15);
-            border: none;
-            color: white;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.2s;
-        }
-
-        .modal-close:hover {
-            background: rgba(255,255,255,0.3);
-        }
-
-        .modal-body {
-            padding: 28px;
-        }
-
-        .modal-body h3 {
-            color: #1E40AF;
-            font-size: 16px;
-            margin: 22px 0 8px;
-        }
-
-        .modal-body h3:first-child {
-            margin-top: 0;
-        }
-
-        .modal-body p, .modal-body li {
-            color: #475569;
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 10px;
-        }
-
-        .modal-body ul {
-            padding-left: 20px;
-            margin-bottom: 12px;
-        }
-
-        .modal-body .titolare-box {
-            background: #EFF6FF;
-            border: 1px solid #BFDBFE;
-            border-radius: 8px;
-            padding: 16px 20px;
-            margin-bottom: 20px;
-        }
-
-        .modal-body .titolare-box p {
-            margin-bottom: 4px;
-            color: #1E3A8A;
-        }
-
-        .modal-body .titolare-box p:last-child {
-            margin-bottom: 0;
-        }
-
-        .modal-footer-btn {
-            display: block;
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #1E40AF, #3B82F6);
-            color: white;
-            border: none;
-            border-radius: 0 0 16px 16px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .modal-footer-btn:hover {
-            opacity: 0.9;
-        }
-
-        @media print {
-            .modal-overlay { display: none !important; }
-            .consent-block { display: none !important; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Check-up Sicurezza | Delivery Care</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:#fff;color:#1e293b}
+.screen{display:none;height:100vh;height:100dvh;flex-direction:column;padding:16px;max-width:500px;margin:0 auto}
+.screen.active{display:flex}
+.logo{height:32px}
+.landing-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px}
+.trust-badge{font-size:12px;color:#00A67E;font-weight:600}
+.landing-content{flex:1;display:flex;flex-direction:column;justify-content:center}
+.landing-question{text-align:center;margin-bottom:16px}
+.landing-question h1{font-size:24px;font-weight:700;margin-bottom:6px}
+.landing-question h1 span{color:#0F4C81}
+.landing-question p{font-size:14px;color:#64748b}
+.time-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,166,126,.1);color:#00A67E;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:8px}
+.sector-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.sector-btn{display:flex;flex-direction:column;align-items:center;padding:16px 10px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;transition:all .15s}
+.sector-btn:hover{border-color:#0F4C81;background:#fff}
+.sector-btn:active{transform:scale(.97)}
+.sector-btn .icon{font-size:36px;margin-bottom:8px}
+.sector-btn .label{font-size:14px;font-weight:600;color:#1e293b}
+.landing-footer{text-align:center;padding-top:8px;font-size:10px;color:#64748b}
+.quiz-header{padding-bottom:12px}
+.progress-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:6px}
+.progress-fill{height:100%;background:linear-gradient(90deg,#0F4C81,#00A67E);transition:width .3s}
+.progress-text{font-size:13px;color:#64748b;text-align:right}
+.section-badge{display:inline-block;background:rgba(15,76,129,.1);color:#0F4C81;padding:6px 14px;border-radius:16px;font-size:14px;font-weight:600;margin-top:8px}
+.quiz-content{flex:1;display:flex;flex-direction:column;justify-content:center}
+.question-text{font-size:22px;font-weight:700;text-align:center;margin-bottom:24px;color:#1e293b}
+.options-list{display:flex;flex-direction:column;gap:10px}
+.option-btn{display:flex;align-items:center;gap:12px;padding:16px 14px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;text-align:left;width:100%;transition:all .15s}
+.option-btn:hover{border-color:#0F4C81;background:#fff}
+.option-btn:active{transform:scale(.98)}
+.option-btn.selected{border-color:#0F4C81;background:rgba(15,76,129,.05)}
+.option-icon{font-size:24px}
+.option-text{font-size:16px;font-weight:500;color:#1e293b}
+.option-skip{border:2px dashed #cbd5e1;background:#fff}
+.option-skip .option-text{color:#64748b}
+.quiz-footer{padding-top:12px;text-align:center}
+.back-link{font-size:14px;color:#64748b;cursor:pointer;padding:8px 16px}
+.back-link:hover{color:#0F4C81}
+.report-header{text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center}
+.report-header h2{font-size:18px;font-weight:600;margin-bottom:16px;color:#64748b}
+.score-circle{width:140px;height:140px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;border:8px solid #00A67E;background:rgba(0,166,126,.05)}
+.score-value{font-size:48px;font-weight:700;color:#1e293b}
+.score-value span{font-size:24px}
+.score-label{font-size:18px;font-weight:700;padding:8px 20px;border-radius:20px}
+.stats-row{display:flex;justify-content:center;gap:40px;margin-top:20px}
+.stat-item{text-align:center}
+.stat-number{font-size:32px;font-weight:700;color:#0F4C81}
+.stat-label{font-size:12px;color:#64748b;text-transform:uppercase;margin-top:4px}
+.report-content{padding-top:16px}
+.email-box{background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-radius:16px;padding:24px;border:2px solid #e2e8f0}
+.email-box h3{font-size:18px;font-weight:700;margin-bottom:8px;text-align:center;color:#1e293b}
+.email-box p{font-size:14px;color:#64748b;margin-bottom:16px;text-align:center}
+.form-row{margin-bottom:12px}
+.form-row input{width:100%;padding:14px;border:2px solid #e2e8f0;border-radius:10px;font-size:16px;background:#fff}
+.form-row input:focus{outline:none;border-color:#0F4C81}
+.checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
+.checkbox-row input{width:20px;height:20px;margin-top:2px;accent-color:#0F4C81}
+.checkbox-row label{font-size:13px;color:#64748b}
+.checkbox-row a{color:#0F4C81;font-weight:600}
+.submit-btn{width:100%;padding:16px;background:linear-gradient(135deg,#00A67E,#059669);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:transform .15s}
+.submit-btn:hover{transform:scale(1.02)}
+.submit-btn:active{transform:scale(.98)}
+.full-report-header{text-align:center;padding:12px 0;border-bottom:2px solid #e2e8f0}
+.full-report-content{flex:1;overflow-y:auto;padding:12px 0}
+.contact-box{background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-radius:12px;padding:16px;margin:16px 0;border:2px solid #0F4C81}
+.contact-box h4{font-size:15px;font-weight:700;margin-bottom:12px;color:#0F4C81}
+.contact-box input{width:100%;padding:12px;border:2px solid #e2e8f0;border-radius:8px;font-size:14px;margin-bottom:8px;background:#fff}
+.contact-box button{width:100%;padding:12px;background:linear-gradient(135deg,#0F4C81,#0a3659);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
+.restart-btn{width:100%;padding:14px;background:#f8fafc;color:#1e293b;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px}
+.restart-btn:hover{border-color:#0F4C81}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:16px}
+.modal.active{display:flex}
+.modal-box{background:#fff;border-radius:16px;padding:24px;max-width:360px;width:100%}
+.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.modal-header h3{font-size:16px;font-weight:700;color:#1e293b}
+.modal-close{width:32px;height:32px;border-radius:50%;background:#f8fafc;border:none;font-size:18px;cursor:pointer}
+.modal-body{font-size:13px;color:#64748b;line-height:1.6}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="LOGO_Delivery_Care.png" alt="Delivery Care Srl - SB">
-            <h1>Check-up Express Sicurezza Lavoro D.Lgs 81/08</h1>
-            <p>Verifica la conformità della tua azienda</p>
-            <div class="benefits">
-                <span class="benefit">✓ Gratuito</span>
-                <span class="benefit">✓ Circa 2 minuti</span>
-                <span class="benefit">✓ Report immediato</span>
-            </div>
-            <div class="progress-container">
-                <div class="progress-bar" id="progressBar"></div>
-            </div>
-        </div>
 
-        <div class="content">
-            <!-- LANDING PAGE -->
-            <div class="step active landing-page" data-step="0">
-                <div style="text-align: center; padding: 60px 40px;">
-                    <h2 style="font-size: 36px; color: #1E293B; margin-bottom: 25px; font-weight: 800; line-height: 1.2;">
-                        Scopri in 2 minuti<br>se la tua azienda è conforme
-                    </h2>
-                    <p style="font-size: 20px; color: #475569; margin-bottom: 15px; line-height: 1.6; max-width: 700px; margin-left: auto; margin-right: auto;">
-                        Rispondi a poche domande mirate e ottieni subito un'analisi preliminare dettagliata dello stato di conformità al D.Lgs 81/08.
-                    </p>
-                    <p style="font-size: 17px; color: #1E293B; margin-bottom: 50px; font-weight: 700; max-width: 700px; margin-left: auto; margin-right: auto;">
-                        Non sono necessari documenti sotto mano.
-                    </p>
-                    
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; margin: 50px auto 60px; max-width: 750px; text-align: left;">
-                        <div style="display: flex; align-items: start; gap: 15px;">
-                            <span style="font-size: 32px;">✅</span>
-                            <div>
-                                <h3 style="font-size: 18px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">Completamente Gratuito</h3>
-                                <p style="font-size: 15px; color: #64748B; margin: 0;">Analisi completa senza alcun costo</p>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: start; gap: 15px;">
-                            <span style="font-size: 32px;">⚡</span>
-                            <div>
-                                <h3 style="font-size: 18px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">Veloce e Immediato</h3>
-                                <p style="font-size: 15px; color: #64748B; margin: 0;">Solo 2 minuti per completarlo</p>
-                            </div>
-                        </div>
-                        <div style="display: flex; align-items: start; gap: 15px;">
-                            <span style="font-size: 32px;">🎯</span>
-                            <div>
-                                <h3 style="font-size: 18px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">Personalizzato</h3>
-                                <p style="font-size: 15px; color: #64748B; margin: 0;">Adattato al tuo settore specifico</p>
-                            </div>
-                        </div>
-                    </div>
+<div class="screen active" id="screenLanding">
+<header class="landing-header">
+<img src="https://raw.githubusercontent.com/deliverycaremeet-ctrl/questionario-sicurezza/main/LOGO_Delivery_Care.png" alt="Delivery Care" class="logo">
+<div class="trust-badge">✓ 100% gratuito</div>
+</header>
+<main class="landing-content">
+<div class="landing-question">
+<div class="time-badge">⏱️ 2 minuti • Gratuito</div>
+<h1>La tua azienda è <span>in regola</span>?</h1>
+<p>Scoprilo subito. In quale settore operi?</p>
+</div>
+<div class="sector-grid">
+<button class="sector-btn" onclick="startQuiz('Uffici')"><span class="icon">🏢</span><span class="label">Uffici / IT</span></button>
+<button class="sector-btn" onclick="startQuiz('Logistica')"><span class="icon">🚚</span><span class="label">Logistica</span></button>
+<button class="sector-btn" onclick="startQuiz('Produzione')"><span class="icon">🏭</span><span class="label">Produzione</span></button>
+<button class="sector-btn" onclick="startQuiz('Edilizia')"><span class="icon">🏗️</span><span class="label">Edilizia</span></button>
+<button class="sector-btn" onclick="startQuiz('Commercio')"><span class="icon">🛒</span><span class="label">Commercio</span></button>
+<button class="sector-btn" onclick="startQuiz('Sanita')"><span class="icon">🏥</span><span class="label">Sanità</span></button>
+<button class="sector-btn" onclick="startQuiz('Ristorazione')"><span class="icon">🍽️</span><span class="label">Ristorazione</span></button>
+<button class="sector-btn" onclick="startQuiz('Altro')"><span class="icon">🎯</span><span class="label">Altro</span></button>
+</div>
+</main>
+<footer class="landing-footer">Delivery Care Srl - Società Benefit</footer>
+</div>
 
-                    <button class="btn btn-primary" onclick="startTest()" style="font-size: 20px; padding: 20px 50px; box-shadow: 0 10px 30px rgba(30, 64, 175, 0.3);">
-                        🚀 Inizia il Check-up
-                    </button>
+<div class="screen" id="screenQuestion">
+<header class="quiz-header">
+<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+<div class="progress-text" id="progressText">1 di 15</div>
+<div class="section-badge" id="sectionBadge">Sezione</div>
+</header>
+<main class="quiz-content">
+<h2 class="question-text" id="questionText">Domanda?</h2>
+<div class="options-list" id="optionsList"></div>
+</main>
+<footer class="quiz-footer">
+<span class="back-link" id="backLink" onclick="goBack()">← Indietro</span>
+</footer>
+</div>
 
-                    <p style="font-size: 14px; color: #94A3B8; margin-top: 30px;">
-                        ⏱️ Tempo stimato: circa 2 minuti
-                    </p>
-                </div>
-            </div>
+<div class="screen" id="screenMiniReport">
+<header class="report-header">
+<h2>Il tuo risultato</h2>
+<div class="score-circle" id="scoreCircle2"><span class="score-value"><span id="scoreValue2">0</span><span>%</span></span></div>
+<span class="score-label" id="scoreLabel2">...</span>
+<div class="stats-row">
+<div class="stat-item"><div class="stat-number" id="criticalCount2">0</div><div class="stat-label">Criticità</div></div>
+<div class="stat-item"><div class="stat-number" id="urgentCount2">0</div><div class="stat-label">Urgenti</div></div>
+</div>
+</header>
+<main class="report-content">
+<div class="email-box">
+<h3>📧 Ricevi il report completo</h3>
+<p>Dettaglio criticità, sanzioni e azioni consigliate</p>
+<div class="form-row"><input type="email" id="emailInput" placeholder="La tua email aziendale"></div>
+<div class="checkbox-row"><input type="checkbox" id="privacyCheck"><label>Accetto l'<a href="#" onclick="openPrivacy(event)">informativa privacy</a></label></div>
+<button class="submit-btn" onclick="submitEmail()">📊 Invia Report Gratuito</button>
+</div>
+</main>
+</div>
 
-            <!-- Step 1: Sector -->
-            <div class="step" data-step="1">
-                <div style="text-align: center; margin-bottom: 40px;">
-                    <div style="font-size: 32px; font-weight: 800; color: #1E293B; margin-bottom: 15px;">
-                        In quale settore opera la tua azienda?
-                    </div>
-                    <div style="font-size: 16px; color: #64748B; line-height: 1.6; max-width: 600px; margin: 0 auto;">
-                        Ci serve per mostrarti solo le domande realmente pertinenti alla tua attività
-                    </div>
-                </div>
+<div class="screen" id="screenFullReport">
+<header class="full-report-header">
+<img src="https://raw.githubusercontent.com/deliverycaremeet-ctrl/questionario-sicurezza/main/LOGO_Delivery_Care.png" alt="Delivery Care" style="height:28px">
+</header>
+<main class="full-report-content" id="reportContent"></main>
+<footer><button class="restart-btn" onclick="restart()">🔄 Nuovo check-up</button></footer>
+</div>
 
-                <div class="sector-grid">
-                    <div class="sector-card" onclick="selectSector('office')">
-                        <div class="icon">🏢</div>
-                        <div class="name">Uffici / Studi /<br>Servizi / IT</div>
-                    </div>
-                    <div class="sector-card" onclick="selectSector('logistics')">
-                        <div class="icon">🚚</div>
-                        <div class="name">Logistica /<br>Trasporti / Magazzini</div>
-                    </div>
-                    <div class="sector-card" onclick="selectSector('manufacturing')">
-                        <div class="icon">🏭</div>
-                        <div class="name">Produzione /<br>Industria / Manifattura</div>
-                    </div>
-                    <div class="sector-card" onclick="selectSector('construction')">
-                        <div class="icon">🏗️</div>
-                        <div class="name">Edilizia /<br>Cantieri / Impiantistica</div>
-                    </div>
-                    <div class="sector-card" onclick="selectSector('retail')">
-                        <div class="icon">🛒</div>
-                        <div class="name">Commercio /<br>Retail / GDO</div>
-                    </div>
-                    <div class="sector-card" onclick="selectSector('healthcare')">
-                        <div class="icon">🏥</div>
-                        <div class="name">Sanità / RSA /<br>Assistenza</div>
-                    </div>
-                    <div class="sector-card" onclick="selectSector('horeca')">
-                        <div class="icon">🍽️</div>
-                        <div class="name">Ristorazione /<br>Hotel / Hospitality</div>
-                    </div>
-                    <div class="sector-card" onclick="selectSector('other')">
-                        <div class="icon">🎨</div>
-                        <div class="name">Altro</div>
-                    </div>
-                </div>
+<div class="modal" id="privacyModal" onclick="if(event.target===this)closePrivacy()">
+<div class="modal-box">
+<div class="modal-header"><h3>🔒 Privacy</h3><button class="modal-close" onclick="closePrivacy()">×</button></div>
+<div class="modal-body">
+<p><b>Titolare:</b> Delivery Care Srl - Società Benefit<br>P.zza centro commerciale 44, 20090 Segrate (MI)<br>P.IVA 11263630961</p>
+<p style="margin-top:12px"><b>Finalità:</b> Invio report conformità D.Lgs 81/08, gestione richiesta consulenza.</p>
+<p style="margin-top:12px"><b>Diritti:</b> Accesso, rettifica, cancellazione.<br>Contatto: info@deliverycare.it</p>
+</div>
+</div>
+</div>
 
-                <div class="buttons">
-                    <button class="btn btn-primary" onclick="nextStep()" id="sectorNextBtn" disabled style="opacity: 0.5;">Continua →</button>
-                </div>
-            </div>
+<script>
+var SHEET_URL="https://script.google.com/macros/s/AKfycbxzxAES75zzCDy6ROvKmWjCko6oLbPKJBD1oXePTZ0h7Zh5uD9S13LeehOaLKvz8X1a/exec";
 
-            <!-- Step 2: Medico -->
-            <div class="step" data-step="2">
-                <div class="step-title">👨‍⚕️ Sorveglianza Sanitaria</div>
-                
-                <div class="question-box">
-                    <div class="question-label">Hai nominato il Medico Competente?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="medicoNominato" value="yes">
-                            <span>✅ SÌ, abbiamo il Medico Competente</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="medicoNominato" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="medicoNominato" value="unknown">
-                            <span>❓ Non lo so</span>
-                        </label>
-                    </div>
-                </div>
+var sanzioni={
+"Hai nominato il Medico Competente?":["MEDICO COMPETENTE MANCANTE","Obbligo per tutte le aziende con rischi","€2.740-€7.014 + arresto 2-4 mesi"],
+"Visite mediche effettuate?":["VISITE MEDICHE NON EFFETTUATE","Ogni lavoratore deve avere visita preventiva","€1.096-€4.384 per lavoratore"],
+"Formazione generale (4h) completata?":["FORMAZIONE GENERALE MANCANTE","4 ore obbligatorie per tutti i lavoratori","€1.315-€5.699 per lavoratore"],
+"Formazione specifica mansione?":["FORMAZIONE SPECIFICA MANCANTE","Obbligatoria in base alla mansione","€1.096-€4.384 per lavoratore"],
+"Aggiornamento (ogni 5 anni)?":["AGGIORNAMENTO NON EFFETTUATO","Ogni 5 anni obbligatorio","€1.096-€4.384"],
+"DVR presente e aggiornato?":["DVR MANCANTE O NON AGGIORNATO","Documento Valutazione Rischi obbligatorio","€2.740-€7.014 + arresto 3-6 mesi"],
+"RSPP nominato?":["RSPP NON NOMINATO","Responsabile Servizio Prevenzione obbligatorio","€2.740-€7.014 + arresto 3-6 mesi"],
+"Addetti Emergenze nominati?":["ADDETTI EMERGENZE MANCANTI","Antincendio e Primo Soccorso obbligatori","€822-€4.384"],
+"DPI forniti ai lavoratori?":["DPI NON FORNITI","Dispositivi Protezione Individuale obbligatori","€1.644-€6.576 + arresto 2-4 mesi"],
+"Piano emergenza presente?":["PIANO EMERGENZA MANCANTE","Piano evacuazione obbligatorio","€2.192-€5.918"],
+"Cassetta primo soccorso?":["CASSETTA PRIMO SOCCORSO MANCANTE","Obbligatoria in ogni sede","€548-€1.972"],
+"Estintori verificati?":["ESTINTORI NON VERIFICATI","Verifica annuale obbligatoria","€2.064-€12.386 + sospensione attività"],
+"Prove evacuazione?":["PROVE EVACUAZIONE NON EFFETTUATE","Almeno annuale obbligatoria","€2.192-€5.918"],
+"Impianto elettrico verificato?":["IMPIANTO ELETTRICO NON VERIFICATO","Verifica biennale DPR 462 obbligatoria","€516-€2.582"]
+};
 
-                <div class="question-box">
-                    <div class="question-label">Tutti i dipendenti hanno effettuato le visite mediche?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="visite" value="all">
-                            <span>✅ SÌ, tutti</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="visite" value="some">
-                            <span>⚠️ Solo alcuni</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="visite" value="none">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
+var questions=[
+{s:"👨‍⚕️ Sorveglianza Sanitaria",q:"Hai nominato il Medico Competente?",o:[{t:"Sì, nominato",i:"✅",p:10},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"👨‍⚕️ Sorveglianza Sanitaria",q:"Visite mediche effettuate?",o:[{t:"Sì, tutti",i:"✅",p:10},{t:"Solo alcuni",i:"⚠️",p:5},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"👨‍⚕️ Sorveglianza Sanitaria",q:"Quanti dipendenti ha l'azienda?",o:[{t:"1-15",i:"👥",p:0,f:1},{t:"16-100",i:"👥",p:0,f:1},{t:"101-250",i:"👥",p:0,f:1},{t:"Oltre 250",i:"👥",p:0,f:1}]},
+{s:"📚 Formazione",q:"Formazione generale (4h) completata?",o:[{t:"Sì, tutti",i:"✅",p:10},{t:"Solo alcuni",i:"⚠️",p:5},{t:"Nessuno",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"📚 Formazione",q:"Formazione specifica mansione?",o:[{t:"Sì, tutti",i:"✅",p:10},{t:"Solo alcuni",i:"⚠️",p:5},{t:"Nessuno",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"📚 Formazione",q:"Aggiornamento (ogni 5 anni)?",o:[{t:"Sì, in regola",i:"✅",p:10},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"📄 Documenti",q:"DVR presente e aggiornato?",o:[{t:"Sì, aggiornato",i:"✅",p:10},{t:"Sì, ma datato",i:"⚠️",p:5},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"📄 Documenti",q:"RSPP nominato?",o:[{t:"Sì",i:"✅",p:10},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"📄 Documenti",q:"Addetti Emergenze nominati?",o:[{t:"Antincendio + PS",i:"✅",p:10},{t:"Solo uno",i:"⚠️",p:5},{t:"Nessuno",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"🦺 DPI e Sicurezza",q:"DPI forniti ai lavoratori?",o:[{t:"Sì, tutti dotati",i:"✅",p:10},{t:"Non necessari",i:"⚪",p:10},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"🦺 DPI e Sicurezza",q:"Piano emergenza presente?",o:[{t:"Sì, completo",i:"✅",p:10},{t:"Parziale",i:"⚠️",p:5},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"🦺 DPI e Sicurezza",q:"Cassetta primo soccorso?",o:[{t:"Sì",i:"✅",p:10},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"🔥 Antincendio",q:"Estintori verificati?",o:[{t:"Sì, in regola",i:"✅",p:10},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"🔥 Antincendio",q:"Prove evacuazione?",o:[{t:"Regolarmente",i:"✅",p:10},{t:"Qualche volta",i:"⚠️",p:5},{t:"Mai",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]},
+{s:"🔥 Antincendio",q:"Impianto elettrico verificato?",o:[{t:"Sì, verificato",i:"✅",p:10},{t:"Verifica scaduta",i:"⚠️",p:5},{t:"No",i:"❌",p:0},{t:"Non so / Avanti",i:"➡️",p:2,k:1}]}
+];
 
-                <!-- Numero Dipendenti -->
-                <div class="question-box" style="margin-top: 40px;">
-                    <div class="question-label" style="text-align: center; margin-bottom: 20px;">Quanti dipendenti ha la tua azienda?</div>
-                    <div class="employee-grid">
-                        <div class="employee-card" onclick="selectEmployees('1-15')">
-                            <div class="number">1-15</div>
-                            <div class="label">dipendenti</div>
-                        </div>
-                        <div class="employee-card" onclick="selectEmployees('16-100')">
-                            <div class="number">16-100</div>
-                            <div class="label">dipendenti</div>
-                        </div>
-                        <div class="employee-card" onclick="selectEmployees('101-250')">
-                            <div class="number">101-250</div>
-                            <div class="label">dipendenti</div>
-                        </div>
-                        <div class="employee-card" onclick="selectEmployees('250+')">
-                            <div class="number">250+</div>
-                            <div class="label">dipendenti</div>
-                        </div>
-                    </div>
-                </div>
+var tot=questions.length;
+var cur=0;
+var ans=[];
+var sett="";
+var score=0;
+var crit=0;
+var urg=0;
+var mail="";
+var dip="";
 
-                <div class="buttons">
-                    <button class="btn btn-secondary" onclick="prevStep()">← Indietro</button>
-                    <button class="btn btn-primary" onclick="nextStep()" id="step2NextBtn" disabled style="opacity: 0.5;">Avanti →</button>
-                </div>
-            </div>
+function show(id){
+    var screens=document.querySelectorAll(".screen");
+    for(var i=0;i<screens.length;i++){screens[i].classList.remove("active");}
+    document.getElementById(id).classList.add("active");
+}
 
-            <!-- Step 3: Formazione -->
-            <div class="step" data-step="3">
-                <div class="step-title">📚 Formazione</div>
-                
-                <div class="question-box">
-                    <div class="question-label">Formazione generale (4 ore) completata?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="formazioneGenerale" value="all">
-                            <span>✅ Tutti</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="formazioneGenerale" value="some">
-                            <span>⚠️ Solo alcuni</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="formazioneGenerale" value="none">
-                            <span>❌ Nessuno</span>
-                        </label>
-                    </div>
-                </div>
+function startQuiz(x){
+    sett=x;cur=0;ans=[];
+    showQ();
+}
 
-                <div class="question-box">
-                    <div class="question-label">Formazione specifica mansione completata?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="formazioneSpecifica" value="all">
-                            <span>✅ Tutti</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="formazioneSpecifica" value="some">
-                            <span>⚠️ Solo alcuni</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="formazioneSpecifica" value="none">
-                            <span>❌ Nessuno</span>
-                        </label>
-                    </div>
-                </div>
+function showQ(){
+    show("screenQuestion");
+    var q=questions[cur];
+    document.getElementById("progressFill").style.width=((cur+1)/tot*100)+"%";
+    document.getElementById("progressText").textContent=(cur+1)+" di "+tot;
+    document.getElementById("sectionBadge").textContent=q.s;
+    document.getElementById("questionText").textContent=q.q;
+    var h="";
+    for(var i=0;i<q.o.length;i++){
+        var c=q.o[i].k?"option-btn option-skip":"option-btn";
+        h+="<button class=\""+c+"\" onclick=\"pick("+i+")\"><span class=\"option-icon\">"+q.o[i].i+"</span><span class=\"option-text\">"+q.o[i].t+"</span></button>";
+    }
+    document.getElementById("optionsList").innerHTML=h;
+    document.getElementById("backLink").style.visibility=cur>0?"visible":"hidden";
+}
 
-                <div class="question-box">
-                    <div class="question-label">Aggiornamento formazione (ogni 5 anni) fatto?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="formazioneAggiornata" value="yes">
-                            <span>✅ SÌ</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="formazioneAggiornata" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
+function pick(i){
+    var q=questions[cur];
+    ans[cur]={q:q.q,s:q.s,a:q.o[i].t,p:q.o[i].p,f:q.o[i].f||0};
+    if(q.q.indexOf("dipendenti")>-1){dip=q.o[i].t;}
+    var btns=document.querySelectorAll("#optionsList .option-btn");
+    btns[i].classList.add("selected");
+    setTimeout(function(){
+        if(cur<tot-1){cur++;showQ();}
+        else{calc();showMini();}
+    },180);
+}
 
-                <div class="buttons">
-                    <button class="btn btn-secondary" onclick="prevStep()">← Indietro</button>
-                    <button class="btn btn-primary" onclick="nextStep()">Avanti →</button>
-                </div>
-            </div>
+function goBack(){if(cur>0){cur--;showQ();}}
 
-            <!-- Step 4: DVR e Nomine -->
-            <div class="step" data-step="4">
-                <div class="step-title">📄 Documenti e Nomine</div>
-                
-                <div class="question-box">
-                    <div class="question-label">DVR (Documento Valutazione Rischi) presente?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="dvr" value="updated">
-                            <span>✅ SÌ, aggiornato</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="dvr" value="old">
-                            <span>⚠️ SÌ, ma datato</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="dvr" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-box">
-                    <div class="question-label">RSPP (Responsabile Servizio Prevenzione) nominato?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="rspp" value="external">
-                            <span>✅ SÌ, esterno</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="rspp" value="internal">
-                            <span>✅ SÌ, interno</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="rspp" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-box">
-                    <div class="question-label">Addetti Emergenze nominati?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="addetti" value="both">
-                            <span>✅ Antincendio + Primo Soccorso</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="addetti" value="one">
-                            <span>⚠️ Solo uno</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="addetti" value="none">
-                            <span>❌ Nessuno</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="buttons">
-                    <button class="btn btn-secondary" onclick="prevStep()">← Indietro</button>
-                    <button class="btn btn-primary" onclick="nextStep()">Avanti →</button>
-                </div>
-            </div>
-
-            <!-- Step 5: DPI -->
-            <div class="step" data-step="5">
-                <div class="step-title">🦺 DPI e Sicurezza</div>
-                
-                <div class="question-box">
-                    <div class="question-label">DPI forniti ai lavoratori?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="dpi" value="all">
-                            <span>✅ SÌ</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="dpi" value="notneeded">
-                            <span>⚪ Non necessari</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="dpi" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-box">
-                    <div class="question-label">Registro infortuni tenuto?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="registro" value="yes">
-                            <span>✅ SÌ</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="registro" value="noinfortuni">
-                            <span>⚪ Mai avuti infortuni</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="registro" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-box">
-                    <div class="question-label">Piano emergenza ed evacuazione?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="emergenza" value="yes">
-                            <span>✅ SÌ, completo</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="emergenza" value="partial">
-                            <span>⚠️ Parziale</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="emergenza" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="buttons">
-                    <button class="btn btn-secondary" onclick="prevStep()">← Indietro</button>
-                    <button class="btn btn-primary" onclick="nextStep()">Avanti →</button>
-                </div>
-            </div>
-
-            <!-- Step 6: Antincendio -->
-            <div class="step" data-step="6">
-                <div class="step-title">🔥 Antincendio e Impianti</div>
-                
-                <div class="question-box">
-                    <div class="question-label">Estintori verificati annualmente?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="estintori" value="yes">
-                            <span>✅ SÌ</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="estintori" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-box">
-                    <div class="question-label">Prove evacuazione effettuate?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="prove_evacuazione" value="regular">
-                            <span>✅ Regolarmente</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="prove_evacuazione" value="sometimes">
-                            <span>⚠️ Qualche volta</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="prove_evacuazione" value="never">
-                            <span>❌ Mai</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-box">
-                    <div class="question-label">Impianto elettrico verificato?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="impianto_elettrico" value="yes">
-                            <span>✅ SÌ</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="impianto_elettrico" value="old">
-                            <span>⚠️ Datato</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="impianto_elettrico" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="question-box">
-                    <div class="question-label">Cassetta primo soccorso presente?</div>
-                    <div class="options">
-                        <label class="option">
-                            <input type="radio" name="cassetta_soccorso" value="yes">
-                            <span>✅ SÌ</span>
-                        </label>
-                        <label class="option">
-                            <input type="radio" name="cassetta_soccorso" value="no">
-                            <span>❌ NO</span>
-                        </label>
-                    </div>
-                </div>
-
-                <div class="buttons">
-                    <button class="btn btn-secondary" onclick="prevStep()">← Indietro</button>
-                    <button class="btn btn-primary" onclick="generateReport()">🔍 Genera Report</button>
-                </div>
-            </div>
-
-            <!-- PRE-REPORT: Percentuale + Form BREVO -->
-            <div class="report" id="preReportSection">
-                <div style="text-align: center; padding: 40px 20px;">
-                    
-                    <!-- Titolo sopra -->
-                    <h2 style="font-size: 24px; font-weight: 700; margin-bottom: 25px; color: #0F172A;">La tua percentuale di adeguamento è</h2>
-                    
-                    <!-- Cerchio punteggio -->
-                    <div style="width: 200px; height: 200px; margin: 0 auto 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15);" id="scoreCircle">
-                        <div>
-                            <div id="preScoreDisplay" style="font-size: 72px; font-weight: 900; color: white;">58</div>
-                            <div style="font-size: 24px; color: white; margin-top: -10px;">%</div>
-                        </div>
-                    </div>
-
-                    <!-- 2 Card Info -->
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; max-width: 500px; margin: 0 auto 40px;">
-                        <div style="background: #FEE2E2; border: 2px solid #DC2626; border-radius: 12px; padding: 20px; text-align: center;">
-                            <div id="criticalAreasCount" style="font-size: 48px; font-weight: 900; color: #DC2626; margin-bottom: 5px;">3</div>
-                            <div style="font-size: 14px; font-weight: 600; color: #991B1B;">Aree Critiche</div>
-                        </div>
-                        <div style="background: #FEF3C7; border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; text-align: center;">
-                            <div id="urgentActionsCount" style="font-size: 48px; font-weight: 900; color: #F59E0B; margin-bottom: 5px;">5</div>
-                            <div style="font-size: 14px; font-weight: 600; color: #92400E;">Interventi Urgenti</div>
-                        </div>
-                    </div>
-
-                    <!-- FORM BREVO -->
-                    <form id="brevoForm" style="max-width: 500px; margin: 0 auto; text-align: left; background: #F8FAFC; padding: 35px; border-radius: 16px; border: 2px solid #E2E8F0;">
-                        
-                        <h3 style="text-align: center; margin-bottom: 25px; font-size: 17px; line-height: 1.6; color: #0F172A;">Abbiamo già elaborato una prima valutazione. Inserisci la tua email per ricevere il report completo con dettaglio criticità, priorità e azioni consigliate.</h3>
-                        
-                        <!-- EMAIL (OBBLIGATORIA) -->
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 15px; color: #0F172A;">Email *</label>
-                            <input type="email" name="EMAIL" id="EMAIL" required placeholder="mario.rossi@azienda.it" style="width: 100%; padding: 14px; border: 2px solid #3B82F6; border-radius: 8px; font-size: 16px;">
-                        </div>
-
-                        <!-- CONSENSO PRIVACY (OBBLIGATORIO) -->
-                        <div class="consent-block" style="margin-bottom: 30px;">
-                            <div class="consent-row" id="consentRowObbligatorio">
-                                <input type="checkbox" id="consentObbl" name="CONSENSO_DATI">
-                                <label for="consentObbl">
-                                    Ho letto l'<a class="link-privacy" onclick="aprModalPrivacy()">informativa sul trattamento dei dati personali</a> e 
-                                    <strong>Do il consenso</strong> al trattamento dei miei dati personali da parte di Delivery Care Srl per le finalità ivi indicate.
-                                    <span class="obbligatorio">*</span>
-                                </label>
-                            </div>
-                            <div class="consent-errore-msg" id="consentErrMsg">⚠️ Il consenso è obbligatorio per procedere.</div>
-                        </div>
-
-                        <!-- SEPARATORE VISIVO -->
-                        <div style="border-top: 2px solid #E2E8F0; margin: 30px 0; padding-top: 25px;">
-                            <p style="text-align: center; color: #64748B; font-size: 14px; margin-bottom: 20px; font-style: italic;">Campi facoltativi (aiutaci a personalizzare il report)</p>
-                        </div>
-
-                        <!-- NOME (FACOLTATIVO) -->
-                        <div style="margin-bottom: 18px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #64748B;">Nome Referente <span style="font-style: italic; font-weight: 400;">(facoltativo)</span></label>
-                            <input type="text" name="NOME" id="NOME" placeholder="Es: Mario Rossi" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                        </div>
-
-                        <!-- NOME AZIENDA (FACOLTATIVO) -->
-                        <div style="margin-bottom: 18px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #64748B;">Nome Azienda <span style="font-style: italic; font-weight: 400;">(facoltativo)</span></label>
-                            <input type="text" name="NOME_AZIENDA" id="NOME_AZIENDA" placeholder="Es: Rossi SRL" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                        </div>
-
-                        <!-- TELEFONO (FACOLTATIVO) -->
-                        <div style="margin-bottom: 20px;">
-                            <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: #64748B;">Telefono <span style="font-style: italic; font-weight: 400;">(facoltativo)</span></label>
-                            <input type="tel" name="TELEFONO" id="TELEFONO" placeholder="333 123 4567" style="width: 100%; padding: 12px; border: 2px solid #E2E8F0; border-radius: 8px; font-size: 15px;">
-                        </div>
-
-                        <!-- CONSENSO MARKETING (FACOLTATIVO) -->
-                        <div class="consent-block" style="margin-bottom: 25px;">
-                            <div class="consent-row">
-                                <input type="checkbox" id="consentMarketing" name="CONSENSO_MARKETING">
-                                <label for="consentMarketing">
-                                    Accetto di ricevere comunicazioni commerciali e promozionali da parte di Delivery Care Srl, inclusi aggiornamenti normativi e offerte dei servizi.
-                                    <span style="color: #64748B; font-style: italic;">(facoltativo)</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Hidden fields BREVO -->
-                        <input type="hidden" name="PUNTEGGIO" id="PUNTEGGIO">
-                        <input type="hidden" name="DIPENDENTI" id="DIPENDENTI">
-                        <input type="hidden" name="SETTORE" id="SETTORE">
-                        <input type="hidden" name="CRITICITA" id="CRITICITA">
-
-                        <button type="button" class="btn btn-primary" onclick="submitBrevoForm()" style="width: 100%; margin-top: 20px;">
-                            📊 Visualizza Report Completo
-                        </button>
-                    </form>
-                </div>
-            </div>
-
-            <!-- REPORT FINALE -->
-            <div class="report" id="reportSection">
-                <div id="reportContent"></div>
-                
-                <div class="buttons">
-                    <button class="btn btn-primary" onclick="window.print()">🖨️ Stampa Report</button>
-                    <button class="btn btn-secondary" onclick="location.reload()">🔄 Nuovo Check-up</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            <strong>Delivery Care Srl - SB</strong><br>
-            P.IVA: 11263630961 | P.zza centro commerciale 44, 20090 Segrate (MI)<br>
-            Tel: +39 02 50047124 | Email: info@deliverycare.it<br>
-            31.000+ lavoratori in sorveglianza sanitaria | 42 province coperte
-        </div>
-    </div>
-
-    <script>
-        let currentStep = 0;
-        const totalSteps = 6;
-        
-        function startTest() {
-            document.querySelector('[data-step="0"]').classList.remove('active');
-            currentStep = 1;
-            document.querySelector('[data-step="1"]').classList.add('active');
-            updateProgress();
-            window.scrollTo(0, 0);
-            
-            trackEvent('test_started', {
-                timestamp: new Date().toISOString()
-            });
+function calc(){
+    var tp=0,mp=0;crit=0;urg=0;
+    for(var i=0;i<ans.length;i++){
+        if(ans[i]&&!ans[i].f){
+            tp+=ans[i].p;mp+=10;
+            if(ans[i].p===0){urg++;}
+            else if(ans[i].p<=5){crit++;}
         }
-        
-        // Selected sector variable
-        let selectedSector = '';
-        let selectedEmployees = '';
-        
-        function selectSector(sector) {
-            selectedSector = sector;
-            
-            // Remove selected class from all cards
-            document.querySelectorAll('.sector-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            // Add selected class to clicked card
-            event.target.closest('.sector-card').classList.add('selected');
-            
-            // Enable continue button
-            const btn = document.getElementById('sectorNextBtn');
-            btn.disabled = false;
-            btn.style.opacity = '1';
+    }
+    score=mp>0?Math.round(tp/mp*100):0;
+}
+
+function showMini(){
+    show("screenMiniReport");
+    var el=document.getElementById("scoreValue2");
+    var v=0;
+    var tm=setInterval(function(){
+        v+=score/20;
+        if(v>=score){v=score;clearInterval(tm);}
+        el.textContent=Math.round(v);
+    },40);
+    var c,l,b;
+    if(score>=90){c="#22c55e";l="Eccellente";b="rgba(34,197,94,.15)";}
+    else if(score>=75){c="#84cc16";l="Buono";b="rgba(132,204,22,.15)";}
+    else if(score>=60){c="#eab308";l="Sufficiente";b="rgba(234,179,8,.15)";}
+    else if(score>=40){c="#f97316";l="Insufficiente";b="rgba(249,115,22,.15)";}
+    else{c="#ef4444";l="Critico";b="rgba(239,68,68,.15)";}
+    document.getElementById("scoreCircle2").style.borderColor=c;
+    var lb=document.getElementById("scoreLabel2");
+    lb.textContent=l;lb.style.background=b;lb.style.color=c;
+    document.getElementById("criticalCount2").textContent=crit;
+    document.getElementById("urgentCount2").textContent=urg;
+}
+
+function submitEmail(){
+    var e=document.getElementById("emailInput").value;
+    var p=document.getElementById("privacyCheck").checked;
+    if(!e||e.indexOf("@")<0){alert("Inserisci un indirizzo email valido");return;}
+    if(!p){alert("Accetta l'informativa privacy per continuare");return;}
+    mail=e;
+    sendSheet();
+    showFull();
+}
+
+function sendSheet(){
+    var payload={timestamp:new Date().toISOString(),email:mail,settore:sett,dipendenti:dip,punteggio:score,criticita:crit,urgenti:urg};
+    fetch(SHEET_URL,{method:"POST",mode:"no-cors",body:JSON.stringify(payload)});
+}
+
+function showFull(){
+    show("screenFullReport");
+    var c,l,emoji;
+    if(score>=90){c="#22c55e";l="CONFORME";emoji="🟢";}
+    else if(score>=75){c="#84cc16";l="BUONO";emoji="🟢";}
+    else if(score>=60){c="#eab308";l="DA MIGLIORARE";emoji="🟡";}
+    else if(score>=40){c="#f97316";l="CRITICITÀ GRAVI";emoji="🟠";}
+    else{c="#ef4444";l="NON CONFORME";emoji="🔴";}
+
+    var areas={};
+    for(var i=0;i<ans.length;i++){
+        if(ans[i]){
+            if(!areas[ans[i].s]){areas[ans[i].s]={items:[],sc:0,mx:0};}
+            areas[ans[i].s].items.push(ans[i]);
+            if(!ans[i].f){areas[ans[i].s].sc+=ans[i].p;areas[ans[i].s].mx+=10;}
         }
+    }
 
-        function selectEmployees(range) {
-            selectedEmployees = range;
-            
-            // Remove selected class from all cards
-            document.querySelectorAll('.employee-card').forEach(card => {
-                card.classList.remove('selected');
-            });
-            
-            // Add selected class to clicked card
-            event.target.closest('.employee-card').classList.add('selected');
-            
-            // Check if can enable button (need employees selection)
-            checkStep2Complete();
-        }
+    var h="<div style=\"text-align:center;padding:24px 16px;margin-bottom:20px;background:linear-gradient(135deg,"+c+"15,"+c+"05);border-radius:16px;border:2px solid "+c+"\">";
+    h+="<div style=\"font-size:13px;color:#64748b;margin-bottom:8px;font-weight:600\">REPORT COMPLIANCE D.Lgs 81/08</div>";
+    h+="<div style=\"font-size:60px;font-weight:900;color:"+c+"\">"+score+"<span style=\"font-size:24px\">/100</span></div>";
+    h+="<div style=\"font-size:20px;font-weight:700;color:"+c+";margin-top:8px\">"+emoji+" "+l+"</div>";
+    h+="</div>";
 
-        function checkStep2Complete() {
-            // Check if employees is selected
-            if (selectedEmployees) {
-                const btn = document.getElementById('step2NextBtn');
-                btn.disabled = false;
-                btn.style.opacity = '1';
-            }
-        }
-        
-        // URL Google Sheets Web App (AGGIORNATO)
-        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbz0R06Eg3IuonsasVY-nT2Hwmkg4p5r_FkIP0JcMJ2M5euojfNN7alog0rD7DPVoadV/exec';
+    h+="<div style=\"font-size:17px;font-weight:700;margin-bottom:14px;color:#1e293b\">📊 Aree Analizzate</div>";
 
-        function nextStep() {
-            if (currentStep === 1) {
-                if (!selectedSector) {
-                    alert('Seleziona un settore');
-                    return;
-                }
-            }
+    for(var area in areas){
+        var a=areas[area];
+        var pct=a.mx>0?Math.round(a.sc/a.mx*100):100;
+        var ac=pct>=80?"#22c55e":(pct>=50?"#eab308":"#ef4444");
+        var st=pct>=80?"CONFORME":(pct>=50?"DA SISTEMARE":"CRITICO");
 
-            if (currentStep === 2) {
-                if (!selectedEmployees) {
-                    alert('Seleziona il numero di dipendenti');
-                    return;
-                }
-            }
+        h+="<div style=\"background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:2px solid #e2e8f0;border-left:5px solid "+ac+"\">";
+        h+="<div style=\"display:flex;justify-content:space-between;align-items:center;margin-bottom:10px\">";
+        h+="<span style=\"font-weight:700;font-size:15px;color:#1e293b\">"+area+"</span>";
+        h+="<span style=\"background:"+ac+";color:#fff;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:700\">"+a.sc+"</span></div>";
+        h+="<div style=\"font-size:11px;font-weight:700;color:"+ac+";margin-bottom:12px;text-transform:uppercase\">"+st+"</div>";
 
-            document.querySelector(`[data-step="${currentStep}"]`).classList.remove('active');
-            currentStep++;
-            document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
-            updateProgress();
-            window.scrollTo(0, 0);
-            
-            // Track avanzamento step
-            trackEvent('step_completato', {
-                step_completato: currentStep - 1,
-                step_successivo: currentStep,
-                progress: Math.round((currentStep / totalSteps) * 100)
-            });
-        }
-
-        function prevStep() {
-            document.querySelector(`[data-step="${currentStep}"]`).classList.remove('active');
-            currentStep--;
-            document.querySelector(`[data-step="${currentStep}"]`).classList.add('active');
-            updateProgress();
-            window.scrollTo(0, 0);
-        }
-
-        function updateProgress() {
-            const progress = (currentStep / totalSteps) * 100;
-            document.getElementById('progressBar').style.width = progress + '%';
-        }
-
-        function getVal(name) {
-            const el = document.querySelector(`input[name="${name}"]:checked`);
-            return el ? el.value : null;
-        }
-
-        function generateReport() {
-            const data = {
-                employees: selectedEmployees || '1-15',
-                employeesRange: selectedEmployees || '1-15',
-                sector: selectedSector || 'non_selezionato',
-                medico: getVal('medicoNominato') || 'no',
-                visite: getVal('visite') || 'none',
-                formGen: getVal('formazioneGenerale') || 'none',
-                formSpec: getVal('formazioneSpecifica') || 'none',
-                formUpd: getVal('formazioneAggiornata') || 'no',
-                dvr: getVal('dvr') || 'no',
-                rspp: getVal('rspp') || 'no',
-                addetti: getVal('addetti') || 'none',
-                dpi: getVal('dpi') || 'no',
-                registro: getVal('registro') || 'no',
-                emergenza: getVal('emergenza') || 'no',
-                estintori: getVal('estintori') || 'no',
-                prove_evacuazione: getVal('prove_evacuazione') || 'never',
-                impianto_elettrico: getVal('impianto_elettrico') || 'no',
-                cassetta_soccorso: getVal('cassetta_soccorso') || 'no'
-            };
-
-            // Calculate score
-            let score = 0;
-            const areas = {
-                medico: { score: 0, status: 'red', issues: [] },
-                formazione: { score: 0, status: 'red', issues: [] },
-                documenti: { score: 0, status: 'red', issues: [] },
-                nomine: { score: 0, status: 'red', issues: [] },
-                dpi_sicurezza: { score: 0, status: 'red', issues: [] },
-                antincendio: { score: 0, status: 'red', issues: [] }
-            };
-
-            // Medico (0-15)
-            if (data.medico === 'yes') {
-                areas.medico.score = 10;
-                if (data.visite === 'all') areas.medico.score = 15;
-                else if (data.visite === 'some') areas.medico.score = 12;
-            } else {
-                areas.medico.issues.push({
-                    title: 'MEDICO COMPETENTE MANCANTE',
-                    desc: 'Obbligo per tutte le aziende',
-                    fine: '€2.740-€7.014 + arresto 2-4 mesi'
-                });
-            }
-
-            if (data.visite !== 'all') {
-                areas.medico.issues.push({
-                    title: 'VISITE MEDICHE NON EFFETTUATE',
-                    desc: 'Ogni lavoratore deve avere visita',
-                    fine: '€1.096-€4.384 per lavoratore'
-                });
-            }
-
-            // Formazione (0-20)
-            let formScore = 0;
-            if (data.formGen === 'all') formScore += 8;
-            else if (data.formGen === 'some') formScore += 4;
-            else {
-                areas.formazione.issues.push({
-                    title: 'FORMAZIONE GENERALE MANCANTE',
-                    desc: '4 ore obbligatorie per tutti',
-                    fine: '€1.096-€4.384 per lavoratore'
-                });
-            }
-
-            if (data.formSpec === 'all') formScore += 8;
-            else if (data.formSpec === 'some') formScore += 4;
-            else {
-                areas.formazione.issues.push({
-                    title: 'FORMAZIONE SPECIFICA MANCANTE',
-                    desc: 'Mansione obbligatoria',
-                    fine: '€1.096-€4.384 per lavoratore'
-                });
-            }
-
-            if (data.formUpd === 'yes') formScore += 4;
-            else {
-                areas.formazione.issues.push({
-                    title: 'AGGIORNAMENTO NON EFFETTUATO',
-                    desc: 'Ogni 5 anni obbligatorio',
-                    fine: '€1.096-€4.384'
-                });
-            }
-            areas.formazione.score = formScore;
-
-            // DVR (0-20)
-            if (data.dvr === 'updated') areas.documenti.score = 20;
-            else if (data.dvr === 'old') {
-                areas.documenti.score = 12;
-                areas.documenti.issues.push({
-                    title: 'DVR NON AGGIORNATO',
-                    desc: 'Documento vecchio',
-                    fine: '€1.096-€4.384'
-                });
-            } else {
-                areas.documenti.issues.push({
-                    title: 'DVR MANCANTE',
-                    desc: 'Documento obbligatorio',
-                    fine: '€2.740-€7.014 + arresto 3-6 mesi'
-                });
-            }
-
-            // Nomine (0-15)
-            let nomScore = 0;
-            if (data.rspp === 'internal' || data.rspp === 'external') nomScore += 10;
-            else {
-                areas.nomine.issues.push({
-                    title: 'RSPP NON NOMINATO',
-                    desc: 'Responsabile obbligatorio',
-                    fine: '€2.740-€7.014'
-                });
-            }
-
-            if (data.addetti === 'both') nomScore += 5;
-            else if (data.addetti === 'one') nomScore += 2;
-            else {
-                areas.nomine.issues.push({
-                    title: 'ADDETTI EMERGENZE MANCANTI',
-                    desc: 'Antincendio e Primo Soccorso',
-                    fine: '€2.740-€7.014'
-                });
-            }
-            areas.nomine.score = nomScore;
-
-            // DPI (0-10)
-            let dpiScore = 0;
-            if (data.dpi === 'all' || data.dpi === 'notneeded') dpiScore += 3;
-            else {
-                areas.dpi_sicurezza.issues.push({
-                    title: 'DPI NON FORNITI',
-                    desc: 'Dispositivi obbligatori',
-                    fine: '€1.096-€4.384'
-                });
-            }
-
-            if (data.registro === 'yes' || data.registro === 'noinfortuni') dpiScore += 3;
-            else {
-                areas.dpi_sicurezza.issues.push({
-                    title: 'REGISTRO INFORTUNI MANCANTE',
-                    desc: 'Obbligo tenuta registro',
-                    fine: '€548-€1.972'
-                });
-            }
-
-            if (data.emergenza === 'yes') dpiScore += 4;
-            else if (data.emergenza === 'partial') dpiScore += 2;
-            else {
-                areas.dpi_sicurezza.issues.push({
-                    title: 'PIANO EMERGENZA MANCANTE',
-                    desc: 'Piano evacuazione obbligatorio',
-                    fine: '€2.740-€7.014'
-                });
-            }
-            areas.dpi_sicurezza.score = dpiScore;
-
-            // Antincendio (0-20)
-            let antiScore = 0;
-            if (data.estintori === 'yes') antiScore += 5;
-            else {
-                areas.antincendio.issues.push({
-                    title: 'ESTINTORI NON VERIFICATI',
-                    desc: 'Verifica annuale obbligatoria',
-                    fine: '€2.064-€12.386 + sospensione'
-                });
-            }
-
-            if (data.prove_evacuazione === 'regular') antiScore += 5;
-            else if (data.prove_evacuazione === 'sometimes') antiScore += 2;
-            else {
-                areas.antincendio.issues.push({
-                    title: 'PROVE EVACUAZIONE MAI EFFETTUATE',
-                    desc: 'Obbligatorie 2 volte/anno',
-                    fine: '€2.064-€12.386'
-                });
-            }
-
-            if (data.impianto_elettrico === 'yes') antiScore += 5;
-            else if (data.impianto_elettrico === 'old') antiScore += 2;
-            else {
-                areas.antincendio.issues.push({
-                    title: 'IMPIANTO ELETTRICO NON VERIFICATO',
-                    desc: 'Verifica ogni 2-5 anni',
-                    fine: '€1.000-€4.800'
-                });
-            }
-
-            if (data.cassetta_soccorso === 'yes') antiScore += 5;
-            else {
-                areas.antincendio.issues.push({
-                    title: 'CASSETTA PRIMO SOCCORSO MANCANTE',
-                    desc: 'Obbligo aziendale',
-                    fine: '€548-€1.972'
-                });
-            }
-            areas.antincendio.score = antiScore;
-
-            // Total score
-            score = areas.medico.score + areas.formazione.score + areas.documenti.score + 
-                    areas.nomine.score + areas.dpi_sicurezza.score + areas.antincendio.score;
-
-            // Status
-            Object.keys(areas).forEach(key => {
-                if (areas[key].issues.length > 0) {
-                    areas[key].status = areas[key].score < 10 ? 'red' : 'yellow';
-                } else {
-                    areas[key].status = areas[key].score >= 15 ? 'green' : 'yellow';
-                }
-            });
-
-            const allIssues = [...areas.medico.issues, ...areas.formazione.issues, ...areas.documenti.issues, ...areas.nomine.issues, ...areas.dpi_sicurezza.issues, ...areas.antincendio.issues];
-
-            // Save data globally
-            window.reportData = { data, score, areas, allIssues };
-            
-            // Track completamento questionario
-            trackEvent('questionario_completato', {
-                punteggio: score,
-                criticita: allIssues.length,
-                dipendenti: data.employees,
-                settore: data.sector
-            });
-            
-            // Facebook Pixel - ViewContent (ha completato il questionario)
-            if (typeof fbq !== 'undefined') {
-                fbq('track', 'ViewContent', {
-                    content_name: 'Report Sicurezza Generato',
-                    content_category: 'Questionario',
-                    value: score
-                });
-            }
-
-            // Populate BREVO fields
-            document.getElementById('DIPENDENTI').value = data.employees;
-            document.getElementById('PUNTEGGIO').value = score;
-            document.getElementById('SETTORE').value = data.sector;
-            document.getElementById('CRITICITA').value = allIssues.length;
-
-            // Show PRE-REPORT
-            document.getElementById('preScoreDisplay').textContent = score;
-            
-            // Set circle color
-            const circle = document.getElementById('scoreCircle');
-            if (score >= 80) {
-                circle.style.background = 'linear-gradient(135deg, #10B981, #059669)';
-            } else if (score >= 50) {
-                circle.style.background = 'linear-gradient(135deg, #F59E0B, #EF4444)';
-            } else {
-                circle.style.background = 'linear-gradient(135deg, #EF4444, #DC2626)';
-            }
-
-            // Popola card statistiche
-            const criticalAreas = Object.values(areas).filter(area => area.status === 'red').length;
-            const urgentActions = allIssues.length;
-            
-            document.getElementById('criticalAreasCount').textContent = criticalAreas;
-            document.getElementById('urgentActionsCount').textContent = urgentActions;
-
-            document.querySelector(`[data-step="${currentStep}"]`).classList.remove('active');
-            document.getElementById('preReportSection').classList.add('active');
-            document.getElementById('progressBar').style.width = '100%';
-            
-            trackEvent('questionario_completato', {
-                settore: data.sector,
-                punteggio: score,
-                criticita: allIssues.length
-            });
-
-            window.scrollTo(0, 0);
-        }
-
-        async function sendToGoogleSheets(reportData) {
-            const { data, score, areas, allIssues } = reportData;
-            
-            console.log('📄 Generazione PDF in corso...');
-            
-            // Genera il PDF del report
-            const pdfBase64 = await generatePDFReport();
-            
-            const payload = {
-                email: document.getElementById('EMAIL').value,
-                nome: document.getElementById('NOME').value,
-                nomeAzienda: document.getElementById('NOME_AZIENDA').value,
-                telefono: document.getElementById('TELEFONO').value,
-                dipendenti: data.employees,
-                settore: data.sector,
-                punteggioTotale: score,
-                statusGenerale: score >= 80 ? 'green' : score >= 50 ? 'yellow' : 'red',
-                numeroCriticita: allIssues.length,
-                scoreMedico: areas.medico.score,
-                scoreFormazione: areas.formazione.score,
-                scoreDocumenti: areas.documenti.score,
-                scoreNomine: areas.nomine.score,
-                scoreDPI: areas.dpi_sicurezza.score,
-                scoreAntincendio: areas.antincendio.score,
-                statusMedico: areas.medico.status,
-                statusFormazione: areas.formazione.status,
-                statusDocumenti: areas.documenti.status,
-                statusNomine: areas.nomine.status,
-                statusDPI: areas.dpi_sicurezza.status,
-                statusAntincendio: areas.antincendio.status,
-                medicoNominato: data.medico,
-                visite: data.visite,
-                formazioneGenerale: data.formGen,
-                formazioneSpecifica: data.formSpec,
-                formazioneAggiornata: data.formUpd,
-                dvr: data.dvr,
-                rspp: data.rspp,
-                addetti: data.addetti,
-                dpi: data.dpi,
-                registro: data.registro,
-                emergenza: data.emergenza,
-                estintori: data.estintori,
-                proveEvacuazione: data.prove_evacuazione,
-                impiantoElettrico: data.impianto_elettrico,
-                cassettaSoccorso: data.cassetta_soccorso,
-                criticitaMedico: areas.medico.issues.map(i => i.title),
-                criticitaFormazione: areas.formazione.issues.map(i => i.title),
-                criticitaDocumenti: areas.documenti.issues.map(i => i.title),
-                criticitaNomine: areas.nomine.issues.map(i => i.title),
-                criticitaDPI: areas.dpi_sicurezza.issues.map(i => i.title),
-                criticitaAntincendio: areas.antincendio.issues.map(i => i.title),
-                pdfBase64: pdfBase64
-            };
-            
-            fetch(GOOGLE_SHEET_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
-                body: JSON.stringify(payload)
-            })
-            .then(() => console.log('✅ Google Sheets + PDF: richiesta inviata'))
-            .catch(error => console.error('❌ Errore Google Sheets:', error));
-        }
-        
-        // Funzione per generare PDF del report
-        async function generatePDFReport() {
-            try {
-                // Crea una copia temporanea del report per il PDF
-                const reportElement = document.getElementById('reportContent').cloneNode(true);
-                
-                // Crea un contenitore temporaneo
-                const tempContainer = document.createElement('div');
-                tempContainer.style.cssText = 'position: absolute; left: -9999px; width: 800px; background: white; padding: 40px;';
-                tempContainer.appendChild(reportElement);
-                document.body.appendChild(tempContainer);
-                
-                // Opzioni per html2pdf
-                const opt = {
-                    margin: 15,
-                    filename: 'Report_Sicurezza.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-                
-                // Genera PDF e ottieni blob
-                const pdfBlob = await html2pdf().set(opt).from(tempContainer).outputPdf('blob');
-                
-                // Rimuovi contenitore temporaneo
-                document.body.removeChild(tempContainer);
-                
-                // Converti blob in base64
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => {
-                        const base64 = reader.result.split(',')[1];
-                        console.log('✅ PDF generato: ' + base64.length + ' caratteri');
-                        resolve(base64);
-                    };
-                    reader.onerror = reject;
-                    reader.readAsDataURL(pdfBlob);
-                });
-                
-            } catch (error) {
-                console.error('❌ Errore generazione PDF:', error);
-                return null;
+        for(var j=0;j<a.items.length;j++){
+            var it=a.items[j];
+            if(!it.f&&it.p<10){
+                var sz=sanzioni[it.q]||["Criticità rilevata","",""];
+                h+="<div style=\"background:"+(it.p===0?"#fef2f2":"#fffbeb")+";border-radius:10px;padding:12px;margin-bottom:8px;border-left:4px solid "+(it.p===0?"#ef4444":"#f59e0b")+"\">";
+                h+="<div style=\"font-size:14px;font-weight:700;color:"+(it.p===0?"#dc2626":"#d97706")+"\">"+sz[0]+"</div>";
+                if(sz[1]){h+="<div style=\"font-size:12px;color:#64748b;margin-top:4px\">"+sz[1]+"</div>";}
+                if(sz[2]){h+="<div style=\"font-size:12px;color:#dc2626;margin-top:6px;font-weight:600\">💰 "+sz[2]+"</div>";}
+                h+="</div>";
             }
         }
 
-        // ─── MODAL PRIVACY ───
-        function aprModalPrivacy() {
-            document.getElementById('modalPrivacy').classList.add('aperta');
-            document.body.style.overflow = 'hidden';
+        var ok=[];
+        for(var k=0;k<a.items.length;k++){if(!a.items[k].f&&a.items[k].p>=10){ok.push(a.items[k]);}}
+        for(var m=0;m<ok.length;m++){
+            h+="<div style=\"font-size:13px;color:#22c55e;padding:6px 0;display:flex;align-items:center;gap:6px\"><span>✅</span> "+ok[m].q+"</div>";
         }
+        h+="</div>";
+    }
 
-        function chiudiModalPrivacy() {
-            document.getElementById('modalPrivacy').classList.remove('aperta');
-            document.body.style.overflow = '';
-        }
+    h+="<div style=\"background:linear-gradient(135deg,#0F4C81,#0a3659);border-radius:16px;padding:24px;color:#fff;margin:20px 0\">";
+    h+="<div style=\"font-size:18px;font-weight:700;margin-bottom:16px;text-align:center\">COME POSSIAMO AIUTARTI</div>";
+    h+="<p style=\"font-size:14px;line-height:1.6;margin-bottom:16px;opacity:.95\">Questo report ti ha fornito una fotografia chiara dello stato di conformità della tua azienda rispetto al D.Lgs 81/08.</p>";
+    h+="<p style=\"font-size:14px;line-height:1.6;margin-bottom:16px;opacity:.95\">Quotidianamente affianchiamo aziende come la tua per implementare la sicurezza sul lavoro in modo pragmatico ed efficace.</p>";
+    h+="<div style=\"font-size:14px;font-weight:600;margin-bottom:10px\">Cosa possiamo fare per te:</div>";
+    h+="<div style=\"font-size:13px;line-height:1.8;opacity:.95\">✓ Analizzare nel dettaglio le criticità<br>✓ Definirti un piano d'azione con tempi e costi<br>✓ Affiancarti nell'implementazione<br>✓ Formare il tuo team<br>✓ Garantirti la conformità nel tempo</div>";
+    h+="<div style=\"text-align:center;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.2)\">";
+    h+="<div style=\"font-size:14px;margin-bottom:12px;opacity:.9\">Contattaci per una call gratuita di 15 minuti</div>";
+    h+="<a href=\"tel:+390250047124\" style=\"display:inline-block;background:#fff;color:#0F4C81;padding:12px 24px;border-radius:10px;font-weight:700;text-decoration:none;font-size:16px\">📞 02 50047124</a>";
+    h+="<div style=\"margin-top:10px\"><a href=\"mailto:info@deliverycare.it\" style=\"color:#fff;font-size:13px\">📧 info@deliverycare.it</a></div>";
+    h+="</div></div>";
 
-        // Chiudi modal cliccando fuori
-        document.addEventListener('DOMContentLoaded', function() {
-            const overlay = document.getElementById('modalPrivacy');
-            if (overlay) {
-                overlay.addEventListener('click', function(e) {
-                    if (e.target === this) chiudiModalPrivacy();
-                });
-            }
-        });
+    h+="<div class=\"contact-box\"><h4>📞 Vuoi essere ricontattato?</h4>";
+    h+="<input id=\"cAz\" placeholder=\"Nome azienda\"><input id=\"cNm\" placeholder=\"Nome referente\"><input id=\"cTel\" placeholder=\"Numero cellulare\">";
+    h+="<button onclick=\"sendContact()\">📩 Richiedi consulenza gratuita</button></div>";
 
-        // ─── SUBMIT FORM - VERSIONE CORRETTA CON PDF ───
-        async function submitBrevoForm() {
-            const email = document.getElementById('EMAIL').value.trim();
-            const consentObbl = document.getElementById('consentObbl').checked;
+    h+="<div style=\"text-align:center;padding:16px;font-size:11px;color:#64748b;border-top:2px solid #e2e8f0;margin-top:16px\">";
+    h+="<div style=\"font-weight:700;color:#1e293b\">Delivery Care Srl - Società Benefit</div>";
+    h+="<div style=\"margin-top:4px\">P.IVA: 11263630961 | P.zza centro commerciale 44, 20090 Segrate (MI)</div>";
+    h+="<div style=\"margin-top:4px;color:#0F4C81\">Specialisti in Sicurezza sul Lavoro</div>";
+    h+="</div>";
 
-            // Validazione
-            if (!email) {
-                alert('Inserisci l\'email');
-                return;
-            }
+    document.getElementById("reportContent").innerHTML=h;
+}
 
-            if (!consentObbl) {
-                const rowObbl = document.getElementById('consentRowObbligatorio');
-                const errMsg = document.getElementById('consentErrMsg');
-                rowObbl.classList.add('errore');
-                errMsg.classList.add('visibile');
-                errMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                return;
-            }
+function sendContact(){
+    var a=document.getElementById("cAz").value;
+    var n=document.getElementById("cNm").value;
+    var t=document.getElementById("cTel").value;
+    if(a||n||t){
+        fetch(SHEET_URL,{method:"POST",mode:"no-cors",body:JSON.stringify({email:mail,azienda:a,nome:n,telefono:t,punteggio:score,callback:"SI"})});
+        alert("Grazie! Ti ricontatteremo al più presto.");
+    }else{
+        alert("Compila almeno un campo per essere ricontattato");
+    }
+}
 
-            // Re-imposta i campi hidden
-            if (window.reportData) {
-                document.getElementById('PUNTEGGIO').value = window.reportData.score;
-                document.getElementById('DIPENDENTI').value = window.reportData.data.employees;
-                document.getElementById('SETTORE').value = window.reportData.data.sector;
-                document.getElementById('CRITICITA').value = window.reportData.allIssues.length;
-            }
+function restart(){
+    cur=0;ans=[];
+    document.getElementById("emailInput").value="";
+    document.getElementById("privacyCheck").checked=false;
+    show("screenLanding");
+}
 
-            // ⬇️ IMPORTANTE: PRIMA mostra il report (così il PDF ha contenuto)
-            showFinalReport();
-            
-            // ⬇️ POI aspetta che il DOM si aggiorni
-            await new Promise(resolve => setTimeout(resolve, 500));
-            
-            // ⬇️ INFINE invia a Google Sheets (che genera il PDF dal report visibile)
-            await sendToGoogleSheets(window.reportData);
+function openPrivacy(e){
+    e.preventDefault();
+    document.getElementById("privacyModal").classList.add("active");
+}
 
-            // Tracking
-            trackEvent('lead_submitted', {
-                punteggio: window.reportData.score,
-                criticita: window.reportData.allIssues.length
-            });
-            
-            trackConversion('fT3NCNbm0_kbEMekqd1C');
-            
-            if (typeof fbq !== 'undefined') {
-                fbq('track', 'Lead', {
-                    content_name: 'Questionario Sicurezza',
-                    value: window.reportData.score,
-                    currency: 'EUR'
-                });
-            }
-        }
-
-        function showFinalReport() {
-            document.getElementById('preReportSection').classList.remove('active');
-            document.getElementById('reportSection').classList.add('active');
-            
-            if (window.reportData) {
-                const { data, score, areas, allIssues } = window.reportData;
-                
-                let html = `
-                    <!-- Logo e Titolo -->
-                    <div style="text-align: center; margin-bottom: 35px; padding-bottom: 25px; border-bottom: 3px solid #E2E8F0;">
-                        <img src="https://raw.githubusercontent.com/deliverycaremeet-ctrl/questionario-sicurezza/main/LOGO_Delivery_Care.png" 
-                             alt="Delivery Care" 
-                             style="max-width: 250px; height: auto; margin-bottom: 20px;">
-                        <h1 style="font-size: 28px; font-weight: 700; color: #1E293B; margin: 15px 0 0 0;">
-                            REPORT COMPLIANCE SICUREZZA LAVORO - D.Lgs 81/08
-                        </h1>
-                    </div>
-                    
-                    <div style="text-align:center; margin-bottom:40px;">
-                        <div style="font-size:64px; font-weight:900; color:#1E40AF;">${score}/100</div>
-                        <div style="font-size:24px; font-weight:700; margin-top:10px; color:#64748B;">
-                            ${score >= 80 ? '🟢 CONFORME' : score >= 50 ? '🟡 DA MIGLIORARE' : '🔴 CRITICITÀ GRAVI'}
-                        </div>
-                    </div>
-                    
-                    <h3 style="margin:30px 0 20px; font-size:24px; font-weight:700;">📊 Aree Analizzate</h3>
-                `;
-                
-                // Generate area cards
-                const areaNames = {
-                    medico: '👨‍⚕️ Sorveglianza Sanitaria',
-                    formazione: '📚 Formazione',
-                    documenti: '📄 DVR',
-                    nomine: '👥 Nomine',
-                    dpi_sicurezza: '🦺 DPI',
-                    antincendio: '🔥 Antincendio'
-                };
-
-                Object.keys(areas).forEach(key => {
-                    const area = areas[key];
-                    let bgColor, borderColor, statusText;
-                    
-                    if (area.status === 'green') {
-                        bgColor = '#D1FAE5';
-                        borderColor = '#10B981';
-                        statusText = 'CONFORME';
-                    } else if (area.status === 'yellow') {
-                        bgColor = '#FEF3C7';
-                        borderColor = '#F59E0B';
-                        statusText = 'DA SISTEMARE';
-                    } else {
-                        bgColor = '#FEE2E2';
-                        borderColor = '#DC2626';
-                        statusText = 'CRITICO';
-                    }
-                    
-                    html += `
-                        <div style="background:${bgColor}; border:3px solid ${borderColor}; border-radius:12px; padding:25px; margin-bottom:20px;">
-                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; flex-wrap:wrap;">
-                                <div style="font-size:18px; font-weight:700;">${areaNames[key]}</div>
-                                <div style="font-size:28px; font-weight:900;">${area.score}</div>
-                            </div>
-                            <div style="font-size:14px; font-weight:600; margin-bottom:10px;">${statusText}</div>
-                    `;
-                    
-                    if (area.issues.length > 0) {
-                        html += '<div style="margin-top:15px;">';
-                        area.issues.forEach(issue => {
-                            html += `
-                                <div style="background:white; padding:15px; border-radius:8px; margin-top:10px;">
-                                    <div style="font-weight:700; color:#991B1B; margin-bottom:5px;">${issue.title}</div>
-                                    <div style="font-size:14px; color:#475569; margin-bottom:8px;">${issue.desc}</div>
-                                    <div style="color:#DC2626; font-weight:800; font-size:14px;">💰 ${issue.fine}</div>
-                                </div>
-                            `;
-                        });
-                        html += '</div>';
-                    }
-                    
-                    html += '</div>';
-                });
-
-                // Footer professionale con CTA
-                html += `
-                    <div style="background: #F8FAFC; border-top: 3px solid #E2E8F0; padding: 45px 35px; margin-top: 40px;">
-                        <h2 style="font-size: 28px; font-weight: 700; color: #1E293B; margin-bottom: 20px; text-align: center;">
-                            COME POSSIAMO AIUTARTI
-                        </h2>
-                        
-                        <p style="font-size: 16px; line-height: 1.7; color: #475569; margin-bottom: 20px;">
-                            Questo report ti ha fornito una fotografia chiara dello stato di conformità 
-                            della tua azienda rispetto al D.Lgs 81/08.
-                        </p>
-                        
-                        <p style="font-size: 16px; line-height: 1.7; color: #475569; margin-bottom: 20px;">
-                            Quotidianamente affianchiamo aziende come la tua per implementare la sicurezza 
-                            sul lavoro in modo pragmatico ed efficace. Il nostro approccio è concreto e 
-                            operativo: lavoriamo insieme a te per costruire un sistema di sicurezza reale, 
-                            sostenibile e su misura per la tua realtà.
-                        </p>
-                        
-                        <div style="background: white; border-left: 4px solid #1E40AF; padding: 25px; border-radius: 8px; margin: 30px 0;">
-                            <p style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 15px;">
-                                Cosa possiamo fare per te:
-                            </p>
-                            <div style="font-size: 15px; color: #475569; line-height: 2;">
-                                ✓ Analizzare nel dettaglio le criticità emerse dal report<br>
-                                ✓ Definirti un piano d'azione prioritario con tempi e costi certi<br>
-                                ✓ Affiancarti nell'implementazione degli interventi necessari<br>
-                                ✓ Formare il tuo team sulla sicurezza<br>
-                                ✓ Garantirti la conformità normativa nel tempo
-                            </div>
-                        </div>
-                        
-                        <p style="font-size: 17px; text-align: center; color: #1E293B; margin: 30px 0 25px 0; font-weight: 600;">
-                            Contattaci per una call di 15 minuti<br>
-                            per scoprire come possiamo aiutarti.
-                        </p>
-                        
-                        <div style="background: white; border: 2px solid #E2E8F0; border-radius: 12px; padding: 30px; text-align: center;">
-                            <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
-                                📞 Chiamaci: <a href="tel:+390250047124" style="color: #1E40AF; text-decoration: none;">+39 02 50047124</a>
-                            </div>
-                            <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
-                                📧 Scrivici: <a href="mailto:info@deliverycare.it" style="color: #1E40AF; text-decoration: none;">info@deliverycare.it</a>
-                            </div>
-                            <div style="font-size: 18px; font-weight: 700; color: #1E40AF; margin: 15px 0;">
-                                🌐 <a href="https://www.deliverycare.it" style="color: #1E40AF; text-decoration: none;" target="_blank">www.deliverycare.it</a>
-                            </div>
-                        </div>
-                        
-                        <div style="text-align: center; margin-top: 35px; padding-top: 25px; border-top: 2px solid #E2E8F0;">
-                            <p style="font-size: 16px; font-weight: 700; color: #1E293B; margin-bottom: 8px;">
-                                Delivery Care Srl - SB
-                            </p>
-                            <p style="font-size: 14px; color: #64748B; line-height: 1.6;">
-                                P.IVA: 11263630961 | P.zza centro commerciale 44, 20090 Segrate (MI)<br>
-                                Specialisti in Sicurezza sul Lavoro
-                            </p>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('reportContent').innerHTML = html;
-            }
-            
-            window.scrollTo(0, 0);
-        }
-
-        updateProgress();
-    </script>
-    
-    <!-- ─── MODAL INFORMATIVA PRIVACY (RGPD) ─── -->
-    <div class="modal-overlay" id="modalPrivacy">
-        <div class="modal-informativa">
-            <div class="modal-header">
-                <h2>🔒 Informativa sul Trattamento dei Dati Personali</h2>
-                <button class="modal-close" onclick="chiudiModalPrivacy()">&times;</button>
-            </div>
-            <div class="modal-body">
-
-                <div class="titolare-box">
-                    <p><strong>Titolare del Trattamento:</strong> Delivery Care Srl – Società Benefit</p>
-                    <p><strong>Indirizzo:</strong> P.zza centro commerciale 44, 20090 Segrate (MI)</p>
-                    <p><strong>P.IVA:</strong> 11263630961</p>
-                    <p><strong>Contatto:</strong> info@deliverycare.it | +39 02 50047124</p>
-                </div>
-
-                <h3>1. Oggetto e base giuridica</h3>
-                <p>
-                    La presente informativa è redatta ai sensi degli <strong>artt. 13 e 14 del Regolamento UE 2016/679 (RGPD)</strong> 
-                    e del <strong>D.Lgs. 196/2003 (Codice della Privacy)</strong>, come modificato dal D.Lgs. 101/2017.
-                </p>
-
-                <h3>2. Finalità del trattamento</h3>
-                <p>I dati personali vengono trattati per le seguenti finalità:</p>
-                <ul>
-                    <li><strong>Erogazione del servizio:</strong> generazione e invio del report di conformità D.Lgs 81/08</li>
-                    <li><strong>Gestione della richiesta:</strong> elaborazione e follow-up</li>
-                    <li><strong>Comunicazioni commerciali</strong> (solo se consentito)</li>
-                </ul>
-
-                <h3>3. Diritti dell'interessato</h3>
-                <p>Ai sensi degli artt. 15-22 RGPD, l'interessato ha il diritto di:</p>
-                <ul>
-                    <li><strong>Accesso:</strong> ottenere conferma del trattamento</li>
-                    <li><strong>Rettificazione:</strong> correggere dati inesatti</li>
-                    <li><strong>Cancellazione:</strong> diritto all'oblio</li>
-                    <li><strong>Opposizione:</strong> opporsi al trattamento</li>
-                    <li><strong>Revoca del consenso:</strong> in qualsiasi momento</li>
-                </ul>
-
-                <h3>4. Come esercitare i diritti</h3>
-                <ul>
-                    <li><strong>Email:</strong> info@deliverycare.it</li>
-                    <li><strong>Telefono:</strong> +39 02 50047124</li>
-                </ul>
-
-            </div>
-            <button class="modal-footer-btn" onclick="chiudiModalPrivacy()">Ho capito</button>
-        </div>
-    </div>
+function closePrivacy(){
+    document.getElementById("privacyModal").classList.remove("active");
+}
+</script>
 </body>
 </html>
