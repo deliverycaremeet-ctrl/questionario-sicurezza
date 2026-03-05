@@ -1,478 +1,464 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Check-up Sicurezza | Delivery Care</title>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YKRX5MWW0Z"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-YKRX5MWW0Z');gtag('config','AW-17912451655');</script>
-<script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","vlau8uhjsv");</script>
-<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1200545094868439');fbq('track','PageView');</script>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{height:100%;overflow:hidden}
-body{font-family:'DM Sans',sans-serif;background:#fff;color:#1e293b}
-.screen{display:none;height:100vh;height:100dvh;flex-direction:column;padding:16px;max-width:500px;margin:0 auto}
-.screen.active{display:flex}
-.logo{height:32px}
-.landing-header{display:flex;align-items:center;justify-content:space-between;padding-bottom:10px}
-.trust-badge{font-size:12px;color:#00A67E;font-weight:600}
-.landing-content{flex:1;display:flex;flex-direction:column;justify-content:center}
-.landing-question{text-align:center;margin-bottom:16px}
-.landing-question h1{font-size:24px;font-weight:700;margin-bottom:6px}
-.landing-question h1 span{color:#0F4C81}
-.landing-question p{font-size:14px;color:#64748b}
-.time-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,166,126,.1);color:#00A67E;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;margin-bottom:8px}
-.sector-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-.sector-btn{display:flex;flex-direction:column;align-items:center;padding:16px 10px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;transition:all .15s}
-.sector-btn:hover{border-color:#0F4C81;background:#fff}
-.sector-btn:active{transform:scale(.97)}
-.sector-btn .icon{font-size:36px;margin-bottom:8px}
-.sector-btn .label{font-size:14px;font-weight:600;color:#1e293b}
-.landing-footer{text-align:center;padding-top:8px;font-size:10px;color:#64748b}
-.quiz-header{padding-bottom:12px}
-.progress-bar{height:6px;background:#e2e8f0;border-radius:3px;overflow:hidden;margin-bottom:6px}
-.progress-fill{height:100%;background:linear-gradient(90deg,#0F4C81,#00A67E);transition:width .3s}
-.progress-text{font-size:13px;color:#64748b;text-align:right}
-.section-badge{display:inline-block;background:rgba(15,76,129,.1);color:#0F4C81;padding:6px 14px;border-radius:16px;font-size:14px;font-weight:600;margin-top:8px}
-.quiz-content{flex:1;display:flex;flex-direction:column;justify-content:center}
-.question-text{font-size:22px;font-weight:700;text-align:center;margin-bottom:24px;color:#1e293b}
-.options-list{display:flex;flex-direction:column;gap:10px}
-.option-btn{display:flex;align-items:center;gap:12px;padding:16px 14px;background:#f8fafc;border:2px solid #e2e8f0;border-radius:12px;cursor:pointer;text-align:left;width:100%;transition:all .15s}
-.option-btn:hover{border-color:#0F4C81;background:#fff}
-.option-btn:active{transform:scale(.98)}
-.option-btn.selected{border-color:#0F4C81;background:rgba(15,76,129,.05)}
-.option-icon{font-size:24px}
-.option-text{font-size:16px;font-weight:500;color:#1e293b}
-.option-skip{border:2px dashed #cbd5e1;background:#fff}
-.option-skip .option-text{color:#64748b}
-.quiz-footer{padding-top:12px;text-align:center}
-.back-link{font-size:14px;color:#64748b;cursor:pointer;padding:8px 16px}
-.back-link:hover{color:#0F4C81}
-.report-header{text-align:center;padding:20px 0}
-.report-header h2{font-size:16px;font-weight:600;color:#64748b;margin-bottom:16px}
-.score-circle{width:140px;height:140px;border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;border:8px solid #00A67E;background:rgba(0,166,126,.05)}
-.score-value{font-size:48px;font-weight:700;color:#1e293b}
-.score-value span{font-size:24px}
-.score-label{font-size:18px;font-weight:700;padding:8px 20px;border-radius:20px}
-.stats-row{display:flex;justify-content:center;gap:40px;margin-top:20px}
-.stat-item{text-align:center}
-.stat-number{font-size:32px;font-weight:700;color:#0F4C81}
-.stat-label{font-size:12px;color:#64748b;text-transform:uppercase;margin-top:4px}
-.email-box{background:linear-gradient(135deg,#f8fafc,#f1f5f9);border-radius:16px;padding:24px;border:2px solid #e2e8f0;margin-top:20px}
-.email-box h3{font-size:18px;font-weight:700;margin-bottom:8px;text-align:center;color:#1e293b}
-.email-box p{font-size:14px;color:#64748b;margin-bottom:16px;text-align:center}
-.form-row{margin-bottom:12px}
-.form-row input{width:100%;padding:14px;border:2px solid #e2e8f0;border-radius:10px;font-size:16px;background:#fff}
-.form-row input:focus{outline:none;border-color:#0F4C81}
-.form-row label{display:block;font-size:12px;color:#64748b;margin-bottom:4px;font-weight:600}
-.checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
-.checkbox-row input{width:20px;height:20px;margin-top:2px;accent-color:#0F4C81}
-.checkbox-row label{font-size:13px;color:#64748b}
-.checkbox-row a{color:#0F4C81;font-weight:600}
-.submit-btn{width:100%;padding:16px;background:linear-gradient(135deg,#00A67E,#059669);color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;transition:transform .15s}
-.submit-btn:hover{transform:scale(1.02)}
-.submit-btn:active{transform:scale(.98)}
-.full-report-header{text-align:center;padding:12px 0;border-bottom:2px solid #e2e8f0}
-.full-report-content{flex:1;overflow-y:auto;padding:12px 0}
-.restart-btn{width:100%;padding:14px;background:#f8fafc;color:#1e293b;border:2px solid #e2e8f0;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;margin-top:12px}
-.restart-btn:hover{border-color:#0F4C81}
-.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1000;align-items:center;justify-content:center;padding:16px}
-.modal.active{display:flex}
-.modal-box{background:#fff;border-radius:16px;padding:24px;max-width:360px;width:100%;max-height:80vh;overflow-y:auto}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.modal-header h3{font-size:16px;font-weight:700;color:#1e293b}
-.modal-close{width:32px;height:32px;border-radius:50%;background:#f8fafc;border:none;font-size:18px;cursor:pointer}
-.modal-body{font-size:13px;color:#64748b;line-height:1.6}
-.mini-report-scroll{flex:1;overflow-y:auto}
-</style>
-</head>
-<body>
+// ============================================
+// LEAD SICUREZZA API - VERSIONE COMPLETA
+// ============================================
 
-<div class="screen active" id="screenLanding">
-<header class="landing-header">
-<img src="https://raw.githubusercontent.com/deliverycaremeet-ctrl/questionario-sicurezza/main/LOGO_Delivery_Care.png" alt="Delivery Care" class="logo">
-<div class="trust-badge">✓ 100% gratuito</div>
-</header>
-<main class="landing-content">
-<div class="landing-question">
-<div class="time-badge">⏱️ 2 minuti • Gratuito</div>
-<h1>La tua azienda è <span>in regola</span>?</h1>
-<p>Scoprilo subito. In quale settore operi?</p>
-</div>
-<div class="sector-grid">
-<button class="sector-btn" onclick="startQuiz('Uffici')"><span class="icon">🏢</span><span class="label">Uffici / IT</span></button>
-<button class="sector-btn" onclick="startQuiz('Logistica')"><span class="icon">🚚</span><span class="label">Logistica</span></button>
-<button class="sector-btn" onclick="startQuiz('Produzione')"><span class="icon">🏭</span><span class="label">Produzione</span></button>
-<button class="sector-btn" onclick="startQuiz('Edilizia')"><span class="icon">🏗️</span><span class="label">Edilizia</span></button>
-<button class="sector-btn" onclick="startQuiz('Commercio')"><span class="icon">🛒</span><span class="label">Commercio</span></button>
-<button class="sector-btn" onclick="startQuiz('Sanita')"><span class="icon">🏥</span><span class="label">Sanità</span></button>
-<button class="sector-btn" onclick="startQuiz('Ristorazione')"><span class="icon">🍽️</span><span class="label">Ristorazione</span></button>
-<button class="sector-btn" onclick="startQuiz('Altro')"><span class="icon">🎯</span><span class="label">Altro</span></button>
-</div>
-</main>
-<footer class="landing-footer">Delivery Care Srl - Società Benefit</footer>
-</div>
+const BREVO_API_KEY = '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';
+const BREVO_LIST_ID = 30;
+const DEBUG_EMAIL = 's.rossi@deliverycare.it';
+const TEMPLATE_DOC_ID = '10qGNlYootLlcs6zRhjXYpT-yQzyTmFOX82qZkABNsEA';
 
-<div class="screen" id="screenQuestion">
-<header class="quiz-header">
-<div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-<div class="progress-text" id="progressText">1 di 15</div>
-<div class="section-badge" id="sectionBadge">Sezione</div>
-</header>
-<main class="quiz-content">
-<h2 class="question-text" id="questionText">Domanda?</h2>
-<div class="options-list" id="optionsList"></div>
-</main>
-<footer class="quiz-footer">
-<span class="back-link" id="backLink" onclick="goBack()">← Indietro</span>
-</footer>
-</div>
+let debugLog = [];
 
-<div class="screen" id="screenMiniReport">
-<div class="mini-report-scroll">
-<header class="report-header">
-<h2>Il tuo risultato</h2>
-<div class="score-circle" id="scoreCircle2"><span class="score-value"><span id="scoreValue2">0</span><span>%</span></span></div>
-<span class="score-label" id="scoreLabel2">...</span>
-<div class="stats-row">
-<div class="stat-item"><div class="stat-number" id="criticalCount2">0</div><div class="stat-label">Criticità</div></div>
-<div class="stat-item"><div class="stat-number" id="urgentCount2">0</div><div class="stat-label">Urgenti</div></div>
-</div>
-</header>
-<div class="email-box">
-<h3>📧 Ricevi il report completo</h3>
-<p>Dettaglio criticità, sanzioni e azioni consigliate</p>
-<div class="form-row"><label>Email aziendale *</label><input type="email" id="emailInput" placeholder="mario.rossi@azienda.it"></div>
-<div class="form-row"><label>Nome referente</label><input type="text" id="nomeInput" placeholder="Mario Rossi"></div>
-<div class="form-row"><label>Nome azienda</label><input type="text" id="aziendaInput" placeholder="Rossi SRL"></div>
-<div class="form-row"><label>Telefono</label><input type="tel" id="telefonoInput" placeholder="333 1234567"></div>
-<div class="checkbox-row"><input type="checkbox" id="privacyCheck"><label>Accetto l'<a href="#" onclick="openPrivacy(event)">informativa privacy</a> *</label></div>
-<button class="submit-btn" onclick="submitEmail()">📊 Visualizza Report Completo</button>
-</div>
-</div>
-</div>
-
-<div class="screen" id="screenFullReport">
-<header class="full-report-header">
-<img src="https://raw.githubusercontent.com/deliverycaremeet-ctrl/questionario-sicurezza/main/LOGO_Delivery_Care.png" alt="Delivery Care" style="height:28px">
-</header>
-<main class="full-report-content" id="reportContent"></main>
-<footer><button class="restart-btn" onclick="restart()">🔄 Nuovo check-up</button></footer>
-</div>
-
-<div class="modal" id="privacyModal" onclick="if(event.target===this)closePrivacy()">
-<div class="modal-box">
-<div class="modal-header"><h3>🔒 Informativa Privacy</h3><button class="modal-close" onclick="closePrivacy()">×</button></div>
-<div class="modal-body">
-<p><b>Titolare:</b> Delivery Care Srl - Società Benefit<br>P.zza centro commerciale 44, 20090 Segrate (MI)<br>P.IVA 11263630961</p>
-<p style="margin-top:12px"><b>Finalità:</b> Invio report conformità D.Lgs 81/08, gestione richiesta consulenza.</p>
-<p style="margin-top:12px"><b>Base giuridica:</b> Consenso dell'interessato (Art. 6.1.a GDPR)</p>
-<p style="margin-top:12px"><b>Diritti:</b> Accesso, rettifica, cancellazione, opposizione.<br>Contatto: info@deliverycare.it</p>
-</div>
-</div>
-</div>
-
-<script>
-var SHEET_URL="https://script.google.com/macros/s/AKfycbxzxAES75zzCDy6ROvKmWjCko6oLbPKJBD1oXePTZ0h7Zh5uD9S13LeehOaLKvz8X1a/exec";
-
-var sanzioni={
-"medicoNominato":["MEDICO COMPETENTE MANCANTE","Obbligo per tutte le aziende","2.740-7.014 + arresto 2-4 mesi"],
-"visite":["VISITE MEDICHE NON EFFETTUATE","Ogni lavoratore deve avere visita","1.096-4.384 per lavoratore"],
-"formazioneGenerale":["FORMAZIONE GENERALE MANCANTE","4 ore obbligatorie per tutti","1.315-5.699 per lavoratore"],
-"formazioneSpecifica":["FORMAZIONE SPECIFICA MANCANTE","Obbligatoria per mansione","1.096-4.384 per lavoratore"],
-"formazioneAggiornata":["AGGIORNAMENTO NON EFFETTUATO","Ogni 5 anni obbligatorio","1.096-4.384"],
-"dvr":["DVR MANCANTE O NON AGGIORNATO","Documento obbligatorio","2.740-7.014 + arresto 3-6 mesi"],
-"rspp":["RSPP NON NOMINATO","Responsabile obbligatorio","2.740-7.014 + arresto 3-6 mesi"],
-"addetti":["ADDETTI EMERGENZE MANCANTI","Antincendio e PS obbligatori","822-4.384"],
-"dpi":["DPI NON FORNITI","Dispositivi obbligatori","1.644-6.576 + arresto 2-4 mesi"],
-"emergenza":["PIANO EMERGENZA MANCANTE","Obbligatorio","2.192-5.918"],
-"cassettaSoccorso":["CASSETTA PS MANCANTE","Obbligatoria in sede","548-1.972"],
-"estintori":["ESTINTORI NON VERIFICATI","Verifica annuale obbligatoria","2.064-12.386 + sospensione"],
-"proveEvacuazione":["PROVE EVACUAZIONE MANCANTI","Almeno annuale","2.192-5.918"],
-"impiantoElettrico":["IMPIANTO NON VERIFICATO","DPR 462 obbligatorio","516-2.582"]
-};
-
-var questions=[
-{s:"Sorveglianza Sanitaria",q:"Hai nominato il Medico Competente?",k:"medicoNominato",o:[{t:"Sì",i:"✅",p:10,v:"yes"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Sorveglianza Sanitaria",q:"Visite mediche effettuate?",k:"visite",o:[{t:"Sì, tutti",i:"✅",p:10,v:"all"},{t:"Solo alcuni",i:"⚠️",p:5,v:"some"},{t:"No",i:"❌",p:0,v:"none"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Sorveglianza Sanitaria",q:"Quanti dipendenti?",k:"dipendenti",info:1,o:[{t:"1-15",i:"👥",p:0,v:"1-15"},{t:"16-100",i:"👥",p:0,v:"16-100"},{t:"101-250",i:"👥",p:0,v:"101-250"},{t:"Oltre 250",i:"👥",p:0,v:"250+"}]},
-{s:"Formazione",q:"Formazione generale (4h) completata?",k:"formazioneGenerale",o:[{t:"Sì, tutti",i:"✅",p:10,v:"all"},{t:"Solo alcuni",i:"⚠️",p:5,v:"some"},{t:"Nessuno",i:"❌",p:0,v:"none"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Formazione",q:"Formazione specifica mansione?",k:"formazioneSpecifica",o:[{t:"Sì, tutti",i:"✅",p:10,v:"all"},{t:"Solo alcuni",i:"⚠️",p:5,v:"some"},{t:"Nessuno",i:"❌",p:0,v:"none"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Formazione",q:"Aggiornamento (ogni 5 anni)?",k:"formazioneAggiornata",o:[{t:"Sì",i:"✅",p:10,v:"yes"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Documenti",q:"DVR presente e aggiornato?",k:"dvr",o:[{t:"Sì, aggiornato",i:"✅",p:10,v:"updated"},{t:"Sì, datato",i:"⚠️",p:5,v:"old"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Nomine",q:"RSPP nominato?",k:"rspp",o:[{t:"Sì, esterno",i:"✅",p:10,v:"external"},{t:"Sì, interno",i:"✅",p:10,v:"internal"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Nomine",q:"Addetti Emergenze nominati?",k:"addetti",o:[{t:"Antincendio + PS",i:"✅",p:10,v:"both"},{t:"Solo uno",i:"⚠️",p:5,v:"one"},{t:"Nessuno",i:"❌",p:0,v:"none"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"DPI e Sicurezza",q:"DPI forniti ai lavoratori?",k:"dpi",o:[{t:"Sì",i:"✅",p:10,v:"all"},{t:"Non necessari",i:"⚪",p:10,v:"notneeded"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"DPI e Sicurezza",q:"Piano emergenza presente?",k:"emergenza",o:[{t:"Sì, completo",i:"✅",p:10,v:"yes"},{t:"Parziale",i:"⚠️",p:5,v:"partial"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"DPI e Sicurezza",q:"Cassetta primo soccorso?",k:"cassettaSoccorso",o:[{t:"Sì",i:"✅",p:10,v:"yes"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Antincendio",q:"Estintori verificati?",k:"estintori",o:[{t:"Sì",i:"✅",p:10,v:"yes"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Antincendio",q:"Prove evacuazione?",k:"proveEvacuazione",o:[{t:"Regolarmente",i:"✅",p:10,v:"regular"},{t:"Qualche volta",i:"⚠️",p:5,v:"sometimes"},{t:"Mai",i:"❌",p:0,v:"never"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]},
-{s:"Antincendio",q:"Impianto elettrico verificato?",k:"impiantoElettrico",o:[{t:"Sì",i:"✅",p:10,v:"yes"},{t:"Scaduto",i:"⚠️",p:5,v:"old"},{t:"No",i:"❌",p:0,v:"no"},{t:"Non so",i:"➡️",p:2,v:"unknown"}]}
-];
-
-var areaMap={
-medico:["medicoNominato","visite"],
-formazione:["formazioneGenerale","formazioneSpecifica","formazioneAggiornata"],
-documenti:["dvr"],
-nomine:["rspp","addetti"],
-dpiSic:["dpi","emergenza","cassettaSoccorso"],
-antincendio:["estintori","proveEvacuazione","impiantoElettrico"]
-};
-
-var tot=questions.length,cur=0,ans=[],sett="",reportData=null;
-
-function show(id){
-var screens=document.querySelectorAll(".screen");
-for(var i=0;i<screens.length;i++)screens[i].classList.remove("active");
-document.getElementById(id).classList.add("active");
+function log(msg) {
+  Logger.log(msg);
+  debugLog.push(msg);
 }
 
-function startQuiz(x){
-sett=x;cur=0;ans=[];
-if(typeof gtag!=="undefined")gtag("event","quiz_start",{event_category:"engagement",event_label:x});
-if(typeof fbq!=="undefined")fbq("track","StartTrial",{content_name:x});
-showQ();
+function doPost(e) {
+  debugLog = [];
+  
+  try {
+    const data = JSON.parse(e.postData.contents);
+    
+    log('📥 ========== INIZIO RICHIESTA ==========');
+    log('📥 Email: ' + data.email);
+    log('📥 Punteggio: ' + data.punteggioTotale);
+    log('📥 Settore: ' + data.settore);
+    log('📥 Dipendenti: ' + data.dipendenti);
+    
+    // 1. Salva su Sheets
+    salvasuSheets(data);
+    
+    // 2. Aggiungi a Brevo
+    if (data.email && data.email.trim() !== '') {
+      log('✅ Email presente, aggiungo a Brevo');
+      aggiungiContattoBrevo(data);
+    } else {
+      log('❌ EMAIL MANCANTE!');
+    }
+    
+    // 3. Genera PDF da template e invia email
+    log('📄 Inizio generazione PDF da template');
+    generaPDFDaTemplateEInvia(data);
+    
+    log('✅ ========== FINE ==========');
+    
+    inviaEmailDebug(data.email);
+    
+    return ContentService.createTextOutput(JSON.stringify({'status': 'success'})).setMimeType(ContentService.MimeType.JSON);
+  } catch (error) {
+    log('❌ ERRORE: ' + error.toString());
+    log('❌ Stack: ' + error.stack);
+    inviaEmailDebug('ERRORE');
+    return ContentService.createTextOutput(JSON.stringify({'status': 'error'})).setMimeType(ContentService.MimeType.JSON);
+  }
 }
 
-function showQ(){
-show("screenQuestion");
-var q=questions[cur];
-document.getElementById("progressFill").style.width=((cur+1)/tot*100)+"%";
-document.getElementById("progressText").textContent=(cur+1)+" di "+tot;
-document.getElementById("sectionBadge").textContent=q.s;
-document.getElementById("questionText").textContent=q.q;
-var h="";
-for(var i=0;i<q.o.length;i++){
-h+='<button class="option-btn" onclick="pick('+i+')"><span class="option-icon">'+q.o[i].i+'</span><span class="option-text">'+q.o[i].t+'</span></button>';
-}
-document.getElementById("optionsList").innerHTML=h;
-document.getElementById("backLink").style.visibility=cur>0?"visible":"hidden";
-}
-
-function pick(i){
-var q=questions[cur];
-ans[cur]={k:q.k,v:q.o[i].v,p:q.o[i].p,info:q.info||0};
-document.querySelectorAll("#optionsList .option-btn")[i].classList.add("selected");
-setTimeout(function(){
-if(cur<tot-1){cur++;showQ();}
-else{calcReport();showMini();}
-},180);
-}
-
-function goBack(){if(cur>0){cur--;showQ();}}
-
-function calcReport(){
-var raw={},pts={};
-for(var i=0;i<ans.length;i++){
-if(ans[i]){raw[ans[i].k]=ans[i].v;pts[ans[i].k]=ans[i].p;}
-}
-
-var areas={
-medico:{score:0,max:20,issues:[]},
-formazione:{score:0,max:30,issues:[]},
-documenti:{score:0,max:10,issues:[]},
-nomine:{score:0,max:20,issues:[]},
-dpiSic:{score:0,max:30,issues:[]},
-antincendio:{score:0,max:30,issues:[]}
-};
-
-for(var area in areaMap){
-var keys=areaMap[area];
-for(var j=0;j<keys.length;j++){
-var k=keys[j];
-if(typeof pts[k]==="number")areas[area].score+=pts[k];
-if(pts[k]<10 && sanzioni[k])areas[area].issues.push(sanzioni[k]);
-}
-}
-
-for(var a in areas){
-var pct=areas[a].max>0?Math.round(areas[a].score/areas[a].max*100):0;
-areas[a].status=pct>=80?"green":(pct>=50?"yellow":"red");
+function salvasuSheets(data) {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName('Lead Sicurezza') || ss.getSheets()[0];
+  
+  sheet.appendRow([
+    new Date(),
+    data.email || '',
+    data.nome || '',
+    data.nomeAzienda || '',
+    data.telefono || '',
+    data.dipendenti || '',
+    data.settore || '',
+    data.punteggioTotale || 0,
+    data.statusGenerale || '',
+    data.numeroCriticita || 0,
+    data.scoreMedico || 0,
+    data.scoreFormazione || 0,
+    data.scoreDocumenti || 0,
+    data.scoreNomine || 0,
+    data.scoreDPI || 0,
+    data.scoreAntincendio || 0,
+    data.statusMedico || '',
+    data.statusFormazione || '',
+    data.statusDocumenti || '',
+    data.statusNomine || '',
+    data.statusDPI || '',
+    data.statusAntincendio || '',
+    data.medicoNominato || '',
+    data.visite || '',
+    data.formazioneGenerale || '',
+    data.formazioneSpecifica || '',
+    data.formazioneAggiornata || '',
+    data.dvr || '',
+    data.rspp || '',
+    data.addetti || '',
+    data.dpi || '',
+    data.registro || '',
+    data.emergenza || '',
+    data.estintori || '',
+    data.proveEvacuazione || '',
+    data.impiantoElettrico || '',
+    data.cassettaSoccorso || '',
+    JSON.stringify(data.criticitaMedico || []),
+    JSON.stringify(data.criticitaFormazione || []),
+    JSON.stringify(data.criticitaDocumenti || []),
+    JSON.stringify(data.criticitaNomine || []),
+    JSON.stringify(data.criticitaDPI || []),
+    JSON.stringify(data.criticitaAntincendio || [])
+  ]);
+  
+  log('✅ Salvato su Sheets');
 }
 
-var totalMax=140,totalScore=0;
-for(var a in areas)totalScore+=areas[a].score;
-var score=Math.round(totalScore/totalMax*100);
-
-var crit=0,urg=0;
-for(var a in areas){crit+=areas[a].issues.length;if(areas[a].status==="red")urg++;}
-
-reportData={
-settore:sett,
-dipendenti:raw.dipendenti||"1-15",
-score:score,
-statusGenerale:score>=80?"green":(score>=50?"yellow":"red"),
-crit:crit,
-urg:urg,
-areas:areas,
-raw:raw
-};
+function aggiungiContattoBrevo(data) {
+  try {
+    log('🔵 Inizio aggiunta Brevo');
+    
+    const url = 'https://api.brevo.com/v3/contacts';
+    
+    const payload = {
+      email: data.email,
+      attributes: {
+        NOME: data.nome || '',
+        NOME_AZIENDA: data.nomeAzienda || '',
+        TELEFONO: data.telefono || '',
+        DIPENDENTI: data.dipendenti || '',
+        SETTORE: data.settore || '',
+        PUNTEGGIO: parseInt(data.punteggioTotale) || 0,
+        CRITICITA: parseInt(data.numeroCriticita) || 0
+      },
+      listIds: [BREVO_LIST_ID],
+      updateEnabled: true
+    };
+    
+    log('🔵 Payload Brevo: ' + JSON.stringify(payload));
+    
+    const response = UrlFetchApp.fetch(url, {
+      method: 'post',
+      headers: { 
+        'api-key': BREVO_API_KEY, 
+        'Content-Type': 'application/json' 
+      },
+      payload: JSON.stringify(payload),
+      muteHttpErrors: true
+    });
+    
+    const statusCode = response.getResponseCode();
+    log('🔵 Brevo Status: ' + statusCode);
+    log('🔵 Brevo Response: ' + response.getContentText());
+    
+    if (statusCode === 201 || statusCode === 204) {
+      log('✅ CONTATTO CREATO/AGGIORNATO IN BREVO!');
+    } else {
+      log('❌ Errore Brevo: ' + response.getContentText());
+    }
+    
+  } catch (error) {
+    log('❌ Exception Brevo: ' + error.toString());
+  }
 }
 
-function showMini(){
-show("screenMiniReport");
-if(typeof gtag!=="undefined")gtag("event","quiz_complete",{event_category:"engagement",value:reportData.score});
-if(typeof fbq!=="undefined")fbq("track","CompleteRegistration",{value:reportData.score});
-
-var el=document.getElementById("scoreValue2"),v=0;
-var tm=setInterval(function(){
-v+=reportData.score/20;
-if(v>=reportData.score){v=reportData.score;clearInterval(tm);}
-el.textContent=Math.round(v);
-},40);
-
-var c,l,b;
-if(reportData.score>=80){c="#22c55e";l="Eccellente";b="rgba(34,197,94,.15)";}
-else if(reportData.score>=60){c="#84cc16";l="Buono";b="rgba(132,204,22,.15)";}
-else if(reportData.score>=50){c="#eab308";l="Sufficiente";b="rgba(234,179,8,.15)";}
-else if(reportData.score>=30){c="#f97316";l="Insufficiente";b="rgba(249,115,22,.15)";}
-else{c="#ef4444";l="Critico";b="rgba(239,68,68,.15)";}
-
-document.getElementById("scoreCircle2").style.borderColor=c;
-var lb=document.getElementById("scoreLabel2");
-lb.textContent=l;lb.style.background=b;lb.style.color=c;
-document.getElementById("criticalCount2").textContent=reportData.crit;
-document.getElementById("urgentCount2").textContent=reportData.urg;
+function generaPDFDaTemplateEInvia(data) {
+  try {
+    log('📄 Copio template...');
+    
+    // Copia il template
+    const templateDoc = DriveApp.getFileById(TEMPLATE_DOC_ID);
+    const nomeAzienda = data.nomeAzienda || 'Azienda';
+    const timestamp = Utilities.formatDate(new Date(), 'Europe/Rome', 'yyyyMMdd_HHmmss');
+    const copiaDoc = templateDoc.makeCopy('Report_' + nomeAzienda + '_' + timestamp);
+    
+    log('✅ Template copiato: ' + copiaDoc.getId());
+    
+    // Apri il documento copiato
+    const doc = DocumentApp.openById(copiaDoc.getId());
+    const body = doc.getBody();
+    
+    log('📝 Sostituisco placeholder...');
+    
+    // Funzione helper per formattare le criticità
+    function formatCriticita(criticitaArray) {
+      if (!criticitaArray || criticitaArray.length === 0) {
+        return 'Nessuna criticità rilevata';
+      }
+      if (typeof criticitaArray === 'string') {
+        try {
+          criticitaArray = JSON.parse(criticitaArray);
+        } catch(e) {
+          return criticitaArray;
+        }
+      }
+      if (Array.isArray(criticitaArray) && criticitaArray.length > 0) {
+        return '• ' + criticitaArray.join('\n• ');
+      }
+      return 'Nessuna criticità rilevata';
+    }
+    
+    // Funzione helper per tradurre status
+    function traduciStatus(status) {
+      if (status === 'green') return '✅ CONFORME';
+      if (status === 'yellow') return '⚠️ DA SISTEMARE';
+      if (status === 'red') return '🔴 CRITICO';
+      return status || 'N/D';
+    }
+    
+    // SOSTITUZIONI BASE
+    body.replaceText('{{NOME_AZIENDA}}', nomeAzienda);
+    body.replaceText('{{PUNTEGGIO}}', String(data.punteggioTotale || 0));
+    body.replaceText('{{DIPENDENTI}}', data.dipendenti || 'Non specificato');
+    body.replaceText('{{SETTORE}}', data.settore || 'Non specificato');
+    body.replaceText('{{CRITICITA}}', String(data.numeroCriticita || 0));
+    body.replaceText('{{DATA}}', Utilities.formatDate(new Date(), 'Europe/Rome', 'dd/MM/yyyy'));
+    
+    // Sorveglianza Sanitaria
+    body.replaceText('{{SCORE_MEDICO}}', String(data.scoreMedico || 0));
+    body.replaceText('{{STATUS_MEDICO}}', traduciStatus(data.statusMedico));
+    body.replaceText('{{CRITICITA_MEDICO}}', formatCriticita(data.criticitaMedico));
+    
+    // Formazione
+    body.replaceText('{{SCORE_FORMAZIONE}}', String(data.scoreFormazione || 0));
+    body.replaceText('{{STATUS_FORMAZIONE}}', traduciStatus(data.statusFormazione));
+    body.replaceText('{{CRITICITA_FORMAZIONE}}', formatCriticita(data.criticitaFormazione));
+    
+    // Documenti
+    body.replaceText('{{SCORE_DOCUMENTI}}', String(data.scoreDocumenti || 0));
+    body.replaceText('{{STATUS_DOCUMENTI}}', traduciStatus(data.statusDocumenti));
+    body.replaceText('{{CRITICITA_DOCUMENTI}}', formatCriticita(data.criticitaDocumenti));
+    
+    // Nomine
+    body.replaceText('{{SCORE_NOMINE}}', String(data.scoreNomine || 0));
+    body.replaceText('{{STATUS_NOMINE}}', traduciStatus(data.statusNomine));
+    body.replaceText('{{CRITICITA_NOMINE}}', formatCriticita(data.criticitaNomine));
+    
+    // DPI
+    body.replaceText('{{SCORE_DPI}}', String(data.scoreDPI || 0));
+    body.replaceText('{{STATUS_DPI}}', traduciStatus(data.statusDPI));
+    body.replaceText('{{CRITICITA_DPI}}', formatCriticita(data.criticitaDPI));
+    
+    // Antincendio
+    body.replaceText('{{SCORE_ANTINCENDIO}}', String(data.scoreAntincendio || 0));
+    body.replaceText('{{STATUS_ANTINCENDIO}}', traduciStatus(data.statusAntincendio));
+    body.replaceText('{{CRITICITA_ANTINCENDIO}}', formatCriticita(data.criticitaAntincendio));
+    
+    // Salva e chiudi
+    doc.saveAndClose();
+    
+    log('✅ Placeholder sostituiti');
+    log('📄 Converto in PDF...');
+    
+    // Converti in PDF
+    const pdfBlob = copiaDoc.getAs('application/pdf');
+    const pdfFileName = 'Report_Sicurezza_' + nomeAzienda.replace(/[^a-zA-Z0-9]/g, '_') + '_' + Utilities.formatDate(new Date(), 'Europe/Rome', 'yyyyMMdd') + '.pdf';
+    pdfBlob.setName(pdfFileName);
+    
+    // Converti in base64
+    const pdfBase64 = Utilities.base64Encode(pdfBlob.getBytes());
+    
+    log('✅ PDF generato: ' + pdfBase64.length + ' caratteri');
+    
+    // Elimina la copia del documento
+    DriveApp.getFileById(copiaDoc.getId()).setTrashed(true);
+    
+    log('📧 Invio email...');
+    
+    // Invia email con Brevo
+    const url = 'https://api.brevo.com/v3/smtp/email';
+    
+    const htmlContent = getEmailHTML(data);
+    
+    const payload = {
+      sender: { 
+        name: "Delivery Care Srl - SB", 
+        email: "s.rossi@deliverycare.it" 
+      },
+      to: [{ 
+        email: data.email, 
+        name: data.nome || data.nomeAzienda || 'Gentile cliente' 
+      }],
+      subject: 'Report Sicurezza Lavoro - ' + nomeAzienda + ' - Punteggio: ' + (data.punteggioTotale || 0) + '/100',
+      htmlContent: htmlContent,
+      attachment: [{
+        name: pdfFileName,
+        content: pdfBase64
+      }]
+    };
+    
+    const response = UrlFetchApp.fetch(url, {
+      method: 'post',
+      headers: { 
+        'api-key': BREVO_API_KEY, 
+        'Content-Type': 'application/json' 
+      },
+      payload: JSON.stringify(payload),
+      muteHttpErrors: true
+    });
+    
+    const statusCode = response.getResponseCode();
+    log('📬 Email status: ' + statusCode);
+    
+    if (statusCode === 201 || statusCode === 200) {
+      log('✅ EMAIL INVIATA CON PDF!');
+    } else {
+      log('⚠️ Errore email: ' + response.getContentText());
+    }
+    
+  } catch (error) {
+    log('❌ Errore generazione PDF: ' + error.toString());
+    log('❌ Stack: ' + error.stack);
+  }
 }
 
-function submitEmail(){
-var e=document.getElementById("emailInput").value;
-var p=document.getElementById("privacyCheck").checked;
-if(!e||e.indexOf("@")<0){alert("Inserisci email valida");return;}
-if(!p){alert("Accetta la privacy");return;}
-
-if(typeof gtag!=="undefined"){gtag("event","generate_lead",{value:reportData.score});gtag("event","conversion",{send_to:"AW-17912451655/lead"});}
-if(typeof fbq!=="undefined")fbq("track","Lead",{value:reportData.score});
-
-sendToSheet();
-showFull();
+function inviaEmailDebug(emailUtente) {
+  try {
+    const logText = debugLog.join('\n');
+    
+    MailApp.sendEmail({
+      to: DEBUG_EMAIL,
+      subject: '🔍 DEBUG Questionario - ' + emailUtente,
+      body: logText
+    });
+    
+  } catch (error) {
+    Logger.log('Errore invio email debug: ' + error);
+  }
 }
 
-function sendToSheet(){
-var a=reportData.areas,r=reportData.raw;
-
-var payload={
-email:document.getElementById("emailInput").value,
-nome:document.getElementById("nomeInput").value||"",
-nomeAzienda:document.getElementById("aziendaInput").value||"",
-telefono:document.getElementById("telefonoInput").value||"",
-dipendenti:reportData.dipendenti,
-settore:reportData.settore,
-punteggioTotale:reportData.score,
-statusGenerale:reportData.statusGenerale,
-numeroCriticita:reportData.crit,
-scoreMedico:a.medico.score,
-scoreFormazione:a.formazione.score,
-scoreDocumenti:a.documenti.score,
-scoreNomine:a.nomine.score,
-scoreDPI:a.dpiSic.score,
-scoreAntincendio:a.antincendio.score,
-statusMedico:a.medico.status,
-statusFormazione:a.formazione.status,
-statusDocumenti:a.documenti.status,
-statusNomine:a.nomine.status,
-statusDPI:a.dpiSic.status,
-statusAntincendio:a.antincendio.status,
-medicoNominato:r.medicoNominato||"",
-visite:r.visite||"",
-formazioneGenerale:r.formazioneGenerale||"",
-formazioneSpecifica:r.formazioneSpecifica||"",
-formazioneAggiornata:r.formazioneAggiornata||"",
-dvr:r.dvr||"",
-rspp:r.rspp||"",
-addetti:r.addetti||"",
-dpi:r.dpi||"",
-registro:"noinfortuni",
-emergenza:r.emergenza||"",
-estintori:r.estintori||"",
-proveEvacuazione:r.proveEvacuazione||"",
-impiantoElettrico:r.impiantoElettrico||"",
-cassettaSoccorso:r.cassettaSoccorso||"",
-criticitaMedico:a.medico.issues.map(function(x){return x[0];}),
-criticitaFormazione:a.formazione.issues.map(function(x){return x[0];}),
-criticitaDocumenti:a.documenti.issues.map(function(x){return x[0];}),
-criticitaNomine:a.nomine.issues.map(function(x){return x[0];}),
-criticitaDPI:a.dpiSic.issues.map(function(x){return x[0];}),
-criticitaAntincendio:a.antincendio.issues.map(function(x){return x[0];})
-};
-
-console.log("📤 Payload:",payload);
-fetch(SHEET_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=UTF-8"},body:JSON.stringify(payload)});
+function getEmailHTML(data) {
+  const nome = data.nome || 'Gentile';
+  const azienda = data.nomeAzienda || 'Azienda';
+  const punteggio = data.punteggioTotale || 0;
+  
+  let colorePunteggio = '#ef4444';
+  let statusText = 'CRITICO';
+  if (punteggio >= 80) { colorePunteggio = '#22c55e'; statusText = 'CONFORME'; }
+  else if (punteggio >= 60) { colorePunteggio = '#84cc16'; statusText = 'BUONO'; }
+  else if (punteggio >= 50) { colorePunteggio = '#eab308'; statusText = 'DA MIGLIORARE'; }
+  else if (punteggio >= 30) { colorePunteggio = '#f97316'; statusText = 'INSUFFICIENTE'; }
+  
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <style>
+        body { font-family: Arial, sans-serif; line-height: 1.7; color: #1e293b; margin: 0; padding: 0; background: #f1f5f9; }
+        .container { max-width: 600px; margin: 0 auto; background: white; }
+        .header { background: linear-gradient(135deg, #0F4C81, #1e40af); color: white; padding: 40px 30px; text-align: center; }
+        .header img { max-width: 200px; margin-bottom: 20px; }
+        .score-box { background: white; border-radius: 16px; padding: 20px; margin: -30px 30px 0; position: relative; box-shadow: 0 4px 20px rgba(0,0,0,0.1); text-align: center; }
+        .score-number { font-size: 48px; font-weight: 900; color: ${colorePunteggio}; }
+        .score-label { font-size: 14px; color: ${colorePunteggio}; font-weight: 700; }
+        .content { padding: 40px 30px; }
+        .highlight { background: #f0f9ff; border-left: 4px solid #0F4C81; padding: 15px 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+        .cta-button { display: inline-block; background: linear-gradient(135deg, #00A67E, #059669); color: white; padding: 14px 28px; border-radius: 8px; text-decoration: none; font-weight: 700; margin: 10px 5px; }
+        .cta-button.secondary { background: linear-gradient(135deg, #0F4C81, #1e40af); }
+        .footer { background: #1e293b; color: #94a3b8; padding: 30px; text-align: center; font-size: 14px; }
+        .footer a { color: #60a5fa; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1 style="margin: 0; font-size: 24px;">Report Sicurezza Lavoro</h1>
+          <p style="margin: 10px 0 0; opacity: 0.9;">${azienda}</p>
+        </div>
+        
+        <div class="score-box">
+          <div class="score-number">${punteggio}/100</div>
+          <div class="score-label">${statusText}</div>
+        </div>
+        
+        <div class="content">
+          <p><strong>Buongiorno ${nome},</strong></p>
+          
+          <p>grazie per aver completato il nostro questionario di autovalutazione sulla sicurezza sul lavoro.</p>
+          
+          <div class="highlight">
+            <strong>📎 Trovi il tuo report completo allegato a questa email in formato PDF.</strong>
+          </div>
+          
+          <p>Il documento contiene:</p>
+          <ul>
+            <li>Analisi delle 6 aree normative del D.Lgs 81/08</li>
+            <li>Punteggio di conformità per ogni area</li>
+            <li>Criticità rilevate con relative sanzioni</li>
+            <li>Interventi prioritari consigliati</li>
+          </ul>
+          
+          <p style="margin-top: 30px;"><strong>Vuoi sistemare le criticità emerse?</strong></p>
+          <p>Siamo a tua disposizione per una consulenza gratuita di 15 minuti.</p>
+          
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="tel:+390250047124" class="cta-button">📞 Chiamaci</a>
+            <a href="mailto:info@deliverycare.it" class="cta-button secondary">📧 Scrivici</a>
+          </div>
+        </div>
+        
+        <div class="footer">
+          <p style="margin: 0;"><strong>Delivery Care Srl - Società Benefit</strong></p>
+          <p style="margin: 5px 0;">Specialisti in Sicurezza sul Lavoro</p>
+          <p style="margin: 5px 0; font-size: 13px;">P.IVA: 11263630961 | P.zza centro commerciale 44, 20090 Segrate (MI)</p>
+          <p style="margin: 15px 0 0 0;">
+            📞 <a href="tel:+390250047124">+39 02 50047124</a> • 
+            📧 <a href="mailto:info@deliverycare.it">info@deliverycare.it</a> • 
+            🌐 <a href="https://www.deliverycare.it">www.deliverycare.it</a>
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
 }
 
-function showFull(){
-show("screenFullReport");
-var score=reportData.score,areas=reportData.areas;
-
-var c,l,emoji;
-if(score>=80){c="#22c55e";l="CONFORME";emoji="🟢";}
-else if(score>=60){c="#84cc16";l="BUONO";emoji="🟢";}
-else if(score>=50){c="#eab308";l="DA MIGLIORARE";emoji="🟡";}
-else if(score>=30){c="#f97316";l="CRITICITÀ GRAVI";emoji="🟠";}
-else{c="#ef4444";l="NON CONFORME";emoji="🔴";}
-
-var areaNames={medico:"👨‍⚕️ Sorveglianza Sanitaria",formazione:"📚 Formazione",documenti:"📄 DVR",nomine:"👥 Nomine",dpiSic:"🦺 DPI e Sicurezza",antincendio:"🔥 Antincendio"};
-
-var h='<div style="text-align:center;padding:24px 16px;margin-bottom:20px;background:linear-gradient(135deg,'+c+'15,'+c+'05);border-radius:16px;border:2px solid '+c+'">';
-h+='<div style="font-size:13px;color:#64748b;margin-bottom:8px;font-weight:600">REPORT COMPLIANCE D.Lgs 81/08</div>';
-h+='<div style="font-size:60px;font-weight:900;color:'+c+'">'+score+'<span style="font-size:24px">/100</span></div>';
-h+='<div style="font-size:20px;font-weight:700;color:'+c+';margin-top:8px">'+emoji+' '+l+'</div></div>';
-
-h+='<div style="font-size:17px;font-weight:700;margin-bottom:14px;color:#1e293b">📊 Aree Analizzate</div>';
-
-for(var area in areas){
-var ar=areas[area];
-var ac=ar.status==="green"?"#22c55e":(ar.status==="yellow"?"#eab308":"#ef4444");
-var st=ar.status==="green"?"CONFORME":(ar.status==="yellow"?"DA SISTEMARE":"CRITICO");
-
-h+='<div style="background:#fff;border-radius:12px;padding:16px;margin-bottom:12px;border:2px solid #e2e8f0;border-left:5px solid '+ac+'">';
-h+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">';
-h+='<span style="font-weight:700;font-size:15px;color:#1e293b">'+areaNames[area]+'</span>';
-h+='<span style="background:'+ac+';color:#fff;padding:4px 12px;border-radius:12px;font-size:12px;font-weight:700">'+ar.score+'</span></div>';
-h+='<div style="font-size:11px;font-weight:700;color:'+ac+';margin-bottom:12px;text-transform:uppercase">'+st+'</div>';
-
-for(var j=0;j<ar.issues.length;j++){
-var sz=ar.issues[j];
-h+='<div style="background:'+(ar.status==="red"?"#fef2f2":"#fffbeb")+';border-radius:10px;padding:12px;margin-bottom:8px;border-left:4px solid '+(ar.status==="red"?"#ef4444":"#f59e0b")+'">';
-h+='<div style="font-size:14px;font-weight:700;color:'+(ar.status==="red"?"#dc2626":"#d97706")+'">'+sz[0]+'</div>';
-if(sz[1])h+='<div style="font-size:12px;color:#64748b;margin-top:4px">'+sz[1]+'</div>';
-if(sz[2])h+='<div style="font-size:12px;color:#dc2626;margin-top:6px;font-weight:600">💰 €'+sz[2]+'</div>';
-h+='</div>';
+// Funzione di test
+function testDoPost() {
+  const testData = {
+    email: 's.rossi@deliverycare.it',
+    nome: 'Test',
+    nomeAzienda: 'Azienda Test',
+    telefono: '333123456',
+    dipendenti: '16-100',
+    settore: 'Produzione',
+    punteggioTotale: 65,
+    statusGenerale: 'yellow',
+    numeroCriticita: 4,
+    scoreMedico: 15,
+    scoreFormazione: 20,
+    scoreDocumenti: 5,
+    scoreNomine: 10,
+    scoreDPI: 20,
+    scoreAntincendio: 15,
+    statusMedico: 'green',
+    statusFormazione: 'yellow',
+    statusDocumenti: 'red',
+    statusNomine: 'yellow',
+    statusDPI: 'green',
+    statusAntincendio: 'yellow',
+    medicoNominato: 'yes',
+    visite: 'all',
+    formazioneGenerale: 'some',
+    formazioneSpecifica: 'all',
+    formazioneAggiornata: 'no',
+    dvr: 'old',
+    rspp: 'external',
+    addetti: 'one',
+    dpi: 'all',
+    registro: 'noinfortuni',
+    emergenza: 'partial',
+    estintori: 'yes',
+    proveEvacuazione: 'sometimes',
+    impiantoElettrico: 'old',
+    cassettaSoccorso: 'yes',
+    criticitaMedico: [],
+    criticitaFormazione: ['AGGIORNAMENTO NON EFFETTUATO'],
+    criticitaDocumenti: ['DVR MANCANTE O NON AGGIORNATO'],
+    criticitaNomine: ['ADDETTI EMERGENZE MANCANTI'],
+    criticitaDPI: ['PIANO EMERGENZA MANCANTE'],
+    criticitaAntincendio: ['PROVE EVACUAZIONE MANCANTI', 'IMPIANTO NON VERIFICATO']
+  };
+  
+  const e = {
+    postData: {
+      contents: JSON.stringify(testData)
+    }
+  };
+  
+  doPost(e);
 }
-if(ar.issues.length===0)h+='<div style="font-size:13px;color:#22c55e;padding:6px 0">✅ Nessuna criticità</div>';
-h+='</div>';
-}
-
-h+='<div style="background:linear-gradient(135deg,#0F4C81,#0a3659);border-radius:16px;padding:24px;color:#fff;margin:20px 0">';
-h+='<div style="font-size:18px;font-weight:700;margin-bottom:16px;text-align:center">COME POSSIAMO AIUTARTI</div>';
-h+='<p style="font-size:14px;line-height:1.6;margin-bottom:16px;opacity:.95">Questo report ti ha fornito una fotografia chiara dello stato di conformità della tua azienda.</p>';
-h+='<div style="font-size:13px;line-height:1.8;opacity:.95">✓ Analisi dettagliata criticità<br>✓ Piano d\'azione con tempi e costi<br>✓ Implementazione interventi<br>✓ Formazione team<br>✓ Conformità nel tempo</div>';
-h+='<div style="text-align:center;margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.2)">';
-h+='<a href="tel:+390250047124" style="display:inline-block;background:#fff;color:#0F4C81;padding:12px 24px;border-radius:10px;font-weight:700;text-decoration:none;font-size:16px">📞 02 50047124</a>';
-h+='<div style="margin-top:10px"><a href="mailto:info@deliverycare.it" style="color:#fff;font-size:13px">📧 info@deliverycare.it</a></div>';
-h+='</div></div>';
-
-h+='<div style="text-align:center;padding:16px;font-size:11px;color:#64748b;border-top:2px solid #e2e8f0;margin-top:16px">';
-h+='<div style="font-weight:700;color:#1e293b">Delivery Care Srl - Società Benefit</div>';
-h+='<div style="margin-top:4px">P.IVA: 11263630961 | Segrate (MI)</div></div>';
-
-document.getElementById("reportContent").innerHTML=h;
-}
-
-function restart(){
-cur=0;ans=[];reportData=null;
-document.getElementById("emailInput").value="";
-document.getElementById("nomeInput").value="";
-document.getElementById("aziendaInput").value="";
-document.getElementById("telefonoInput").value="";
-document.getElementById("privacyCheck").checked=false;
-show("screenLanding");
-}
-
-function openPrivacy(e){e.preventDefault();document.getElementById("privacyModal").classList.add("active");}
-function closePrivacy(){document.getElementById("privacyModal").classList.remove("active");}
-</script>
-</body>
-</html>
